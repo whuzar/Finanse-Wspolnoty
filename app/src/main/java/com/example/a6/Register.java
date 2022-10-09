@@ -23,11 +23,11 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        final EditText fullname = findViewById(R.id.fullname);
         final EditText email = findViewById(R.id.email);
         final EditText log = findViewById(R.id.logi);
         final EditText password = findViewById(R.id.password);
         final EditText conpassword = findViewById(R.id.conpassword);
+        final EditText phon = findViewById(R.id.phone);
 
         final Button registerBtn = findViewById(R.id.registerBtn);
         final TextView login = findViewById(R.id.login);
@@ -37,13 +37,13 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                final String fullnameTxt = fullname.getText().toString();
                 final String emailtxt = email.getText().toString();
                 final String logtxt = log.getText().toString();
                 final String passwordtxt = password.getText().toString();
                 final String conpasswordtxt = conpassword.getText().toString();
+                final String phontxt = phon.getText().toString();
 
-                if(fullnameTxt.isEmpty() || emailtxt.isEmpty() || logtxt.isEmpty() || passwordtxt.isEmpty()){
+                if(emailtxt.isEmpty() || logtxt.isEmpty() || passwordtxt.isEmpty() || conpasswordtxt.isEmpty() || phontxt.isEmpty()){
                     Toast.makeText(Register.this, "Proszę wprowadzić dane", Toast.LENGTH_SHORT).show();
                 }
 
@@ -52,15 +52,17 @@ public class Register extends AppCompatActivity {
                 }
 
                 else {
-                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.hasChild(logtxt)){
-                                Toast.makeText(Register.this, "Ten numer już jest zarejestrowany", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Register.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
                             }else{
-                                databaseReference.child("users").child(logtxt).child("fullname").setValue(fullnameTxt);
-                                databaseReference.child("users").child(logtxt).child("email").setValue(emailtxt);
-                                databaseReference.child("users").child(logtxt).child("password").setValue(passwordtxt);
+                                databaseReference.child("admin").child(logtxt).child("email").setValue(emailtxt);
+                                databaseReference.child("admin").child(logtxt).child("password").setValue(passwordtxt);
+                                databaseReference.child("admin").child(logtxt).child("phone").setValue(phontxt);
+                                databaseReference.child("admin").child(logtxt).child("email").setValue(emailtxt);
+                                // przy generowaniu loginu ma nie byc admina chyba ze generuje dla kolejnych zarzadcow
 
                                 Toast.makeText(Register.this, "Utworzono użytkonika", Toast.LENGTH_SHORT).show();
                                 finish();

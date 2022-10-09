@@ -19,6 +19,7 @@
         android:fontFamily="sans-serif-condensed"
         android:textSize="40sp"
         android:text="LOGOWANIE"/>
+
     <EditText
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
