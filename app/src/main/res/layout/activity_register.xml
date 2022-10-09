@@ -16,7 +16,7 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:layout_marginTop="-60dp"
-        android:fontFamily="sans-serif-condensed"
+        android:fontFamily="@font/montserrat_regular"
         android:textSize="40sp"
         android:text="REJESTRACJA"/>
 
@@ -26,31 +26,19 @@
         android:textStyle="bold"
         android:gravity="center"
         android:textColor="@color/white"
-        android:fontFamily="sans-serif-condensed"
+        android:fontFamily="@font/montserrat_regular"
         android:textSize="20sp"
         android:text="DLA ZARZĄDCÓW"/>
 
 
-<!--    <EditText-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:inputType="text"-->
-<!--        android:id="@+id/nazwa"-->
-<!--        android:hint="Nazwa wspólnoty"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textColorHint="@color/white"-->
-<!--        android:maxLines="1"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:layout_marginEnd="20dp"-->
-<!--        android:paddingStart="20dp"-->
-<!--        android:paddingEnd="0dp"/>-->
+
 
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/email"
+        android:background="@android:color/transparent"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -60,7 +48,7 @@
             android:layout_marginTop="50dp"
 
             android:layout_marginEnd="20dp"
-            android:background="@null"
+            android:background="@android:color/transparent"
             android:hint="E-mail"
             android:inputType="textEmailAddress"
             android:maxLines="1"
@@ -74,6 +62,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/phone"
+        android:background="@android:color/transparent"
         app:errorEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -83,6 +72,7 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:maxLines="1"
+            android:background="@android:color/transparent"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:paddingStart="20dp"
@@ -100,7 +90,8 @@
         app:counterEnabled="true"
         app:counterMaxLength="20"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/transparent">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -109,7 +100,7 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:maxLines="1"
-
+            android:background="@android:color/transparent"
             android:paddingStart="20dp"
             android:paddingEnd="0dp"
             android:maxLength="20">
@@ -122,12 +113,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/password"
+        android:background="@android:color/transparent"
         app:errorEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-
+            android:background="@android:color/transparent"
             android:hint="Twoje hasło"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
@@ -144,12 +136,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/conpassword"
+        android:background="@android:color/transparent"
         app:errorEnabled="true">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-
+            android:background="@android:color/transparent"
             android:hint="Powtórz hasło"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
@@ -170,7 +163,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="Register"
+        android:background="@android:color/transparent"
+        android:text="Zarejestruj się"
         android:layout_marginTop="40dp"/>
     <LinearLayout
         android:layout_width="wrap_content"
