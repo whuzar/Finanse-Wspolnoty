@@ -20,37 +20,55 @@
         android:textSize="40sp"
         android:text="LOGOWANIE"/>
 
-    <EditText
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:id="@+id/log"
-        android:hint="Login"
-        android:drawableStart="@drawable/ic_login"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:maxLines="1"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"/>
 
-    <EditText
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
+        android:id="@+id/log"
+        app:errorEnabled="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="Login"
+            android:drawableStart="@drawable/ic_login"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:maxLines="1"
+            >
+
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/password"
-        android:hint="Hasło"
-        android:drawableStart="@drawable/ic_lock"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:maxLines="1"
+        app:errorEnabled="true"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:paddingStart="12dp"
-        android:paddingEnd="12dp"/>
+        android:paddingEnd="12dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+
+            android:hint="Hasło"
+            android:drawableStart="@drawable/ic_lock"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:maxLines="1"
+            >
+
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginBtn"
