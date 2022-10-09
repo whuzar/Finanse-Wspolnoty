@@ -41,13 +41,13 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, "Proszę wprowadzić dane", Toast.LENGTH_SHORT).show();
                 }else {
 
-                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.hasChild(logiText)){
                                 final String getPassword = snapshot.child(logiText).child("password").getValue(String.class);
                                 if(getPassword.equals(passwordTxt)){
-                                    Toast.makeText(Login.this, "Zalogowano poprawnie", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Login.this, "Witamy ponownie", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(Login.this, MainActivity.class));
                                     finish();
                                 }else {
