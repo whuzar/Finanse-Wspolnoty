@@ -10,9 +10,18 @@
         <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/drawable/gradient_start.xml" value="0.1942084942084942" />
         <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/drawable/ic_lock.xml" value="0.199609375" />
         <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/drawable/ic_login.xml" value="0.199609375" />
+        <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/drawable/radius_corners.xml" value="0.199609375" />
+        <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/font/montserrat.xml" value="0.21015625" />
         <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/layout/activity_login.xml" value="0.176" />
-        <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/layout/activity_main.xml" value="0.176" />
+        <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/layout/activity_main.xml" value="0.1423611111111111" />
         <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/layout/activity_register.xml" value="0.176" />
+        <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/layout/activity_test.xml" value="0.176953125" />
+        <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/layout/fragment_first.xml" value="0.1837431693989071" />
+        <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/layout/fragment_second.xml" value="0.1837431693989071" />
+        <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/layout/fragment_third.xml" value="0.1837431693989071" />
+        <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/menu/bottom_menu.xml" value="0.1875" />
+        <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.199609375" />
+        <entry key="..\:/Users/wojte/AndroidStudioProjects/6/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.199609375" />
       </map>
     </option>
   </component>
