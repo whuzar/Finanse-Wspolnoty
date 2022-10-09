@@ -1,5 +1,6 @@
 package com.example.a6;
 
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,16 +37,17 @@ public class Register extends AppCompatActivity {
 
 
 
-    private EditText email;
-    private EditText log;
-    private EditText password;
-    private EditText conpassword;
-    private EditText phon;
+    private TextInputLayout email;
+    private TextInputLayout log;
+    private TextInputLayout password;
+    private TextInputLayout conpassword;
+    private TextInputLayout phon;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_register);
 
         email = findViewById(R.id.email);
@@ -63,10 +66,10 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                final String emailtxt = email.getText().toString();
-                final String logtxt = log.getText().toString();
-                final String passwordtxt = password.getText().toString();
-                final String phontxt = phon.getText().toString();
+                final String emailtxt = email.getEditText().getText().toString();
+                final String logtxt = log.getEditText().getText().toString();
+                final String passwordtxt = password.getEditText().getText().toString();
+                final String phontxt = phon.getEditText().getText().toString();
 
                 if(!validateEmail() || !validatePhone() || !validateUsername() || !validatePassword()){
                     return;
@@ -107,15 +110,15 @@ public class Register extends AppCompatActivity {
     }
 
     private boolean validateEmail() {
-        String emailInput = email.getText().toString().trim();
-
+        String emailInput = email.getEditText().getText().toString().trim();
         if (emailInput.isEmpty()) {
 //            email.setError("Pole jest puste");
-            Toast.makeText(Register.this, "Pole e-mail jest puste", Toast.LENGTH_SHORT).show();
+            email.setError("Pole nie może być puste");
+//            Toast.makeText(Register.this, "Pole e-mail jest puste", Toast.LENGTH_SHORT).show();
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-//            email.setError("Proszę wpisać poprawnie e-mail");
-            Toast.makeText(Register.this, "Proszę wpisać poprawnie adres e-mail", Toast.LENGTH_SHORT).show();
+            email.setError("Proszę wpisać poprawnie adres e-mail");
+//            Toast.makeText(Register.this, "Proszę wpisać poprawnie adres e-mail", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             email.setError(null);
@@ -123,19 +126,20 @@ public class Register extends AppCompatActivity {
         }
     }
     private boolean validatePassword() {
-        String passwordInput = password.getText().toString().trim();
-        String conpasswordInput = conpassword.getText().toString().trim();
+        String passwordInput = password.getEditText().getText().toString().trim();
+        String conpasswordInput = conpassword.getEditText().getText().toString().trim();
 
         if (passwordInput.isEmpty()) {
-//            password.setError("Field can't be empty");
-            Toast.makeText(Register.this, "Pole hasła nie może być puste", Toast.LENGTH_SHORT).show();
+            password.setError("Pole hasła nie może być puste");
+//            Toast.makeText(Register.this, "Pole hasła nie może być puste", Toast.LENGTH_SHORT).show();
             return false;
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-//            password.setError("Password too weak");
-            Toast.makeText(Register.this, "Hasło jest za słabe", Toast.LENGTH_SHORT).show();
+            password.setError("Hasło jest za słabe");
+//            Toast.makeText(Register.this, "Hasło jest za słabe", Toast.LENGTH_SHORT).show();
             return false;
         }else if(!passwordInput.equals(conpasswordInput)){
-            Toast.makeText(Register.this, "Hasła nie pasują do siebie", Toast.LENGTH_SHORT).show();
+            password.setError("Hasła nie pasują do siebie");
+//            Toast.makeText(Register.this, "Hasła nie pasują do siebie", Toast.LENGTH_SHORT).show();
             return false;
         }
         else {
@@ -144,14 +148,14 @@ public class Register extends AppCompatActivity {
         }
     }
     private boolean validateUsername() {
-        String usernameInput = log.getText().toString().trim();
+        String usernameInput = log.getEditText().getText().toString().trim();
         if (usernameInput.isEmpty()) {
-//            log.setError("Field can't be empty");
-            Toast.makeText(Register.this, "Pole login nie może być puste", Toast.LENGTH_SHORT).show();
+            log.setError("Pole login nie może być puste");
+//            Toast.makeText(Register.this, "Pole login nie może być puste", Toast.LENGTH_SHORT).show();
             return false;
         } else if (usernameInput.length() > 20) {
-//            log.setError("Username too long");
-            Toast.makeText(Register.this, "Login jest za długi", Toast.LENGTH_SHORT).show();
+            log.setError("Login jest za długi");
+//            Toast.makeText(Register.this, "Login jest za długi", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             log.setError(null);
@@ -160,15 +164,18 @@ public class Register extends AppCompatActivity {
     }
 
     private boolean validatePhone() {
-        String phoneInput = phon.getText().toString().trim();
+        String phoneInput = phon.getEditText().getText().toString().trim();
         if (phoneInput.isEmpty()) {
-            Toast.makeText(Register.this, "Pole numer telefonu nie może być puste", Toast.LENGTH_SHORT).show();
+            phon.setError("Pole numer telefonu nie może być puste");
+//            Toast.makeText(Register.this, "Pole numer telefonu nie może być puste", Toast.LENGTH_SHORT).show();
             return false;
         } else if (!PHONE_PATTERN.matcher(phoneInput).matches()) {
+            phon.setError("Proszę wpisać poprawnie numer telefonu");
             Toast.makeText(Register.this, "Proszę wpisać poprawnie numer telefonu", Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            log.setError(null);
+//            log.setError(null);
+            phon.setError(null);
             return true;
         }
     }

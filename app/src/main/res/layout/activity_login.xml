@@ -4,53 +4,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login"
-    android:orientation="vertical"
+    android:layout_alignParentTop="true"
+    android:background="@drawable/gradient_animation"
     android:gravity="center"
-    android:background="@drawable/gradient_animation">
+    android:orientation="vertical"
+    tools:context=".Login">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginTop="-100dp"
-        android:textColor="@color/white"
-        android:fontFamily="sans-serif-condensed"
-        android:textSize="40sp"
-        android:text="LOGOWANIE"/>
 
-    <EditText
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
+    <!--    <TextView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="-100dp"-->
+    <!--        android:fontFamily="sans-serif-condensed"-->
+    <!--        android:gravity="center"-->
+    <!--        android:text="LOGOWANIE"-->
+    <!--        android:textColor="@color/white"-->
+    <!--        android:textSize="40sp"-->
+    <!--        android:textStyle="bold" />-->
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="312dp"
+        android:layout_height="258dp"
+        android:layout_marginTop="-500px"
+        app:srcCompat="@drawable/organizator_transparent" />
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/log"
-        android:hint="Login"
-        android:drawableStart="@drawable/ic_login"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:maxLines="1"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"/>
-
-    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:id="@+id/password"
-        android:hint="Hasło"
-        android:drawableStart="@drawable/ic_lock"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:maxLines="1"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:background="@android:color/transparent"
         android:paddingStart="12dp"
-        android:paddingEnd="12dp"/>
+        android:paddingEnd="12dp"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_login"
+            android:hint="Login"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:boxBackgroundColor="@android:color/transparent">
+
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/transparent"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:boxBackgroundColor="@android:color/transparent"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:drawableStart="@drawable/ic_lock"
+            android:hint="Hasło"
+
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:boxBackgroundColor="@android:color/transparent">
+
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginBtn"
@@ -59,27 +93,31 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
+        android:background="@color/colorTransparent"
         android:text="Login" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="Chcesz utworzyć system dla swojej wspólnoty?"/>
-        <TextView
-            android:layout_marginStart="5dp"
-            android:id="@+id/register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:text="Zarejestruj"
-            android:textStyle="bold"/>
+            android:text="Chcesz utworzyć system dla swojej wspólnoty?"
+            android:textColor="@color/white" />
+
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="Zarejestruj"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 </LinearLayout>
