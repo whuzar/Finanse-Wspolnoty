@@ -26,6 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/login_inne"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/white"
@@ -35,6 +36,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/number_inne"
                 android:text="+48123456789"
                 android:textColor="#CCFFFFFF"
                 android:textSize="12sp"
@@ -63,40 +65,39 @@
                 android:padding="15dp">
 
                 <!--Dark mode-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content">-->
 
-                    <ImageView
-                        android:id="@+id/modenight"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/round_bl"
-                        android:padding="12dp"
-                        android:src="@drawable/moon" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/modenight"-->
+<!--                        android:layout_width="40dp"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:background="@drawable/round_bl"-->
+<!--                        android:padding="12dp"-->
+<!--                        android:src="@drawable/moon" />-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="20dp"
-                        android:layout_toEndOf="@id/modenight"
-                        android:text="Tryb nocny"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:layout_marginStart="20dp"-->
+<!--                        android:layout_toEndOf="@id/modenight"-->
+<!--                        android:text="Tryb nocny"-->
+<!--                        android:textColor="#FFFFFF"-->
+<!--                        android:textStyle="bold" />-->
 
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:switchMinWidth="50dp"
-                        android:theme="@style/nigtMode"/>
-                </RelativeLayout>
+<!--                    <androidx.appcompat.widget.SwitchCompat-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_alignParentEnd="true"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:switchMinWidth="50dp"-->
+<!--                        android:theme="@style/nigtMode"/>-->
+<!--                </RelativeLayout>-->
 
 <!--                Notifications-->
                 <RelativeLayout
-                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -128,36 +129,36 @@
                 </RelativeLayout>
 
 <!--                Private Account-->
-                <RelativeLayout
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/privateAccount"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/shield"
-                        android:background="@drawable/account"
-                        android:padding="12dp"/>
+<!--                <RelativeLayout-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content">-->
+<!--                    <ImageView-->
+<!--                        android:id="@+id/privateAccount"-->
+<!--                        android:layout_width="40dp"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:src="@drawable/shield"-->
+<!--                        android:background="@drawable/account"-->
+<!--                        android:padding="12dp"/>-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="20dp"
-                        android:layout_toEndOf="@id/privateAccount"
-                        android:text="Konto prywatne"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:layout_marginStart="20dp"-->
+<!--                        android:layout_toEndOf="@id/privateAccount"-->
+<!--                        android:text="Konto prywatne"-->
+<!--                        android:textColor="#FFFFFF"-->
+<!--                        android:textStyle="bold" />-->
 
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:switchMinWidth="50dp"
-                        android:theme="@style/privateMode"/>
-                </RelativeLayout>
+<!--                    <androidx.appcompat.widget.SwitchCompat-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_alignParentEnd="true"-->
+<!--                        android:layout_centerVertical="true"-->
+<!--                        android:switchMinWidth="50dp"-->
+<!--                        android:theme="@style/privateMode"/>-->
+<!--                </RelativeLayout>-->
 
             </LinearLayout>
 
@@ -174,8 +175,9 @@
             <!--Security-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="wrap_content"
+                android:id="@+id/zarzadcaclick"
+                android:clickable="true">
                 <ImageView
                     android:id="@+id/security"
                     android:layout_width="40dp"
@@ -254,7 +256,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="20dp"
                     android:layout_toEndOf="@id/aboutus"
-                    android:text="O nas"
+                    android:text="Twoje informacje"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
 
