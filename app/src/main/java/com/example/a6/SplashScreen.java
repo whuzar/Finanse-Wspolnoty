@@ -16,12 +16,7 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        if (!checkInternet()){
-            NoInternet noInternet = new NoInternet(SplashScreen.this);
-            noInternet.setCancelable(false);
-            noInternet.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
-            noInternet.show();
-        }
+
 //        while (!checkInternet()){
 //
 //
@@ -38,9 +33,5 @@ public class SplashScreen extends AppCompatActivity {
 
     }
 
-    private boolean checkInternet(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService((Context.CONNECTIVITY_SERVICE));
 
-        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
-    }
 }

@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,7 @@ public class NoInternet extends Dialog {
             @Override
             public void onClick(View view) {
                 dismiss();
+
             }
         });
     }
