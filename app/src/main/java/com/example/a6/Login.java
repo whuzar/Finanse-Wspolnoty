@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,8 +50,14 @@ public class Login extends AppCompatActivity {
                 final String passwordTxt = password.getEditText().getText().toString();
 
                 if(logiText.isEmpty() || passwordTxt.isEmpty()){
-                    password.setError("Pole nie może być puste");
-                    logi.setError("Pole nie może być puste");
+                    if(logiText.isEmpty()){
+                        logi.setError("Pole nie może być puste");
+                    }
+                    if(passwordTxt.isEmpty()){
+                        password.setError("Pole nie może być puste");
+                    }
+
+
 //                    Toast.makeText(Login.this, "Proszę wprowadzić dane", Toast.LENGTH_SHORT).show();
                 }else {
 
@@ -95,6 +103,12 @@ public class Login extends AppCompatActivity {
             noInternet.setCancelable(false);
             noInternet.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
             noInternet.show();
+            noInternet.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    checkInternet();
+                }
+            });
         }
 
 
