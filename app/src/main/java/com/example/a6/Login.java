@@ -36,7 +36,7 @@ public class Login extends AppCompatActivity {
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //        getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
-        checkInternet();
+
         final TextInputLayout logi = findViewById(R.id.log);
         final TextInputLayout password = findViewById(R.id.password);
         final Button loginbtn = findViewById(R.id.loginBtn);
@@ -96,21 +96,5 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-    private void checkInternet(){
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService((Context.CONNECTIVITY_SERVICE));
-        if (!(connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected())){
-            NoInternet noInternet = new NoInternet(Login.this);
-            noInternet.setCancelable(false);
-            noInternet.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
-            noInternet.show();
-            noInternet.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialogInterface) {
-                    checkInternet();
-                }
-            });
-        }
 
-
-    }
 }
