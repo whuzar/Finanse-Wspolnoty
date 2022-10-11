@@ -1,5 +1,7 @@
 package com.example.a6;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -70,35 +72,37 @@ public class Register extends AppCompatActivity {
                 final String logtxt = log.getEditText().getText().toString();
                 final String passwordtxt = password.getEditText().getText().toString();
                 final String phontxt = phon.getEditText().getText().toString();
-
-                if(!validateEmail() || !validatePhone() || !validateUsername() || !validatePassword()){
-                    return;
-                }
-                else {
-                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.hasChild(logtxt)){
-                                Toast.makeText(Register.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
-                            }else{
-                                databaseReference.child("admin").child(logtxt).child("email").setValue(emailtxt);
-                                databaseReference.child("admin").child(logtxt).child("password").setValue(passwordtxt);
-                                databaseReference.child("admin").child(logtxt).child("phone").setValue(phontxt);
-                                databaseReference.child("admin").child(logtxt).child("email").setValue(emailtxt);
-                                // przy generowaniu loginu ma nie byc admina chyba ze generuje dla kolejnych zarzadcow
-
-                                Toast.makeText(Register.this, "Utworzono użytkonika", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-                }
+                JavaMailAPI javaMailAPI = new JavaMailAPI(Register.this, emailtxt, "Kod potwierdzający rejestracje", "twój kod potwierdzający. \n UWAGA WAŻNY PRZEZ 5 MIN");
+                javaMailAPI.execute();
+//                if(!validateEmail() || !validatePhone() || !validateUsername() || !validatePassword()){
+//                    return;
+//                }
+//                else {
+//
+////                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+////                        @Override
+////                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+////                            if(snapshot.hasChild(logtxt)){
+////                                Toast.makeText(Register.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
+////                            }else{
+//////                                databaseReference.child("admin").child(logtxt).child("email").setValue(emailtxt);
+//////                                databaseReference.child("admin").child(logtxt).child("password").setValue(passwordtxt);
+//////                                databaseReference.child("admin").child(logtxt).child("phone").setValue(phontxt);
+//////                                databaseReference.child("admin").child(logtxt).child("email").setValue(emailtxt);
+//////                                // przy generowaniu loginu ma nie byc admina chyba ze generuje dla kolejnych zarzadcow
+//////
+//////                                Toast.makeText(Register.this, "Utworzono użytkonika", Toast.LENGTH_SHORT).show();
+////                                finish();
+////                            }
+////                        }
+////
+////                        @Override
+////                        public void onCancelled(@NonNull DatabaseError error) {
+////
+////                        }
+////                    });
+//
+//                }
             }
         });
         login.setOnClickListener(new View.OnClickListener() {
