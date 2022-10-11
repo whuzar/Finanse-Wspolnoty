@@ -1,6 +1,8 @@
 package com.example.a6;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,26 +15,48 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class ThirdFragment extends Fragment{
+
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_LOGIN = "login";
+    private static final String KEY_NUMBER = "number";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_third,
                 container, false);
-        RelativeLayout button = (RelativeLayout) rootView.findViewById(R.id.zarzadcaclick);
+        RelativeLayout zarzadcaclick = (RelativeLayout) rootView.findViewById(R.id.zarzadcaclick);
+        RelativeLayout logouttologin = (RelativeLayout) rootView.findViewById(R.id.logouttologin);
         TextView number_telephone = (TextView) rootView.findViewById(R.id.number_inne);
         TextView login_underphoto = (TextView) rootView.findViewById(R.id.login_inne);
+        sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        String login = sharedPreferences.getString(KEY_LOGIN, null);
+        String numberphone = sharedPreferences.getString(KEY_NUMBER, null);
+
+       zarzadcaclick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 updateDetail();
             }
         });
 
-        number_telephone.setText("jo");
-        login_underphoto.setText("whuzar");
+       logouttologin.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               SharedPreferences.Editor editor = sharedPreferences.edit();
+               editor.clear();
+               editor.commit();
+               startActivity(new Intent(getActivity(), Login.class));
+               getActivity().finish();
+           }
+       });
 
-
+       if(login != null || numberphone != null) {
+           login_underphoto.setText(login);
+           number_telephone.setText(numberphone);
+       }
 
         return rootView;
     }

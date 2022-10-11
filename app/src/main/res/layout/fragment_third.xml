@@ -284,6 +284,7 @@
             <!--Log out-->
             <RelativeLayout
                 android:layout_width="match_parent"
+                android:id="@+id/logouttologin"
                 android:layout_height="wrap_content">
 
                 <ImageView
