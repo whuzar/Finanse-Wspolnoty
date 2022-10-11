@@ -13,39 +13,39 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class VoteOnIdeaAdmin extends AppCompatActivity {
-    private EditText choicedate;
-    private Calendar calendar;
+public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    private TextView dateText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote_on_idea_admin);
+        dateText = findViewById(R.id.cos);
 
-        choicedate = findViewById(R.id.choosedate);
-        calendar = Calendar.getInstance();
-
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        findViewById(R.id.choosedate).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                updateCalendar();
-            }
-            private void updateCalendar() {
-                String Format = "MM/dd/yy";
-                SimpleDateFormat sdf = new SimpleDateFormat(Format, Locale.GERMANY);
-
-                choicedate.setText(sdf.format(calendar.getTime()));
-            }
-        };
-
-        choicedate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(VoteOnIdeaAdmin.this, date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
+            public void onClick(View v) {
+                showDatePickerDialog();
             }
         });
+
+    }
+
+    public void showDatePickerDialog(){
+        Calendar calendar = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        String date = "month/day/year: " + month + "/" + dayOfMonth + "/" + year;
+        dateText.setText(date);
     }
 }
