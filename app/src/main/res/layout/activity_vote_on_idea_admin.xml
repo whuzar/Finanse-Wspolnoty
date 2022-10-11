@@ -56,7 +56,7 @@
                     android:background="@drawable/back_wh"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:orientation="vertical"
@@ -73,19 +73,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white"
+                        android:focusable="false"/>
                 </LinearLayout>
                 <LinearLayout
                     android:background="@drawable/back_wh"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginEnd="5dp"
                     android:orientation="vertical"
                     android:padding="15dp">
                     <TextView
-                        android:id="@+id/cos"
+                        android:layout_marginBottom="30dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Wybierz do kiedy trwa głosowanie"
@@ -97,7 +98,6 @@
                         android:id="@+id/choosedate"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:layout_marginTop="20dp"
                         android:paddingStart="30dp"
                         android:text="Wybierz datę"
                         android:paddingEnd="30dp"
@@ -105,7 +105,38 @@
                         android:textAllCaps="false"
                         android:layout_gravity="center"
                         android:background="@drawable/back_second"/>
+                    <TextView
+                        android:layout_marginTop="30dp"
+                        android:id="@+id/cos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nie wybrano jeszcze daty"
+                        android:textSize="15dp"
+                        android:layout_gravity="center"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
                 </LinearLayout>
+                <LinearLayout
+                    android:background="@drawable/back_wh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Wybierz siłę głosowania"
+                        android:textSize="15dp"
+                        android:layout_gravity="center"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

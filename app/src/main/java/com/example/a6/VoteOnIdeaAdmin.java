@@ -45,7 +45,7 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String date = "month/day/year: " + month + "/" + dayOfMonth + "/" + year;
+        String date = "Wybrana data " + dayOfMonth + "-" + month + "-" + year;
         dateText.setText(date);
     }
 }
