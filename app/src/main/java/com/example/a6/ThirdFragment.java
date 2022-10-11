@@ -1,5 +1,6 @@
 package com.example.a6;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ public class ThirdFragment extends Fragment{
     private static final String KEY_LOGIN = "login";
     private static final String KEY_NUMBER = "number";
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -28,12 +30,19 @@ public class ThirdFragment extends Fragment{
                 container, false);
         RelativeLayout zarzadcaclick = (RelativeLayout) rootView.findViewById(R.id.zarzadcaclick);
         RelativeLayout logouttologin = (RelativeLayout) rootView.findViewById(R.id.logouttologin);
+        Button editprofileb = (Button) rootView.findViewById(R.id.btneditprofile);
         TextView number_telephone = (TextView) rootView.findViewById(R.id.number_inne);
         TextView login_underphoto = (TextView) rootView.findViewById(R.id.login_inne);
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
+
         String login = sharedPreferences.getString(KEY_LOGIN, null);
         String numberphone = sharedPreferences.getString(KEY_NUMBER, null);
+
+        if(login != null || numberphone != null) {
+            login_underphoto.setText(login);
+            number_telephone.setText("+48" + numberphone);
+        }
 
        zarzadcaclick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,10 +62,12 @@ public class ThirdFragment extends Fragment{
            }
        });
 
-       if(login != null || numberphone != null) {
-           login_underphoto.setText(login);
-           number_telephone.setText(numberphone);
-       }
+       editprofileb.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               startActivity(new Intent(getActivity(), editprofile.class));
+           }
+       });
 
         return rootView;
     }
