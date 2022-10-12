@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class Register extends AppCompatActivity {
@@ -72,37 +73,39 @@ public class Register extends AppCompatActivity {
                 final String logtxt = log.getEditText().getText().toString();
                 final String passwordtxt = password.getEditText().getText().toString();
                 final String phontxt = phon.getEditText().getText().toString();
-                JavaMailAPI javaMailAPI = new JavaMailAPI(Register.this, emailtxt, "Kod potwierdzający rejestracje", "twój kod potwierdzający. \n UWAGA WAŻNY PRZEZ 5 MIN");
-                javaMailAPI.execute();
-//                if(!validateEmail() || !validatePhone() || !validateUsername() || !validatePassword()){
-//                    return;
-//                }
-//                else {
-//
-////                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
-////                        @Override
-////                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-////                            if(snapshot.hasChild(logtxt)){
-////                                Toast.makeText(Register.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
-////                            }else{
-//////                                databaseReference.child("admin").child(logtxt).child("email").setValue(emailtxt);
-//////                                databaseReference.child("admin").child(logtxt).child("password").setValue(passwordtxt);
-//////                                databaseReference.child("admin").child(logtxt).child("phone").setValue(phontxt);
-//////                                databaseReference.child("admin").child(logtxt).child("email").setValue(emailtxt);
-//////                                // przy generowaniu loginu ma nie byc admina chyba ze generuje dla kolejnych zarzadcow
-//////
-//////                                Toast.makeText(Register.this, "Utworzono użytkonika", Toast.LENGTH_SHORT).show();
-////                                finish();
-////                            }
-////                        }
+                final String code = generateCode();
+                if(!validateEmail() || !validatePhone() || !validateUsername() || !validatePassword()){
+                    return;
+                }
+                else {
+                    JavaMailAPI javaMailAPI = new JavaMailAPI(Register.this, emailtxt, "Kod potwierdzający rejestracje", "twój kod potwierdzający. \n UWAGA WAŻNY PRZEZ 5 MIN"+code);
+                    javaMailAPI.execute();
+                    startActivity(new Intent(Register.this, AccountVerification.class));
+
+//                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            if(snapshot.hasChild(logtxt)){
+//                                Toast.makeText(Register.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
+//                            }else{
+////                                databaseReference.child("admin").child(logtxt).child("email").setValue(emailtxt);
+////                                databaseReference.child("admin").child(logtxt).child("password").setValue(passwordtxt);
+////                                databaseReference.child("admin").child(logtxt).child("phone").setValue(phontxt);
+////                                databaseReference.child("admin").child(logtxt).child("email").setValue(emailtxt);
+////                                // przy generowaniu loginu ma nie byc admina chyba ze generuje dla kolejnych zarzadcow
 ////
-////                        @Override
-////                        public void onCancelled(@NonNull DatabaseError error) {
-////
-////                        }
-////                    });
+////                                Toast.makeText(Register.this, "Utworzono użytkonika", Toast.LENGTH_SHORT).show();
+//                                finish();
+//                            }
+//                        }
 //
-//                }
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//
+//                        }
+//                    });
+
+                }
             }
         });
         login.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +114,14 @@ public class Register extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private String generateCode(){
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+
+        // this will convert any number sequence into 6 character.
+        return String.format("%06d", number);
     }
 
     private boolean validateEmail() {
