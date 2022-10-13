@@ -13,7 +13,36 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.6">
         <activity
-            android:name=".AccountVerification"
+
+            android:name=".CreateLoginUserAdmin"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".VoteOnIdeaAdmin"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".EditPhotoPicture"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".editprofile"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".adminInne"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
