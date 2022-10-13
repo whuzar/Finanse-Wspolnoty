@@ -86,23 +86,23 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
         }
 
         String logtxt = nameau.substring(0, 3) + surnameau.substring(0, 3) + n;
-        logtxt.toUpperCase(Locale.ROOT);
+        String login = logtxt.toUpperCase();
 
 
         String finalPassword = password;
         databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.hasChild(logtxt)){
+                if(snapshot.hasChild(login)){
                     Toast.makeText(CreateLoginUserAdmin.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
                 }else{
-                    databaseReference.child("admin").child(logtxt).child("name").setValue(nameau);
-                    databaseReference.child("admin").child(logtxt).child("surname").setValue(surnameau);
-                    databaseReference.child("admin").child(logtxt).child("email").setValue(mailau);
-                    databaseReference.child("admin").child(logtxt).child("password").setValue(finalPassword);
-                    databaseReference.child("admin").child(logtxt).child("phone").setValue(phoneau);
-                    databaseReference.child("admin").child(logtxt).child("shares").setValue(sharesau);
-                    databaseReference.child("admin").child(logtxt).child("team").setValue("1");
+                    databaseReference.child("admin").child(login).child("name").setValue(nameau);
+                    databaseReference.child("admin").child(login).child("surname").setValue(surnameau);
+                    databaseReference.child("admin").child(login).child("email").setValue(mailau);
+                    databaseReference.child("admin").child(login).child("password").setValue(finalPassword);
+                    databaseReference.child("admin").child(login).child("phone").setValue(phoneau);
+                    databaseReference.child("admin").child(login).child("shares").setValue(sharesau);
+                    databaseReference.child("admin").child(login).child("team").setValue("1");
                 }
             }
 
