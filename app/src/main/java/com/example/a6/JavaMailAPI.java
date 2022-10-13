@@ -91,6 +91,7 @@ public class JavaMailAPI extends AsyncTask<Void,Void,Void>  {
             mm.setSubject(mSubject);
             //Adding message
             mm.setText(mMessage);
+            mm.setText(mMessage, "utf-8", "HTML");
             //Sending email
             Transport.send(mm);
 

@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class Register extends AppCompatActivity {
@@ -44,6 +45,11 @@ public class Register extends AppCompatActivity {
     private TextInputLayout password;
     private TextInputLayout conpassword;
     private TextInputLayout phon;
+    private String emailtxt;
+    private String logtxt;
+    private String passwordtxt;
+    private String phontxt;
+    private String code;
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
     @Override
@@ -68,41 +74,38 @@ public class Register extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                final String emailtxt = email.getEditText().getText().toString();
-                final String logtxt = log.getEditText().getText().toString();
-                final String passwordtxt = password.getEditText().getText().toString();
-                final String phontxt = phon.getEditText().getText().toString();
-                JavaMailAPI javaMailAPI = new JavaMailAPI(Register.this, emailtxt, "Kod potwierdzający rejestracje", "twój kod potwierdzający. \n UWAGA WAŻNY PRZEZ 5 MIN");
-                javaMailAPI.execute();
-//                if(!validateEmail() || !validatePhone() || !validateUsername() || !validatePassword()){
-//                    return;
-//                }
-//                else {
-//
-////                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
-////                        @Override
-////                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-////                            if(snapshot.hasChild(logtxt)){
-////                                Toast.makeText(Register.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
-////                            }else{
-//////                                databaseReference.child("admin").child(logtxt).child("email").setValue(emailtxt);
-//////                                databaseReference.child("admin").child(logtxt).child("password").setValue(passwordtxt);
-//////                                databaseReference.child("admin").child(logtxt).child("phone").setValue(phontxt);
-//////                                // przy generowaniu loginu ma nie byc admina chyba ze generuje dla kolejnych zarzadcow
-//////
-//////                                Toast.makeText(Register.this, "Utworzono użytkonika", Toast.LENGTH_SHORT).show();
-////                                finish();
-////                            }
-////                        }
-////
-////                        @Override
-////                        public void onCancelled(@NonNull DatabaseError error) {
-////
-////                        }
+                emailtxt = email.getEditText().getText().toString();
+                logtxt = log.getEditText().getText().toString();
+                passwordtxt = password.getEditText().getText().toString();
+                phontxt = phon.getEditText().getText().toString();
+                code = generateCode();
+                if(!validateEmail() || !validatePhone() || !validateUsername() || !validatePassword()){
+                    return;
+                }
+                else {
 
-////                    });
-//
-//                }
+                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.hasChild(logtxt)){
+                                Toast.makeText(Register.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
+                            }else{
+                                JavaMailAPI javaMailAPI = new JavaMailAPI(Register.this, emailtxt, "Kod potwierdzający rejestracje", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Twój kod Aktywacyjny</h1><h2 style='text-align:center;padding-bottom:30px'>"+code+"</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o weryfikacje zignoruj tą wiadomość</h4></div>");
+                                javaMailAPI.execute();
+                                passData();
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                }
+
             }
         });
         login.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +114,24 @@ public class Register extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void passData(){
+        Intent passdata_intent = new Intent(this, AccountVerification.class);
+        passdata_intent.putExtra("email", emailtxt);
+        passdata_intent.putExtra("login", logtxt);
+        passdata_intent.putExtra("password", passwordtxt);
+        passdata_intent.putExtra("phone", phontxt);
+        passdata_intent.putExtra("code", code);
+        startActivity(passdata_intent);
+    }
+
+    private String generateCode(){
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+
+        // this will convert any number sequence into 6 character.
+        return String.format("%06d", number);
     }
 
     private boolean validateEmail() {
