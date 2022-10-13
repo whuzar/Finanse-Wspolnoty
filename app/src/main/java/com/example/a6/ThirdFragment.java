@@ -28,8 +28,10 @@ public class ThirdFragment extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_third,
                 container, false);
+
         RelativeLayout zarzadcaclick = (RelativeLayout) rootView.findViewById(R.id.zarzadcaclick);
         RelativeLayout logouttologin = (RelativeLayout) rootView.findViewById(R.id.logouttologin);
+        RelativeLayout changepwd = (RelativeLayout) rootView.findViewById(R.id.changepasswd);
         Button editprofileb = (Button) rootView.findViewById(R.id.btneditprofile);
         TextView number_telephone = (TextView) rootView.findViewById(R.id.number_inne);
         TextView login_underphoto = (TextView) rootView.findViewById(R.id.login_inne);
@@ -68,6 +70,13 @@ public class ThirdFragment extends Fragment{
                startActivity(new Intent(getActivity(), editprofile.class));
            }
        });
+
+        changepwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), ChangePassword.class));
+            }
+        });
 
         return rootView;
     }
