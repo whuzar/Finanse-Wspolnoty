@@ -95,7 +95,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:background="@color/colorTransparent"
-        android:text="Login" />
+        android:text="Zaloguj" />
 
     <LinearLayout
         android:layout_width="wrap_content"
