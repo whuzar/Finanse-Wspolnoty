@@ -64,28 +64,13 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
 
     public void CreateAdminAccept(View v){
         mDialog.setContentView(R.layout.popupcreateua2);
-        Button btnadmin = mDialog.findViewById(R.id.createadminyes);
-        btnadmin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(CreateLoginUserAdmin.this, "Zapisano admina", Toast.LENGTH_SHORT).show();
-                mDialog.dismiss();
-            }
-        });
-        mDialog.show();
+        Toast.makeText(CreateLoginUserAdmin.this, "Zapisano admina", Toast.LENGTH_SHORT).show();
+        mDialog.dismiss();
     }
 
     public void CreateUserAccept(View v){
         mDialog.setContentView(R.layout.popupcreateua);
-        Button btnuser = mDialog.findViewById(R.id.createuseryes);
-        btnuser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(CreateLoginUserAdmin.this, "Zapisano usera", Toast.LENGTH_SHORT).show();
-                mDialog.dismiss();
-            }
-        });
-        mDialog.show();
+        Toast.makeText(CreateLoginUserAdmin.this, "Zapisano usera", Toast.LENGTH_SHORT).show();
+        mDialog.dismiss();
     }
-
 }
