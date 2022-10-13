@@ -239,6 +239,8 @@
 
             <!--About Us-->
             <RelativeLayout
+                android:id="@+id/aboutyou"
+                android:clickable="true"
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -313,6 +315,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true" />
                 </RelativeLayout>
+
             </LinearLayout>
 
         <LinearLayout
