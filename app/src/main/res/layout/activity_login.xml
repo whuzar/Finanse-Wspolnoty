@@ -10,24 +10,17 @@
     android:orientation="vertical"
     tools:context=".Login">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <!--    <TextView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="-100dp"-->
-    <!--        android:fontFamily="sans-serif-condensed"-->
-    <!--        android:gravity="center"-->
-    <!--        android:text="LOGOWANIE"-->
-    <!--        android:textColor="@color/white"-->
-    <!--        android:textSize="40sp"-->
-    <!--        android:textStyle="bold" />-->
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="312dp"
-        android:layout_height="258dp"
-        android:layout_marginTop="-500px"
-        app:srcCompat="@drawable/organizator_transparent" />
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/imageView2"
+            android:layout_width="312dp"
+            android:layout_height="258dp"
+            app:srcCompat="@drawable/organizator_transparent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/log"
@@ -56,7 +49,6 @@
 
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
-
     <com.google.android.material.textfield.TextInputLayout
         app:passwordToggleEnabled="true"
         android:id="@+id/password"
@@ -95,14 +87,15 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:background="@color/colorTransparent"
-        android:text="Zaloguj" />
+        android:text="Zaloguj się" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:layout_marginTop="40dp"
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
@@ -110,15 +103,14 @@
             android:text="Chcesz utworzyć system dla swojej wspólnoty?"
             android:textColor="@color/white" />
 
+        <TextView
+            android:id="@+id/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Zarejestruj"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="Zarejestruj"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
-
 </LinearLayout>
