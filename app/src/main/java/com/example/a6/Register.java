@@ -88,7 +88,6 @@ public class Register extends AppCompatActivity {
 //////                                databaseReference.child("admin").child(logtxt).child("email").setValue(emailtxt);
 //////                                databaseReference.child("admin").child(logtxt).child("password").setValue(passwordtxt);
 //////                                databaseReference.child("admin").child(logtxt).child("phone").setValue(phontxt);
-//////                                databaseReference.child("admin").child(logtxt).child("email").setValue(emailtxt);
 //////                                // przy generowaniu loginu ma nie byc admina chyba ze generuje dla kolejnych zarzadcow
 //////
 //////                                Toast.makeText(Register.this, "Utworzono użytkonika", Toast.LENGTH_SHORT).show();
@@ -100,6 +99,7 @@ public class Register extends AppCompatActivity {
 ////                        public void onCancelled(@NonNull DatabaseError error) {
 ////
 ////                        }
+
 ////                    });
 //
 //                }
