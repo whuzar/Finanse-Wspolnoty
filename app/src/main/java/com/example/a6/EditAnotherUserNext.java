@@ -33,7 +33,7 @@ public class EditAnotherUserNext extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
 
-    private EditText eaphone, eaemail, eashares;
+    private EditText eaphone, eaemail, eashares, eanamesur;
     private Button eaconfirm;
     private TextView insertl;
 
@@ -45,6 +45,7 @@ public class EditAnotherUserNext extends AppCompatActivity {
         eaphone = findViewById(R.id.editphoneuser);
         eaemail = findViewById(R.id.editemailuser);
         eashares = findViewById(R.id.editsharesuser);
+        eanamesur = findViewById(R.id.editnamesurn);
 
         eaconfirm = findViewById(R.id.eabntchangeacceptinfo);
 
@@ -54,6 +55,22 @@ public class EditAnotherUserNext extends AppCompatActivity {
         String login = sharedPreferences.getString(KEY_LOGIN2, null);
 
         insertl.setText(login);
+
+        DatabaseReference uidRef = databaseReference.child("user").child(login);
+        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
+                        String surname = task.getResult().child("surname").getValue(String.class);
+                        String name = task.getResult().child("name").getValue(String.class);
+
+                        eanamesur.setText(name + " "+ surname);
+
+                    }
+                }
+            }
+        });
 
         eaconfirm.setOnClickListener(new View.OnClickListener() {
             @Override
