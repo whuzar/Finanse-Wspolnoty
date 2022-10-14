@@ -8,8 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 public class adminInne extends AppCompatActivity {
-    private RelativeLayout voteIdea;
-    private RelativeLayout createlogin;
+    private RelativeLayout voteIdea, createlogin, editanuser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,6 +16,7 @@ public class adminInne extends AppCompatActivity {
 
         voteIdea = findViewById(R.id.voteidea);
         createlogin = findViewById(R.id.createlogingo);
+        editanuser = findViewById(R.id.editanotheruser);
 
         voteIdea.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,6 +29,13 @@ public class adminInne extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(adminInne.this, CreateLoginUserAdmin.class));
+            }
+        });
+
+        editanuser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(adminInne.this, EditAnotherUser.class));
             }
         });
     }
