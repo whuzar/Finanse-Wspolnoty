@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAllCaps="true"
-                    android:text="Informacje o tobie"
+                    android:text="Edytuj informacje"
                     android:textSize="23dp"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
@@ -59,17 +59,16 @@
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/aboutyounameandsurname"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/editnamesur"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="true"
-                    android:text="dane"
-                    android:textSize="12dp"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textAlignment="center"
+                    android:focusable="false"
+                    android:enabled="false"
+                    android:cursorVisible="false"/>
 
                 <TextView
                     android:layout_marginTop="20dp"
@@ -82,17 +81,14 @@
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/aboutyouemail"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/editemail"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="true"
-                    android:text="dane"
-                    android:textSize="12dp"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/white"
+                    android:textAlignment="center" />
+
                 <TextView
                     android:layout_marginTop="20dp"
                     android:layout_gravity="center"
@@ -104,18 +100,13 @@
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/aboutyouphone"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/editphone"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="true"
-                    android:text="dane"
-                    android:textSize="12dp"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="10dp"/>
+                    android:inputType="phone"
+                    android:textColor="@color/white"
+                    android:textAlignment="center" />
             </LinearLayout>
             <LinearLayout
                 android:background="@drawable/back_wh"
@@ -138,18 +129,14 @@
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/aboutyoushares"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/editshares"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="true"
-                    android:text="dane"
-                    android:textSize="12dp"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="10dp"/>
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textAlignment="center" />
+
             </LinearLayout>
             <LinearLayout
                 android:background="@drawable/back_wh"
@@ -162,11 +149,11 @@
                 android:padding="15dp">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/bntchangeinformations"
+                    android:id="@+id/bntchangeacceptinfo"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:paddingStart="30dp"
-                    android:text="Zmień dane"
+                    android:text="Potwierdź"
                     android:paddingEnd="30dp"
                     android:textColor="@color/pprimary"
                     android:textAllCaps="false"

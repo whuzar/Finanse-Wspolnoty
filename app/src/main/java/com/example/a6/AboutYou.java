@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +33,7 @@ public class AboutYou extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
 
     TextView anamesur, aemail, aphone, ashares;
+    Button btnchange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,8 @@ public class AboutYou extends AppCompatActivity {
         aemail = findViewById(R.id.aboutyouemail);
         aphone = findViewById(R.id.aboutyouphone);
         ashares = findViewById(R.id.aboutyoushares);
+
+        btnchange = findViewById(R.id.bntchangeinformations);
 
         sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String login = sharedPreferences.getString(KEY_LOGIN, null);
@@ -62,9 +68,14 @@ public class AboutYou extends AppCompatActivity {
                         ashares.setText(shares);
 
                     }
-                } else {
-                    System.out.println("nie dziala");
                 }
+            }
+        });
+
+        btnchange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AboutYou.this, EditAboutYou.class));
             }
         });
 
