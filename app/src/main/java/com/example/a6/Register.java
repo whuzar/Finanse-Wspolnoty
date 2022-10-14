@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Locale;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -38,18 +39,25 @@ public class Register extends AppCompatActivity {
     private static final Pattern PHONE_PATTERN =
             Pattern.compile("^[0-9]{9}$");
 
+    private static final Pattern NAME_PATTERN = Pattern.compile("^[A-Za-zĘÓĄŚŁŻŹĆŃęóąśłżźć]+");
 
 
     private TextInputLayout email;
-    private TextInputLayout log;
     private TextInputLayout password;
     private TextInputLayout conpassword;
     private TextInputLayout phon;
+    private TextInputLayout nameInput;
+    private TextInputLayout surnameInput;
+    private TextInputLayout sharesInput;
     private String emailtxt;
     private String logtxt;
     private String passwordtxt;
     private String phontxt;
     private String code;
+    private String name;
+    private String surname;
+    private String shares;
+
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
     @Override
@@ -59,49 +67,38 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         email = findViewById(R.id.email);
-        log = findViewById(R.id.logi);
         password = findViewById(R.id.password);
         conpassword = findViewById(R.id.conpassword);
         phon = findViewById(R.id.phone);
+        nameInput = findViewById(R.id.name);
+        surnameInput = findViewById(R.id.surname);
+        sharesInput = findViewById(R.id.shares);
 
         final Button registerBtn = findViewById(R.id.registerBtn);
         final TextView login = findViewById(R.id.login);
-
-
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
-                emailtxt = email.getEditText().getText().toString();
-                logtxt = log.getEditText().getText().toString();
-                passwordtxt = password.getEditText().getText().toString();
-                phontxt = phon.getEditText().getText().toString();
+                emailtxt = email.getEditText().getText().toString().trim();
+                passwordtxt = password.getEditText().getText().toString().trim();
+                phontxt = phon.getEditText().getText().toString().trim();
+                name = nameInput.getEditText().getText().toString().trim();
+                name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+                surname = surnameInput.getEditText().getText().toString().trim();
+                surname = surname.substring(0, 1).toUpperCase() + surname.substring(1).toLowerCase();
+                shares = sharesInput.getEditText().getText().toString().trim();
                 code = generateCode();
-                if(!validateEmail() || !validatePhone() || !validateUsername() || !validatePassword()){
+               generateUsername();
+
+                if(!validateEmail() || !validatePhone() || !validatePassword() || !validateName(name, nameInput) || !validateName(surname, surnameInput) || !validateShares()){
                     return;
                 }
                 else {
 
-                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.hasChild(logtxt)){
-                                Toast.makeText(Register.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
-                            }else{
-                                JavaMailAPI javaMailAPI = new JavaMailAPI(Register.this, emailtxt, "Kod potwierdzający rejestracje", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Twój kod Aktywacyjny</h1><h2 style='text-align:center;padding-bottom:30px'>"+code+"</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o weryfikacje zignoruj tą wiadomość</h4></div>");
-                                javaMailAPI.execute();
-                                passData();
-                                finish();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
+                    addUser();
 
 
                 }
@@ -123,6 +120,9 @@ public class Register extends AppCompatActivity {
         passdata_intent.putExtra("password", passwordtxt);
         passdata_intent.putExtra("phone", phontxt);
         passdata_intent.putExtra("code", code);
+        passdata_intent.putExtra("name", name);
+        passdata_intent.putExtra("surname", surname);
+        passdata_intent.putExtra("shares", shares);
         startActivity(passdata_intent);
     }
 
@@ -172,21 +172,7 @@ public class Register extends AppCompatActivity {
             return true;
         }
     }
-    private boolean validateUsername() {
-        String usernameInput = log.getEditText().getText().toString().trim();
-        if (usernameInput.isEmpty()) {
-            log.setError("Pole login nie może być puste");
-//            Toast.makeText(Register.this, "Pole login nie może być puste", Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (usernameInput.length() > 20) {
-            log.setError("Login jest za długi");
-//            Toast.makeText(Register.this, "Login jest za długi", Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
-            log.setError(null);
-            return true;
-        }
-    }
+
 
     private boolean validatePhone() {
         String phoneInput = phon.getEditText().getText().toString().trim();
@@ -203,6 +189,64 @@ public class Register extends AppCompatActivity {
             phon.setError(null);
             return true;
         }
+    }
+
+    private boolean validateName(String string, TextInputLayout input) {
+        if (string.isEmpty()) {
+            input.setError("Pole imie nie może być puste");
+//            Toast.makeText(Register.this, "Pole login nie może być puste", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (string.length() > 30) {
+            input.setError("imie jest za długi");
+//            Toast.makeText(Register.this, "Login jest za długi", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if(!NAME_PATTERN.matcher(string).matches()) {
+            input.setError("Proszę wpisać poprawną wartość");
+            return false;
+        }else{
+            input.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateShares() {
+        if (shares.isEmpty()) {
+            phon.setError("Pole udziały nie może być puste");
+//            Toast.makeText(Register.this, "Pole numer telefonu nie może być puste", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+//            log.setError(null);
+            phon.setError(null);
+            return true;
+        }
+    }
+    private void generateUsername(){
+        Random rand = new Random();
+        int n = rand.nextInt(1000);
+        logtxt = name.substring(0, 3) + surname.substring(0, 3) + n;
+        logtxt = logtxt.toUpperCase();
+    }
+    private void addUser(){
+        databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.hasChild(logtxt)){
+//                    Toast.makeText(Register.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
+                    generateUsername();
+                    addUser();
+                }else{
+                    JavaMailAPI javaMailAPI = new JavaMailAPI(Register.this, emailtxt, "Kod potwierdzający rejestracje", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Twój kod Aktywacyjny</h1><h2 style='text-align:center;padding-bottom:30px'>"+code+"</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o weryfikacje zignoruj tą wiadomość</h4></div>");
+                    javaMailAPI.execute();
+                    passData();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 
