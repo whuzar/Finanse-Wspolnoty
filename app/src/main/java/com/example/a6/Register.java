@@ -211,12 +211,12 @@ public class Register extends AppCompatActivity {
 
     private boolean validateShares() {
         if (shares.isEmpty()) {
-            phon.setError("Pole udziały nie może być puste");
+            sharesInput.setError("Pole udziały nie może być puste");
 //            Toast.makeText(Register.this, "Pole numer telefonu nie może być puste", Toast.LENGTH_SHORT).show();
             return false;
         } else {
 //            log.setError(null);
-            phon.setError(null);
+            sharesInput.setError(null);
             return true;
         }
     }

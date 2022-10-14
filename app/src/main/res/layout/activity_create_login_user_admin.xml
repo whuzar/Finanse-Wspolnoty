@@ -65,13 +65,31 @@
                         android:layout_gravity="center"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
-                    <EditText
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/nameuseroradmin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:layout_marginBottom="48dp"
+                        android:background="@color/colorTransparent"
+                        android:ems="10"
                         android:textColor="@color/white"
-                        android:textAlignment="center"/>
+                        app:errorEnabled="true"
+                        app:layout_constraintBottom_toTopOf="@+id/textView4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorTransparent"
+                            android:inputType="text"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:ellipsize="start"
+                            android:gravity="center_horizontal">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
                     <TextView
                         android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
@@ -81,13 +99,31 @@
                         android:layout_gravity="center"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
-                    <EditText
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/usernameuseroradmin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:layout_marginBottom="48dp"
+                        android:background="@color/colorTransparent"
+                        android:ems="10"
                         android:textColor="@color/white"
-                        android:textAlignment="center"/>
+                        app:errorEnabled="true"
+                        app:layout_constraintBottom_toTopOf="@+id/textView4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorTransparent"
+                            android:inputType="text"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:ellipsize="start"
+                            android:gravity="center_horizontal">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
                     <TextView
                         android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
@@ -97,13 +133,31 @@
                         android:layout_gravity="center"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"/>
-                    <EditText
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/emailuseroradmin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
+                        android:layout_marginBottom="48dp"
+                        android:background="@color/colorTransparent"
+                        android:ems="10"
                         android:textColor="@color/white"
-                        android:textAlignment="center"/>
+                        app:errorEnabled="true"
+                        app:layout_constraintBottom_toTopOf="@+id/textView4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorTransparent"
+                            android:inputType="textEmailAddress"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:ellipsize="start"
+                            android:gravity="center_horizontal">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
                     <TextView
                         android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
@@ -113,13 +167,32 @@
                         android:layout_gravity="center"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"/>
-                    <EditText
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/phoneuseroradmin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="phone"
+                        android:layout_marginBottom="48dp"
+                        android:background="@color/colorTransparent"
+                        android:ems="10"
                         android:textColor="@color/white"
-                        android:textAlignment="center"/>
+                        app:errorEnabled="true"
+                        app:layout_constraintBottom_toTopOf="@+id/textView4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorTransparent"
+                            android:inputType="phone"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:ellipsize="start"
+                            android:gravity="center_horizontal"
+                            android:maxLength="9">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -141,13 +214,31 @@
                         android:layout_gravity="center"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"/>
-                    <EditText
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/sharesuseroradmin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
+                        android:layout_marginBottom="48dp"
+                        android:background="@color/colorTransparent"
+                        android:ems="10"
                         android:textColor="@color/white"
-                        android:textAlignment="center"/>
+                        app:errorEnabled="true"
+                        app:layout_constraintBottom_toTopOf="@+id/textView4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorTransparent"
+                            android:inputType="number"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:ellipsize="start"
+                            android:gravity="center_horizontal">
+
+                        </com.google.android.material.textfield.TextInputEditText>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
                 <LinearLayout
