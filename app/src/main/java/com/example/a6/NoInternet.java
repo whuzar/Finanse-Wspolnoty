@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class NoInternet extends Dialog {
 
@@ -22,7 +23,7 @@ public class NoInternet extends Dialog {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_no_internet);
 
-        final AppCompatButton retryBtn = findViewById(R.id.retryBtn);
+        final Button retryBtn = findViewById(R.id.retryBtn);
 
         retryBtn.setOnClickListener(new View.OnClickListener() {
             @Override

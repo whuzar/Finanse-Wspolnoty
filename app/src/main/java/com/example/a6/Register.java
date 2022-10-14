@@ -102,6 +102,7 @@ public class Register extends AppCompatActivity {
 
 
                 }
+
             }
         });
         login.setOnClickListener(new View.OnClickListener() {

@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -28,6 +31,10 @@ import org.w3c.dom.Text;
 
 public class Login extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
+
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_LOGIN = "login";
+    private static final String KEY_NUMBER = "number";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -41,6 +48,15 @@ public class Login extends AppCompatActivity {
         final TextInputLayout password = findViewById(R.id.password);
         final Button loginbtn = findViewById(R.id.loginBtn);
         final TextView registerNowBtn = findViewById(R.id.register);
+
+        final SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+
+//Jeżeli chcemy aby po wejsciu raz loginem zapamietalo
+        String loginremember = sharedPreferences.getString(KEY_LOGIN, null);
+
+        if (loginremember != null){
+            startActivity(new Intent(Login.this, MainActivity.class));
+        }
 
 
         loginbtn.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +83,12 @@ public class Login extends AppCompatActivity {
                             if(snapshot.hasChild(logiText)){
                                 final String getPassword = snapshot.child(logiText).child("password").getValue(String.class);
                                 if(getPassword.equals(passwordTxt)){
+                                    final String getNumber = snapshot.child(logiText).child("phone").getValue(String.class);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString(KEY_LOGIN, logiText);
+                                    editor.putString(KEY_NUMBER, getNumber);
+                                    editor.apply();
+
                                     Toast.makeText(Login.this, "Witamy ponownie", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(Login.this, MainActivity.class));
                                     finish();
@@ -95,6 +117,6 @@ public class Login extends AppCompatActivity {
                 startActivity(new Intent(Login.this, Register.class));
             }
         });
-    }
 
+    }
 }

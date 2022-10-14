@@ -13,4 +13,22 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+<!--    Nigt Mode-->
+    <style name="nigtMode" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/mode_night</item>
+        <item name="colorSwitchThumbNormal">#FFFFFF</item>
+        <item name="android:colorForeground">#99FFFFFF</item>
+    </style>
+<!--    Notification-->
+    <style name="notifMode" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/notif</item>
+        <item name="colorSwitchThumbNormal">#FFFFFF</item>
+        <item name="android:colorForeground">#99FFFFFF</item>
+    </style>
+    <!--    privAccount-->
+    <style name="privateMode" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/account</item>
+        <item name="colorSwitchThumbNormal">#FFFFFF</item>
+        <item name="android:colorForeground">#99FFFFFF</item>
+    </style>
 </resources>

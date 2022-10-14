@@ -17,4 +17,13 @@
     <color name="colorGradientStart">#7400B8</color>
     <color name="colorGradientCenter">#48BFE3</color>
     <color name="colorGradientEnd">#80FFDB</color>
+
+    <color name="pprimary">#1B023B</color>
+    <color name="psecondary">#FF03DAC5</color>
+
+    <color name="mode_night">#6124B1</color>
+    <color name="notif">#13B2C3</color>
+    <color name="account">#E6A326</color>
+    <color name="sec">#D95F69</color>
+
 </resources>

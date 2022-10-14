@@ -9,36 +9,47 @@
     tools:context=".ThirdFragment">
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
-
                 android:background="@drawable/back_wh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
                 android:padding="15dp">
 
                 <TextView
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Trwają prace budowlane"
+                    android:textAllCaps="true"
+                    android:text="Kontakt do zarządców"
+                    android:textSize="23dp"
                     android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:textSize="18dp"
-                    android:padding="10dp"/>
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:background="@drawable/back_wh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                android:padding="15dp">
 
+                <view class="androidx.recyclerview.widget.RecyclerView"
+                    android:id="@+id/recycle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </view>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
 </LinearLayout>
