@@ -33,6 +33,7 @@ public class ThirdFragment extends Fragment{
         RelativeLayout logouttologin = (RelativeLayout) rootView.findViewById(R.id.logouttologin);
         RelativeLayout changepwd = (RelativeLayout) rootView.findViewById(R.id.changepasswd);
         RelativeLayout aboutyou = (RelativeLayout) rootView.findViewById(R.id.aboutyou);
+        RelativeLayout contacta = (RelativeLayout) rootView.findViewById(R.id.contactwithadmin);
 
         Button editprofileb = (Button) rootView.findViewById(R.id.btneditprofile);
 
@@ -85,6 +86,13 @@ public class ThirdFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), AboutYou.class));
+            }
+        });
+
+        contacta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), ContactToAdmin.class));
             }
         });
 
