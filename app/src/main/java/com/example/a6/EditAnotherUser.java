@@ -18,13 +18,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class EditAnotherUser extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
-    private static final String KEY_TEAM = "team";
-    private static final String KEY_TEAM2 = "team2";
+    private static final String KEY_LOGIN2 = "login2";
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
 
@@ -48,46 +50,28 @@ public class EditAnotherUser extends AppCompatActivity {
 
                 String downloaduserinfo = getuser.getText().toString();
 
-                DatabaseReference uidRef = databaseReference.child("admin").child(downloaduserinfo);
+                DatabaseReference uidRef = databaseReference;
                 uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (task.isSuccessful()) {
                             for (DataSnapshot ds : task.getResult().getChildren()) {
-                                String team = task.getResult().child("team").getValue(String.class);
-
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString(KEY_TEAM, team);
-                                editor.apply();
+                                String team1 = task.getResult().child("admin").child(login).child("team").getValue(String.class);
+                                String team2 = task.getResult().child("user").child(downloaduserinfo).child("team").getValue(String.class);
+                                if(Objects.equals(team1, team2)){
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString(KEY_LOGIN2, downloaduserinfo);
+                                    editor.apply();
+                                    startActivity(new Intent(EditAnotherUser.this, EditAnotherUserNext.class));
+                                    getuser.setText("");
+                                }else{
+                                    Toast.makeText(EditAnotherUser.this, "Taki użytkownik w twojej wspólocie nie istnieje", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
                     }
                 });
-                String teamwspo = sharedPreferences.getString(KEY_TEAM, null);
-                DatabaseReference uidRef2 = databaseReference.child("admin").child(login);
-                uidRef2.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (DataSnapshot ds : task.getResult().getChildren()) {
-                                String team2 = task.getResult().child("team").getValue(String.class);
-
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString(KEY_TEAM2, team2);
-                                editor.apply();
-                            }
-                        }
-                    }
-                });
-                String teamwspo2 = sharedPreferences.getString(KEY_TEAM2, null);
-
-                if(teamwspo == teamwspo2){
-                    startActivity(new Intent(EditAnotherUser.this, EditAnotherUserNext.class));
-                }else{
-                    Toast.makeText(EditAnotherUser.this, "Taki użytkownik w twojej wspólocie nie istnieje", Toast.LENGTH_SHORT).show();
-                }
             }
         });
-
     }
 }

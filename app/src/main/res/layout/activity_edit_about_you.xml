@@ -32,7 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAllCaps="true"
-                    android:text="Edytuj informacje"
+                    android:text="Edytuj swoje dane"
                     android:textSize="23dp"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />

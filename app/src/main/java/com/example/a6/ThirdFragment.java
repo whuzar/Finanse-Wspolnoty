@@ -33,11 +33,13 @@ public class ThirdFragment extends Fragment{
         RelativeLayout logouttologin = (RelativeLayout) rootView.findViewById(R.id.logouttologin);
         RelativeLayout changepwd = (RelativeLayout) rootView.findViewById(R.id.changepasswd);
         RelativeLayout aboutyou = (RelativeLayout) rootView.findViewById(R.id.aboutyou);
+
         Button editprofileb = (Button) rootView.findViewById(R.id.btneditprofile);
+
         TextView number_telephone = (TextView) rootView.findViewById(R.id.number_inne);
         TextView login_underphoto = (TextView) rootView.findViewById(R.id.login_inne);
-        sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
+        sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         String login = sharedPreferences.getString(KEY_LOGIN, null);
         String numberphone = sharedPreferences.getString(KEY_NUMBER, null);

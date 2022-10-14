@@ -31,8 +31,8 @@ public class EditAboutYou extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
 
-    EditText changephone, changeemail, changeshares, changenamesur;
-    Button confirmchanges;
+    private EditText changephone, changeemail, changeshares, changenamesur;
+    private Button confirmchanges;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
