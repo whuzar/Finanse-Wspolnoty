@@ -32,9 +32,8 @@ public class ThirdFragment extends Fragment{
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
     private static final String KEY_NUMBER = "number";
-    private static final String KEY_PHOTO = "photo";
 
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -112,7 +111,7 @@ public class ThirdFragment extends Fragment{
        editprofileb.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               startActivity(new Intent(getActivity(), editprofile.class));
+               startActivity(new Intent(getActivity(), EditPhotoPicture.class));
            }
        });
 

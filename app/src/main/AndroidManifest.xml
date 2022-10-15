@@ -77,13 +77,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".editprofile"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".AccountVerification"
             android:exported="false">
             <meta-data

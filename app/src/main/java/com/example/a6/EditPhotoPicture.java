@@ -1,12 +1,15 @@
 package com.example.a6;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +21,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -31,8 +37,12 @@ import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.Random;
 
 public class EditPhotoPicture extends AppCompatActivity {
@@ -40,6 +50,8 @@ public class EditPhotoPicture extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
+
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     private Uri filepath;
     private ImageView img;
@@ -56,6 +68,33 @@ public class EditPhotoPicture extends AppCompatActivity {
         save = findViewById(R.id.btnsave);
 
         sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
+        String login = sharedPreferences.getString(KEY_LOGIN, null);
+
+        DatabaseReference uidRef = databaseReference.child("admin").child(login);
+        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
+                        String picprof = task.getResult().child("pimage").getValue(String.class);
+
+                        Transformation transformation = new RoundedTransformationBuilder()
+                                .borderColor(Color.WHITE)
+                                .borderWidthDp(1)
+                                .cornerRadiusDp(100)
+                                .oval(true)
+                                .build();
+
+                        Picasso.get()
+                                .load(picprof)
+                                .fit()
+                                .transform(transformation)
+                                .into(img);
+                    }
+                }
+            }
+        });
 
         browse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +174,7 @@ public class EditPhotoPicture extends AppCompatActivity {
                                 root.child(login).child("pimage").setValue(uri.toString());
 
                                 img.setImageResource(R.drawable.profilepic);
-                                Toast.makeText(EditPhotoPicture.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EditPhotoPicture.this, "Zmieniono", Toast.LENGTH_SHORT).show();
 
                             }
                         });

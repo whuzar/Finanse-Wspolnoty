@@ -22,8 +22,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/profilepic"
-                />
+                android:src="@drawable/profilepic" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -50,7 +49,7 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:paddingStart="30dp"
-                android:text="Edytuj Profil"
+                android:text="Edytuj Zdjęcie"
                 android:paddingEnd="30dp"
                 android:textColor="@color/pprimary"
                 android:textAllCaps="false"
@@ -66,38 +65,6 @@
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
                 android:padding="15dp">
-
-                <!--Dark mode-->
-<!--                <RelativeLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/modenight"-->
-<!--                        android:layout_width="40dp"-->
-<!--                        android:layout_height="40dp"-->
-<!--                        android:background="@drawable/round_bl"-->
-<!--                        android:padding="12dp"-->
-<!--                        android:src="@drawable/moon" />-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_centerVertical="true"-->
-<!--                        android:layout_marginStart="20dp"-->
-<!--                        android:layout_toEndOf="@id/modenight"-->
-<!--                        android:text="Tryb nocny"-->
-<!--                        android:textColor="#FFFFFF"-->
-<!--                        android:textStyle="bold" />-->
-
-<!--                    <androidx.appcompat.widget.SwitchCompat-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_alignParentEnd="true"-->
-<!--                        android:layout_centerVertical="true"-->
-<!--                        android:switchMinWidth="50dp"-->
-<!--                        android:theme="@style/nigtMode"/>-->
-<!--                </RelativeLayout>-->
 
 <!--                Notifications-->
                 <RelativeLayout
@@ -127,6 +94,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        android:checked="true"
                         android:switchMinWidth="50dp"
                         android:theme="@style/notifMode"/>
                 </RelativeLayout>
@@ -207,39 +175,6 @@
                     android:layout_centerVertical="true" />
             </RelativeLayout>
 
-            <!--Text Size-->
-            <RelativeLayout
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/textsize"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/round_bl"
-                    android:padding="12dp"
-                    android:src="@drawable/letter_a" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_toEndOf="@id/textsize"
-                    android:text="Rozmiar liter"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_right_go"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
-            </RelativeLayout>
-
-            <!--About Us-->
             <RelativeLayout
                 android:id="@+id/aboutyou"
                 android:clickable="true"

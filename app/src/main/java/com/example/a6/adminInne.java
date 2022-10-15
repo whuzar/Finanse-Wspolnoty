@@ -1,14 +1,26 @@
 package com.example.a6;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 public class adminInne extends AppCompatActivity {
 
@@ -17,8 +29,11 @@ public class adminInne extends AppCompatActivity {
     private static final String KEY_LOGIN = "login";
     private static final String KEY_NUMBER = "number";
 
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
     private RelativeLayout voteIdea, createlogin, editanuser;
     private TextView logina, phonea;
+    private ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +47,8 @@ public class adminInne extends AppCompatActivity {
         logina = findViewById(R.id.setloginadmin);
         phonea = findViewById(R.id.setphoneadmin);
 
+        img = findViewById(R.id.photopic);
+
         sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         String login = sharedPreferences.getString(KEY_LOGIN, null);
@@ -41,6 +58,31 @@ public class adminInne extends AppCompatActivity {
             logina.setText(login);
             phonea.setText("+48" + numberphone);
         }
+
+        DatabaseReference uidRef = databaseReference.child("admin").child(login);
+        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
+                        String picprof = task.getResult().child("pimage").getValue(String.class);
+
+                        Transformation transformation = new RoundedTransformationBuilder()
+                                .borderColor(Color.WHITE)
+                                .borderWidthDp(1)
+                                .cornerRadiusDp(100)
+                                .oval(true)
+                                .build();
+
+                        Picasso.get()
+                                .load(picprof)
+                                .fit()
+                                .transform(transformation)
+                                .into(img);
+                    }
+                }
+            }
+        });
 
         voteIdea.setOnClickListener(new View.OnClickListener() {
             @Override
