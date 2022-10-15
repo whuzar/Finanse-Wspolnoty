@@ -63,7 +63,6 @@ public class AboutYou extends AppCompatActivity {
                 startActivity(new Intent(AboutYou.this, EditAboutYou.class));
             }
         });
-
     }
     private void showay() {
         String login = sharedPreferences.getString(KEY_LOGIN, null);
