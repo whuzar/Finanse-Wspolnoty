@@ -34,6 +34,7 @@ public class Login extends AppCompatActivity {
 
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
+    private static final String KEY_LOGED = "wloged";
     private static final String KEY_NUMBER = "number";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,38 @@ public class Login extends AppCompatActivity {
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString(KEY_LOGIN, logiText);
                                     editor.putString(KEY_NUMBER, getNumber);
+                                    editor.putString(KEY_LOGED, "admin");
+                                    editor.apply();
+
+                                    Toast.makeText(Login.this, "Witamy ponownie", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(Login.this, MainActivity.class));
+                                    finish();
+                                }else {
+                                    password.setError("Niepoprawne hasło");
+//                                    Toast.makeText(Login.this, "Niepoprawne hasło", Toast.LENGTH_SHORT).show();
+                                }
+                            }else {
+                                logi.setError("Niepoprawny login");
+//                                Toast.makeText(Login.this, "Niepoprawny login", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.hasChild(logiText)){
+                                final String getPassword = snapshot.child(logiText).child("password").getValue(String.class);
+                                if(getPassword.equals(passwordTxt)){
+                                    final String getNumber = snapshot.child(logiText).child("phone").getValue(String.class);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putString(KEY_LOGIN, logiText);
+                                    editor.putString(KEY_NUMBER, getNumber);
+                                    editor.putString(KEY_LOGED, "user");
                                     editor.apply();
 
                                     Toast.makeText(Login.this, "Witamy ponownie", Toast.LENGTH_SHORT).show();

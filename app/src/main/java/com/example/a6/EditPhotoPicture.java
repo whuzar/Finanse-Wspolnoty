@@ -50,6 +50,7 @@ public class EditPhotoPicture extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
+    private static final String KEY_LOGED = "wloged";
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -57,7 +58,7 @@ public class EditPhotoPicture extends AppCompatActivity {
     private ImageView img;
     private Button browse, save;
     private Bitmap bitmap;
-
+    private String who;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,8 +71,9 @@ public class EditPhotoPicture extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         String login = sharedPreferences.getString(KEY_LOGIN, null);
+        who = sharedPreferences.getString(KEY_LOGED, null);
 
-        DatabaseReference uidRef = databaseReference.child("admin").child(login);
+        DatabaseReference uidRef = databaseReference.child(who).child(login);
         uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -169,7 +171,7 @@ public class EditPhotoPicture extends AppCompatActivity {
                                 String login = sharedPreferences.getString(KEY_LOGIN, null);
 
                                 FirebaseDatabase db = FirebaseDatabase.getInstance();
-                                DatabaseReference root = db.getReference("admin");
+                                DatabaseReference root = db.getReference(who);
 
                                 root.child(login).child("pimage").setValue(uri.toString());
 
