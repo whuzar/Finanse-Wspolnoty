@@ -135,13 +135,13 @@ public class ThirdFragment extends Fragment{
             number_telephone.setText("+48" + numberphone);
         }
 
-        DatabaseReference uidRef = databaseReference.child(who).child(login);
+        DatabaseReference uidRef = databaseReference.child(who).child(login).child("pimage");
         uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
                     for (DataSnapshot ds : task.getResult().getChildren()) {
-                        String picprof = task.getResult().child("pimage").getValue(String.class);
+                        String picprof = task.getResult().getValue(String.class);
 
                         Transformation transformation = new RoundedTransformationBuilder()
                                 .borderColor(Color.WHITE)
