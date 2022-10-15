@@ -106,7 +106,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="phone"
                     android:textColor="@color/white"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:maxLength="9"/>
             </LinearLayout>
             <LinearLayout
                 android:background="@drawable/back_wh"
@@ -133,7 +134,7 @@
                     android:id="@+id/editshares"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:textColor="@color/white"
                     android:textAlignment="center" />
 

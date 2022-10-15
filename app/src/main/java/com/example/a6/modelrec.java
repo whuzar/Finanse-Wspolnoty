@@ -13,6 +13,7 @@ public class modelrec {
         this.surname = surname;
         this.phone = phone;
         this.email = email;
+        //imageprofile taka sama nazwa jak w bazie
     }
 
     public String getName() {

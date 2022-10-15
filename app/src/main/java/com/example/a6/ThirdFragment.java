@@ -4,23 +4,39 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
+
 public class ThirdFragment extends Fragment{
+
+    private SwipeRefreshLayout refreshLayout;
 
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
     private static final String KEY_NUMBER = "number";
+
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -28,6 +44,8 @@ public class ThirdFragment extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_third,
                 container, false);
+
+        refreshLayout = rootView.findViewById(R.id.refreshLayout3);
 
         RelativeLayout zarzadcaclick = (RelativeLayout) rootView.findViewById(R.id.zarzadcaclick);
         RelativeLayout logouttologin = (RelativeLayout) rootView.findViewById(R.id.logouttologin);
@@ -40,15 +58,19 @@ public class ThirdFragment extends Fragment{
         TextView number_telephone = (TextView) rootView.findViewById(R.id.number_inne);
         TextView login_underphoto = (TextView) rootView.findViewById(R.id.login_inne);
 
+        ImageView profilepohoto = (ImageView) rootView.findViewById(R.id.photoprofile);
+
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
-        String login = sharedPreferences.getString(KEY_LOGIN, null);
-        String numberphone = sharedPreferences.getString(KEY_NUMBER, null);
+        refresh(login_underphoto, number_telephone, profilepohoto);
 
-        if(login != null || numberphone != null) {
-            login_underphoto.setText(login);
-            number_telephone.setText("+48" + numberphone);
-        }
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh(login_underphoto, number_telephone, profilepohoto);
+                refreshLayout.setRefreshing(false);
+            }
+        });
 
        zarzadcaclick.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +93,7 @@ public class ThirdFragment extends Fragment{
        editprofileb.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
-               startActivity(new Intent(getActivity(), editprofile.class));
+               startActivity(new Intent(getActivity(), EditPhotoPicture.class));
            }
        });
 
@@ -98,6 +120,43 @@ public class ThirdFragment extends Fragment{
 
         return rootView;
     }
+
+    private void refresh(TextView login_underphoto, TextView number_telephone, ImageView profilepohoto) {
+        String login = sharedPreferences.getString(KEY_LOGIN, null);
+        String numberphone = sharedPreferences.getString(KEY_NUMBER, null);
+
+
+        if(login != null || numberphone != null) {
+            login_underphoto.setText(login);
+            number_telephone.setText("+48" + numberphone);
+        }
+
+        DatabaseReference uidRef = databaseReference.child("admin").child(login);
+        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
+                        String picprof = task.getResult().child("pimage").getValue(String.class);
+
+                        Transformation transformation = new RoundedTransformationBuilder()
+                                .borderColor(Color.WHITE)
+                                .borderWidthDp(1)
+                                .cornerRadiusDp(100)
+                                .oval(true)
+                                .build();
+
+                        Picasso.get()
+                                .load(picprof)
+                                .fit()
+                                .transform(transformation)
+                                .into(profilepohoto);
+                    }
+                }
+            }
+        });
+    }
+
     public void updateDetail() {
         Intent intent = new Intent(getActivity(), adminInne.class);
         startActivity(intent);

@@ -9,6 +9,10 @@
     tools:context=".ThirdFragment">
 
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayoutai"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -17,6 +21,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <ImageView
+                android:id="@+id/photopic"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
@@ -41,18 +46,6 @@
                 android:textColor="#CCFFFFFF"
                 android:textSize="12sp"
                 android:layout_gravity="center"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:paddingStart="30dp"
-                android:text="Edytuj Profil"
-                android:paddingEnd="30dp"
-                android:textColor="@color/pprimary"
-                android:textAllCaps="false"
-                android:layout_gravity="center"
-                android:background="@drawable/back_second"/>
 
             <LinearLayout
                 android:background="@drawable/back_wh"
@@ -152,7 +145,7 @@
                         android:layout_height="40dp"
                         android:background="@drawable/account"
                         android:padding="12dp"
-                        android:src="@drawable/writing" />
+                        android:src="@drawable/editing" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -207,4 +200,5 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>
