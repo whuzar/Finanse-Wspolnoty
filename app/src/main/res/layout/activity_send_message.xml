@@ -18,85 +18,98 @@
             android:orientation="vertical">
 
             <LinearLayout
-
                 android:background="@drawable/back_wh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
                 android:padding="15dp">
 
                 <TextView
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:text="Ogłoszenia"
+                    android:text="STWÓRZ OGŁOSZENIE"
+                    android:textSize="23dp"
                     android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:textSize="24dp"
-                    android:padding="10dp"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
             <LinearLayout
                 android:background="@drawable/back_wh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
                 android:padding="15dp">
 
                 <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:text="Temat ogłoszenia"
+                    android:text="Temat wiadomości"
+                    android:textSize="15dp"
                     android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:textSize="14dp"
-                    android:padding="5dp"/>
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/thememessage"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textAllCaps="true"
-                    android:text="theme"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:textSize="14dp"
-                    android:layout_marginTop="5dp"/>
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textAlignment="center" />
 
                 <TextView
                     android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:text="Wiadomość"
+                    android:text="wiadomość"
+                    android:textSize="15dp"
                     android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:textSize="14dp"
-                    android:padding="5dp"/>
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/messageadmin"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textAllCaps="true"
-                    android:text="theme"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:textSize="14dp"
-                    android:layout_marginTop="5dp"/>
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/white"
+                    android:maxLength="255"
+                    android:textAlignment="center"
+                    />
 
+            </LinearLayout>
+            <LinearLayout
+                android:background="@drawable/back_wh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/acceptsendmessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:paddingStart="30dp"
+                    android:text="Wyślij wiadomość"
+                    android:paddingEnd="30dp"
+                    android:textColor="@color/pprimary"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    android:background="@drawable/back_second"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

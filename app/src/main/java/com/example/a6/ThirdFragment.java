@@ -47,18 +47,18 @@ public class ThirdFragment extends Fragment{
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout3);
 
-        RelativeLayout zarzadcaclick = (RelativeLayout) rootView.findViewById(R.id.zarzadcaclick);
-        RelativeLayout logouttologin = (RelativeLayout) rootView.findViewById(R.id.logouttologin);
-        RelativeLayout changepwd = (RelativeLayout) rootView.findViewById(R.id.changepasswd);
-        RelativeLayout aboutyou = (RelativeLayout) rootView.findViewById(R.id.aboutyou);
-        RelativeLayout contacta = (RelativeLayout) rootView.findViewById(R.id.contactwithadmin);
+        RelativeLayout zarzadcaclick = rootView.findViewById(R.id.zarzadcaclick);
+        RelativeLayout logouttologin = rootView.findViewById(R.id.logouttologin);
+        RelativeLayout changepwd = rootView.findViewById(R.id.changepasswd);
+        RelativeLayout aboutyou = rootView.findViewById(R.id.aboutyou);
+        RelativeLayout contacta = rootView.findViewById(R.id.contactwithadmin);
 
-        Button editprofileb = (Button) rootView.findViewById(R.id.btneditprofile);
+        Button editprofileb = rootView.findViewById(R.id.btneditprofile);
 
-        TextView number_telephone = (TextView) rootView.findViewById(R.id.number_inne);
-        TextView login_underphoto = (TextView) rootView.findViewById(R.id.login_inne);
+        TextView number_telephone = rootView.findViewById(R.id.number_inne);
+        TextView login_underphoto = rootView.findViewById(R.id.login_inne);
 
-        ImageView profilepohoto = (ImageView) rootView.findViewById(R.id.photoprofile);
+        ImageView profilepohoto = rootView.findViewById(R.id.photoprofile);
 
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
