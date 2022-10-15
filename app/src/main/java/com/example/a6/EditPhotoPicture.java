@@ -1,8 +1,6 @@
 package com.example.a6;
 
 import android.Manifest;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -42,7 +40,6 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 import java.io.InputStream;
-import java.util.Calendar;
 import java.util.Random;
 
 public class EditPhotoPicture extends AppCompatActivity {
@@ -73,26 +70,28 @@ public class EditPhotoPicture extends AppCompatActivity {
         String login = sharedPreferences.getString(KEY_LOGIN, null);
         who = sharedPreferences.getString(KEY_LOGED, null);
 
-        DatabaseReference uidRef = databaseReference.child(who).child(login);
+        DatabaseReference uidRef = databaseReference.child(who).child(login).child("pimage");
         uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
                     for (DataSnapshot ds : task.getResult().getChildren()) {
-                        String picprof = task.getResult().child("pimage").getValue(String.class);
+                        String picprof = task.getResult().getValue(String.class);
 
-                        Transformation transformation = new RoundedTransformationBuilder()
-                                .borderColor(Color.WHITE)
-                                .borderWidthDp(1)
-                                .cornerRadiusDp(100)
-                                .oval(true)
-                                .build();
+                        if(picprof != null){
+                            Transformation transformation = new RoundedTransformationBuilder()
+                                    .borderColor(Color.WHITE)
+                                    .borderWidthDp(1)
+                                    .cornerRadiusDp(100)
+                                    .oval(true)
+                                    .build();
 
-                        Picasso.get()
-                                .load(picprof)
-                                .fit()
-                                .transform(transformation)
-                                .into(img);
+                            Picasso.get()
+                                    .load(picprof)
+                                    .fit()
+                                    .transform(transformation)
+                                    .into(img);
+                        }
                     }
                 }
             }

@@ -135,26 +135,28 @@ public class ThirdFragment extends Fragment{
             number_telephone.setText("+48" + numberphone);
         }
 
-        DatabaseReference uidRef = databaseReference.child(who).child(login).child("pimage");
+        DatabaseReference uidRef = databaseReference.child(who).child(login);
         uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
                     for (DataSnapshot ds : task.getResult().getChildren()) {
-                        String picprof = task.getResult().getValue(String.class);
+                        String picprof = task.getResult().child("pimage").getValue(String.class);
 
-                        Transformation transformation = new RoundedTransformationBuilder()
-                                .borderColor(Color.WHITE)
-                                .borderWidthDp(1)
-                                .cornerRadiusDp(100)
-                                .oval(true)
-                                .build();
+                        if(picprof != null){
+                            Transformation transformation = new RoundedTransformationBuilder()
+                                    .borderColor(Color.WHITE)
+                                    .borderWidthDp(1)
+                                    .cornerRadiusDp(100)
+                                    .oval(true)
+                                    .build();
 
-                        Picasso.get()
-                                .load(picprof)
-                                .fit()
-                                .transform(transformation)
-                                .into(profilepohoto);
+                            Picasso.get()
+                                    .load(picprof)
+                                    .fit()
+                                    .transform(transformation)
+                                    .into(profilepohoto);
+                        }
                     }
                 }
             }

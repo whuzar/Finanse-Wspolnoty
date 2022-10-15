@@ -35,15 +35,6 @@ public class FirstFragment extends Fragment {
             }
         });
 
-//        click1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(Intent.ACTION_VIEW
-//                        , Uri.parse("tel:" + 735250007)));
-//            }
-//        });
-
-
         return rootView;
     }
     public void showtime(){
