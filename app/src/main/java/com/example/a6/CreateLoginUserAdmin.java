@@ -29,7 +29,6 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
                     //"(?=.*[a-z])" +         //at least 1 lower case letter
                     //"(?=.*[A-Z])" +         //at least 1 upper case letter
                     "(?=.*[a-zA-Z])" +      //any letter
-                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
                     "(?=\\S+$)" +           //no white spaces
                     ".{4,}" +               //at least 4 characters
                     "$");
@@ -90,9 +89,7 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
         mDialog.setContentView(R.layout.popupcreateua2);
 
         nameau = name.getEditText().getText().toString();
-        nameau = nameau.substring(0, 1).toUpperCase() + nameau.substring(1).toLowerCase();
         surnameau = username.getEditText().getText().toString();
-        surnameau = surnameau.substring(0, 1).toUpperCase() + surnameau.substring(1).toLowerCase();
         mailau = email.getEditText().getText().toString();
         phoneau = phonenumber.getEditText().getText().toString();
         sharesau = sharesuser.getEditText().getText().toString();
@@ -114,9 +111,12 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
 
         finalPassword = password;
         if(!validateEmail() || !validatePhone() || !validateShares() || !validateName(nameau, name) || !validateName(surnameau, username)){
+            mDialog.dismiss();
             return;
         }
         else {
+            nameau = nameau.substring(0, 1).toUpperCase() + nameau.substring(1).toLowerCase();
+            surnameau = surnameau.substring(0, 1).toUpperCase() + surnameau.substring(1).toLowerCase();
             generateUsername();
             addAdmin();
         }
@@ -128,9 +128,9 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
         mDialog.setContentView(R.layout.popupcreateua);
 
         nameau = name.getEditText().getText().toString();
-        nameau = nameau.substring(0, 1).toUpperCase() + nameau.substring(1).toLowerCase();
+
         surnameau = username.getEditText().getText().toString();
-        surnameau = surnameau.substring(0, 1).toUpperCase() + surnameau.substring(1).toLowerCase();
+
         mailau = email.getEditText().getText().toString();
         phoneau = phonenumber.getEditText().getText().toString();
         sharesau = sharesuser.getEditText().getText().toString();
@@ -152,9 +152,12 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
 
         finalPassword = password;
         if(!validateEmail() || !validatePhone() || !validateShares() || !validateName(nameau, name) || !validateName(surnameau, username)){
+            mDialog.dismiss();
             return;
         }
         else {
+            nameau = nameau.substring(0, 1).toUpperCase() + nameau.substring(1).toLowerCase();
+            surnameau = surnameau.substring(0, 1).toUpperCase() + surnameau.substring(1).toLowerCase();
             generateUsername();
             addUser();
 

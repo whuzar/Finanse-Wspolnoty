@@ -34,8 +34,9 @@ public class ThirdFragment extends Fragment{
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
+    private static final String KEY_LOGED = "wloged";
     private static final String KEY_NUMBER = "number";
-
+    private String who;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     @SuppressLint("SetTextI18n")
@@ -61,7 +62,10 @@ public class ThirdFragment extends Fragment{
         ImageView profilepohoto = rootView.findViewById(R.id.photoprofile);
 
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-
+        who = sharedPreferences.getString(KEY_LOGED, null);
+        if(who.equals("user")){
+            zarzadcaclick.setVisibility(View.GONE);
+        }
         refresh(login_underphoto, number_telephone, profilepohoto);
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -131,7 +135,7 @@ public class ThirdFragment extends Fragment{
             number_telephone.setText("+48" + numberphone);
         }
 
-        DatabaseReference uidRef = databaseReference.child("admin").child(login);
+        DatabaseReference uidRef = databaseReference.child(who).child(login);
         uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
