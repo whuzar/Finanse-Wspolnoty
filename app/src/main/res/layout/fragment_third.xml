@@ -8,7 +8,10 @@
     android:orientation="vertical"
     tools:context=".ThirdFragment">
 
-
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -98,39 +101,6 @@
                         android:switchMinWidth="50dp"
                         android:theme="@style/notifMode"/>
                 </RelativeLayout>
-
-<!--                Private Account-->
-<!--                <RelativeLayout-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-<!--                    <ImageView-->
-<!--                        android:id="@+id/privateAccount"-->
-<!--                        android:layout_width="40dp"-->
-<!--                        android:layout_height="40dp"-->
-<!--                        android:src="@drawable/shield"-->
-<!--                        android:background="@drawable/account"-->
-<!--                        android:padding="12dp"/>-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_centerVertical="true"-->
-<!--                        android:layout_marginStart="20dp"-->
-<!--                        android:layout_toEndOf="@id/privateAccount"-->
-<!--                        android:text="Konto prywatne"-->
-<!--                        android:textColor="#FFFFFF"-->
-<!--                        android:textStyle="bold" />-->
-
-<!--                    <androidx.appcompat.widget.SwitchCompat-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_alignParentEnd="true"-->
-<!--                        android:layout_centerVertical="true"-->
-<!--                        android:switchMinWidth="50dp"-->
-<!--                        android:theme="@style/privateMode"/>-->
-<!--                </RelativeLayout>-->
-
             </LinearLayout>
 
         <LinearLayout
@@ -333,4 +303,5 @@
         </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>
