@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,10 +20,31 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 public class CreateLoginUserAdmin extends AppCompatActivity {
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    //"(?=.*[0-9])" +         //at least 1 digit
+                    //"(?=.*[a-z])" +         //at least 1 lower case letter
+                    //"(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[a-zA-Z])" +      //any letter
+                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{4,}" +               //at least 4 characters
+                    "$");
+    private static final Pattern PHONE_PATTERN =
+            Pattern.compile("^[0-9]{9}$");
 
-    private EditText name, username, email, phonenumber, sharesuser;
+    private static final Pattern NAME_PATTERN = Pattern.compile("^[A-Za-zĘÓĄŚŁŻŹĆŃęóąśłżźć]+");
+    private TextInputLayout name, username, email, phonenumber, sharesuser;
+    private String nameau;
+    private String surnameau;
+    private String mailau;
+    private String phoneau;
+    private String sharesau;
+    private String login;
+    private String finalPassword;
 
     Dialog mDialog;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
@@ -66,14 +89,16 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
     public void CreateAdminAccept(View v){
         mDialog.setContentView(R.layout.popupcreateua2);
 
-        final String nameau = name.getText().toString();
-        final String surnameau = username.getText().toString();
-        final String mailau = email.getText().toString();
-        final String phoneau = phonenumber.getText().toString();
-        final String sharesau = sharesuser.getText().toString();
+        nameau = name.getEditText().getText().toString();
+        nameau = nameau.substring(0, 1).toUpperCase() + nameau.substring(1).toLowerCase();
+        surnameau = username.getEditText().getText().toString();
+        surnameau = surnameau.substring(0, 1).toUpperCase() + surnameau.substring(1).toLowerCase();
+        mailau = email.getEditText().getText().toString();
+        phoneau = phonenumber.getEditText().getText().toString();
+        sharesau = sharesuser.getEditText().getText().toString();
 
         Random rand = new Random();
-        int n = rand.nextInt(1000);
+
 
         String password = "";
         String valuecharacter = "";
@@ -85,16 +110,109 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
             password = password + valuecharacter;
         }
 
-        String logtxt = nameau.substring(0, 3) + surnameau.substring(0, 3) + n;
-        String login = logtxt.toUpperCase();
 
 
-        String finalPassword = password;
+        finalPassword = password;
+        if(!validateEmail() || !validatePhone() || !validateShares() || !validateName(nameau, name) || !validateName(surnameau, username)){
+            return;
+        }
+        else {
+            generateUsername();
+            addAdmin();
+        }
+
+
+    }
+
+    public void CreateUserAccept(View v){
+        mDialog.setContentView(R.layout.popupcreateua);
+
+        nameau = name.getEditText().getText().toString();
+        nameau = nameau.substring(0, 1).toUpperCase() + nameau.substring(1).toLowerCase();
+        surnameau = username.getEditText().getText().toString();
+        surnameau = surnameau.substring(0, 1).toUpperCase() + surnameau.substring(1).toLowerCase();
+        mailau = email.getEditText().getText().toString();
+        phoneau = phonenumber.getEditText().getText().toString();
+        sharesau = sharesuser.getEditText().getText().toString();
+
+        Random rand = new Random();
+
+        String password = "";
+        String valuecharacter = "";
+
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for(int i = 0; i< 13; i++){
+            int ranletter = rand.nextInt(characters.length());
+            valuecharacter = String.valueOf(characters.charAt(ranletter));
+            password = password + valuecharacter;
+        }
+
+
+
+
+        finalPassword = password;
+        if(!validateEmail() || !validatePhone() || !validateShares() || !validateName(nameau, name) || !validateName(surnameau, username)){
+            return;
+        }
+        else {
+            generateUsername();
+            addUser();
+
+        }
+
+    }
+    private void generateUsername(){
+        Random rand = new Random();
+        int n = rand.nextInt(1000);
+        login = nameau.substring(0, 3) + surnameau.substring(0, 3) + n;
+        login = login.toUpperCase();
+    }
+
+    private void addUser(){
+        databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.hasChild(login)){
+                    generateUsername();
+                    addUser();
+//                    Toast.makeText(CreateLoginUserAdmin.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
+                }else{
+                    databaseReference.child("user").child(login).child("name").setValue(nameau);
+                    databaseReference.child("user").child(login).child("surname").setValue(surnameau);
+                    databaseReference.child("user").child(login).child("email").setValue(mailau);
+                    databaseReference.child("user").child(login).child("password").setValue(finalPassword);
+                    databaseReference.child("user").child(login).child("phone").setValue(phoneau);
+                    databaseReference.child("user").child(login).child("shares").setValue(sharesau);
+                    databaseReference.child("user").child(login).child("team").setValue("1");
+                    JavaMailAPI javaMailAPI = new JavaMailAPI(CreateLoginUserAdmin.this, mailau, "Utworzono dla ciebo konto w Organizator Budżetu", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Zostało dla ciebie utworzone konto w aplikacji Organizator budżetu</h1><h2 style='text-align:center;padding-bottom:30px'>Login: "+login+"</h2><h2 style='text-align:center;padding-bottom:30px'>Hasło: "+finalPassword+"</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o to konto zignoruj tą wiadomość</h4></div>");
+                    javaMailAPI.execute();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        name.getEditText().setText("");
+        username.getEditText().setText("");
+        email.getEditText().setText("");
+        phonenumber.getEditText().setText("");
+        sharesuser.getEditText().setText("");
+
+        Toast.makeText(CreateLoginUserAdmin.this, "Pomyślnie utworzono użytkonika", Toast.LENGTH_SHORT).show();
+        mDialog.dismiss();
+    }
+
+    private void addAdmin(){
         databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.hasChild(login)){
-                    Toast.makeText(CreateLoginUserAdmin.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
+                    generateUsername();
+                    addAdmin();
+//                    Toast.makeText(CreateLoginUserAdmin.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
                 }else{
                     databaseReference.child("admin").child(login).child("name").setValue(nameau);
                     databaseReference.child("admin").child(login).child("surname").setValue(surnameau);
@@ -103,6 +221,8 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
                     databaseReference.child("admin").child(login).child("phone").setValue(phoneau);
                     databaseReference.child("admin").child(login).child("shares").setValue(sharesau);
                     databaseReference.child("admin").child(login).child("team").setValue("1");
+                    JavaMailAPI javaMailAPI = new JavaMailAPI(CreateLoginUserAdmin.this, mailau, "Utworzono dla ciebo konto administratora w Organizator Budżetu", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Zostało dla ciebie utworzone konto w aplikacji Organizator budżetu</h1><h2 style='text-align:center;padding-bottom:30px'>Login: "+login+"</h2><h2 style='text-align:center;padding-bottom:30px'>Hasło: "+finalPassword+"</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o to konto zignoruj tą wiadomość</h4></div>");
+                    javaMailAPI.execute();
                 }
             }
 
@@ -112,73 +232,81 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
             }
         });
 
-        name.setText("");
-        username.setText("");
-        email.setText("");
-        phonenumber.setText("");
-        sharesuser.setText("");
+        name.getEditText().setText("");
+        username.getEditText().setText("");
+        email.getEditText().setText("");
+        phonenumber.getEditText().setText("");
+        sharesuser.getEditText().setText("");
 
         Toast.makeText(CreateLoginUserAdmin.this, "Pomyślnie utworzono zarządcę", Toast.LENGTH_SHORT).show();
         mDialog.dismiss();
     }
 
-    public void CreateUserAccept(View v){
-        mDialog.setContentView(R.layout.popupcreateua);
-
-        final String nameau = name.getText().toString();
-        final String surnameau = username.getText().toString();
-        final String mailau = email.getText().toString();
-        final String phoneau = phonenumber.getText().toString();
-        final String sharesau = sharesuser.getText().toString();
-
-        Random rand = new Random();
-        int n = rand.nextInt(1000);
-
-        String password = "";
-        String valuecharacter = "";
-
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        for(int i = 0; i< 13; i++){
-            int ranletter = rand.nextInt(characters.length());
-            valuecharacter = String.valueOf(characters.charAt(ranletter));
-            password = password + valuecharacter;
+    private boolean validateEmail() {
+        String emailInput = email.getEditText().getText().toString().trim();
+        if (emailInput.isEmpty()) {
+//            email.setError("Pole jest puste");
+            email.setError("Pole nie może być puste");
+//            Toast.makeText(Register.this, "Pole e-mail jest puste", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+            email.setError("Proszę wpisać poprawnie adres e-mail");
+//            Toast.makeText(Register.this, "Proszę wpisać poprawnie adres e-mail", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            email.setError(null);
+            return true;
         }
-
-        String logtxt = nameau.substring(0, 3) + surnameau.substring(0, 3) + n;
-        logtxt.toUpperCase(Locale.ROOT);
+    }
 
 
-        String finalPassword = password;
-        databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.hasChild(logtxt)){
-                    Toast.makeText(CreateLoginUserAdmin.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
-                }else{
-                    databaseReference.child("user").child(logtxt).child("name").setValue(nameau);
-                    databaseReference.child("user").child(logtxt).child("surname").setValue(surnameau);
-                    databaseReference.child("user").child(logtxt).child("email").setValue(mailau);
-                    databaseReference.child("user").child(logtxt).child("password").setValue(finalPassword);
-                    databaseReference.child("user").child(logtxt).child("phone").setValue(phoneau);
-                    databaseReference.child("user").child(logtxt).child("shares").setValue(sharesau);
-                    databaseReference.child("user").child(logtxt).child("team").setValue("1");
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+    private boolean validatePhone() {
+        String phoneInput = phonenumber.getEditText().getText().toString().trim();
+        if (phoneInput.isEmpty()) {
+            phonenumber.setError("Pole numer telefonu nie może być puste");
+//            Toast.makeText(Register.this, "Pole numer telefonu nie może być puste", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!PHONE_PATTERN.matcher(phoneInput).matches()) {
+            phonenumber.setError("Proszę wpisać poprawnie numer telefonu");
+            Toast.makeText(CreateLoginUserAdmin.this, "Proszę wpisać poprawnie numer telefonu", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+//            log.setError(null);
+            phonenumber.setError(null);
+            return true;
+        }
+    }
 
-            }
-        });
 
-        name.setText("");
-        username.setText("");
-        email.setText("");
-        phonenumber.setText("");
-        sharesuser.setText("");
-
-        Toast.makeText(CreateLoginUserAdmin.this, "Pomyślnie utworzono użytkonika", Toast.LENGTH_SHORT).show();
-        mDialog.dismiss();
+    private boolean validateShares() {
+        String es = sharesuser.getEditText().getText().toString().trim();
+        if (es.isEmpty()) {
+            sharesuser.setError("Pole udziały nie może być puste");
+//            Toast.makeText(Register.this, "Pole numer telefonu nie może być puste", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+//            log.setError(null);
+            sharesuser.setError(null);
+            return true;
+        }
+    }
+    private boolean validateName(String string, TextInputLayout input) {
+        if (string.isEmpty()) {
+            input.setError("Pole imie nie może być puste");
+//            Toast.makeText(Register.this, "Pole login nie może być puste", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (string.length() > 30) {
+            input.setError("imie jest za długi");
+//            Toast.makeText(Register.this, "Login jest za długi", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if(!NAME_PATTERN.matcher(string).matches()) {
+            input.setError("Proszę wpisać poprawną wartość");
+            return false;
+        }else{
+            input.setError(null);
+            return true;
+        }
     }
 
 }
