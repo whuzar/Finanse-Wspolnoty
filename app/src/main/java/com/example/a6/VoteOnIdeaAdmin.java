@@ -1,7 +1,8 @@
 package com.example.a6;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,11 +12,23 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Calendar;
 
 public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
+    SharedPreferences sharedPreferences;
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_LOGIN = "login";
+
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
     private TextView dateText;
-    private EditText valuefor, votetheme;
+    private EditText valuefor, votetheme, sugger;
     private Button btndate, sendvote;
     private RadioButton vt1, vt2, valuer1, valuer2;
     @Override
@@ -23,13 +36,16 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vote_on_idea_admin);
 
+        sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+
         dateText = findViewById(R.id.cos);
         btndate = findViewById(R.id.choosedate);
         valuefor = findViewById(R.id.showedit);
         valuer2 = findViewById(R.id.radiochoice2value);
         valuer1 = findViewById(R.id.radiochoice1value);
-        sendvote = findViewById(R.id.senddatavote);
+        sendvote = findViewById(R.id.sendtoonevote);
         votetheme = findViewById(R.id.themevote);
+        sugger = findViewById(R.id.suggest);
 
         final String themevt = votetheme.getText().toString();
         System.out.println(themevt);
@@ -61,10 +77,58 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
             }
         });
 
+        String login = sharedPreferences.getString(KEY_LOGIN, null);
+
         sendvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(VoteOnIdeaAdmin.this, themevt, Toast.LENGTH_SHORT).show();
+
+                String vt = votetheme.getText().toString();
+                String sg = sugger.getText().toString();
+                String bd = btndate.getText().toString();
+                Toast.makeText(VoteOnIdeaAdmin.this, bd, Toast.LENGTH_SHORT).show();
+
+//                DatabaseReference uidRef = databaseReference.child("admin").child(login);
+//                uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            for (DataSnapshot ds : task.getResult().getChildren()) {
+//                                String teamwspo = task.getResult().child("team").getValue(String.class);
+//
+//                                DatabaseReference textRef = databaseReference.child("wspolnota").child(teamwspo);
+//                                textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                                        if (task.isSuccessful()) {
+//                                            DataSnapshot snapshot = task.getResult();
+//
+//                                            databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                @Override
+//                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                                    databaseReference.child("wspolnota").child(teamwspo).child("notice").child("thememessage").setValue(tm);
+//                                                    databaseReference.child("wspolnota").child(teamwspo).child("notice").child("message").setValue(ma);
+//                                                    databaseReference.child("wspolnota").child(teamwspo).child("notice").child("sendby").setValue(login);
+//                                                }
+//
+//                                                @Override
+//                                                public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                                }
+//                                            });
+//                                            Toast.makeText(SendMessage.this, "Wiadomość wysłana pomyślnie", Toast.LENGTH_SHORT).show();
+//                                            theme.setText("");
+//                                            message.setText("");
+//                                        } else {
+//                                            Log.d("TAG", task.getException().getMessage());
+//                                        }
+//                                    }
+//                                });;
+//                            }
+//                        }
+//                    }
+//                });
+
             }
         });
     }

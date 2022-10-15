@@ -46,10 +46,7 @@ public class SecondFragment extends Fragment {
         linearLayoutonoff = rootView.findViewById(R.id.noticeonoff);
         linearLayoutshow = rootView.findViewById(R.id.noticeshownothing);
 
-        if(themes.getText().toString().equals("") || mes.getText().toString().equals("")){
-            linearLayoutonoff.setVisibility(View.GONE);
-            linearLayoutshow.setVisibility(View.VISIBLE);
-        }else{shownotice();}
+        shownotice();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -75,11 +72,14 @@ public class SecondFragment extends Fragment {
 
                         String theme = task.getResult().child("wspolnota").child(team).child("notice").child("thememessage").getValue(String.class);
                         String message = task.getResult().child("wspolnota").child(team).child("notice").child("message").getValue(String.class);
-                        String sendby = task.getResult().child("wspolnota").child(team).child("notice").child("sendby").getValue(String.class);
+                        if(theme.equals("") || message.equals("")){
+                            linearLayoutonoff.setVisibility(View.GONE);
+                            linearLayoutshow.setVisibility(View.VISIBLE);
+                        }
+//                        String name = task.getResult().child("wspolnota").child(team).child("notice").child("sendby").getValue(String.class);
 
                         themes.setText(theme);
                         mes.setText(message);
-//                        ashares.setText(shares);
 
                     }
                 }
