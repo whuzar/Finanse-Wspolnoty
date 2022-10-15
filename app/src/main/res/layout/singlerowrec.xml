@@ -14,8 +14,8 @@
                 android:orientation="horizontal"
                 android:padding="15dp">
 
-                <ImageView
-                    android:id="@+id/profilepicadmins"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/picadminr"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:src="@drawable/profilepic"/>

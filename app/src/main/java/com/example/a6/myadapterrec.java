@@ -4,14 +4,16 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec.myviewrec> {
 
@@ -26,6 +28,10 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
         holder.namesur.setText(model.getName() + " " + model.getSurname());
         holder.email.setText(model.getEmail());
         holder.phone.setText("+48" + model.getPhone());
+        if(model.getPimage() == null){
+        }else {
+            Glide.with(holder.img.getContext()).load(model.getPimage()).into(holder.img);
+        }
 
     }
 
@@ -38,16 +44,16 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
 
     class myviewrec extends RecyclerView.ViewHolder{
 
-        private ImageView img;
+        private CircleImageView img;
         private TextView namesur, phone, email;
 
         public myviewrec(@NonNull View intemview){
             super(intemview);
 
-            img = (ImageView)itemView.findViewById(R.id.profilepicadmins);
-            namesur = (TextView)itemView.findViewById(R.id.namesurrec);
-            phone = (TextView)itemView.findViewById(R.id.phonerec);
-            email = (TextView)itemView.findViewById(R.id.emailrec);
+            img = itemView.findViewById(R.id.picadminr);
+            namesur = itemView.findViewById(R.id.namesurrec);
+            phone = itemView.findViewById(R.id.phonerec);
+            email = itemView.findViewById(R.id.emailrec);
         }
     }
 }

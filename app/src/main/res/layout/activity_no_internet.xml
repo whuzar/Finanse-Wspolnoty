@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_vertical"
     tools:context=".NoInternet">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
         app:cardUseCompatPadding="true"
-        android:layout_marginTop="80dp"
-        android:layout_marginBottom="80dp"
         app:cardBackgroundColor="#90C9DB">
 
-       <RelativeLayout
+       <LinearLayout
            android:layout_width="match_parent"
-           android:layout_height="match_parent">
-
+           android:layout_height="wrap_content"
+           android:orientation="vertical">
            <TextView
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
@@ -28,30 +28,22 @@
                android:text="BRAK POŁACZENIA"
                android:textColor="@color/white"
                android:textSize="36sp"
-               android:textStyle="bold">
-
-           </TextView>
+               android:textStyle="bold"/>
            <ImageView
                android:layout_width="match_parent"
-               android:layout_height="wrap_content"
+               android:layout_height="300dp"
                android:layout_marginTop="10dp"
-               android:src="@drawable/wireless">
-
-           </ImageView>
-
+               android:src="@drawable/wireless"/>
            <Button
                android:id="@+id/retryBtn"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:layout_marginHorizontal="10dp"
                android:fontFamily="@font/montserrat_regular"
-               android:layout_marginTop="500dp"
                android:textSize="30dp"
                android:background="@color/colorTransparent"
-               android:text="SPRÓBIJ PONOWNIE">
-
-           </Button>
-       </RelativeLayout>
+               android:text="Spróbuj ponownie"/>
+       </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
