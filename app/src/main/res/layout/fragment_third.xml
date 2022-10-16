@@ -19,12 +19,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/photoprofile"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="50dp"
                 android:src="@drawable/profilepic" />
 
             <TextView
@@ -118,7 +119,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/zarzadcaclick"
-                android:clickable="true">
+                android:clickable="true"
+                android:layout_marginBottom="10dp">
                 <ImageView
                     android:id="@+id/security"
                     android:layout_width="40dp"
@@ -148,7 +150,6 @@
             <RelativeLayout
                 android:id="@+id/aboutyou"
                 android:clickable="true"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

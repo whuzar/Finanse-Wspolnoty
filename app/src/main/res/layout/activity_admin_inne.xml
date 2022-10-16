@@ -20,12 +20,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/backlastview"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_back"
+                android:clickable="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+
             <ImageView
                 android:id="@+id/photopic"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
                 android:src="@drawable/profilepic"/>
 
             <TextView
@@ -92,12 +102,14 @@
 
                 <!--Create Vote-->
                 <RelativeLayout
+                    android:id="@+id/voteonideaclick"
+                    android:clickable="true"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/textsize"
+                        android:id="@+id/voteonidea"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/round_bl"
@@ -109,7 +121,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="20dp"
-                        android:layout_toEndOf="@id/textsize"
+                        android:layout_toEndOf="@id/voteonidea"
                         android:text="Głosowanie za pomysłem"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
@@ -218,6 +230,49 @@
                         android:layout_marginStart="20dp"
                         android:layout_toEndOf="@id/aboutus"
                         android:text="Utwórz login lub loginy"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_right_go"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="70dp"
+                android:background="@drawable/back_wh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <RelativeLayout
+                    android:id="@+id/deletuser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:id="@+id/delete"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/security"
+                        android:padding="12dp"
+                        android:src="@drawable/trash" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_toEndOf="@id/delete"
+                        android:text="Usuń konto użytkownika"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
 

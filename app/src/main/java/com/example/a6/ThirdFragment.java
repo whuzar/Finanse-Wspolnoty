@@ -65,6 +65,7 @@ public class ThirdFragment extends Fragment{
         RelativeLayout aboutyou = rootView.findViewById(R.id.aboutyou);
         RelativeLayout contacta = rootView.findViewById(R.id.contactwithadmin);
         RelativeLayout deleteacc = rootView.findViewById(R.id.delet);
+        RelativeLayout breaks = rootView.findViewById(R.id.reportbreaks);
 
         Button editprofileb = rootView.findViewById(R.id.btneditprofile);
 
@@ -141,6 +142,13 @@ public class ThirdFragment extends Fragment{
             }
         });
 
+        breaks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), Breaks.class));
+            }
+        });
+
         return rootView;
     }
     public void ShowDelete(View v){
@@ -178,6 +186,9 @@ public class ThirdFragment extends Fragment{
                         }
                     });
                     Toast.makeText(getActivity(), "Usunięto użytkownika", Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(KEY_LOGIN, null);
+                    editor.apply();
                     startActivity(new Intent(getActivity(), Login.class));
                 }else{
                     Toast.makeText(getActivity(), "Nie poprawny login", Toast.LENGTH_SHORT).show();

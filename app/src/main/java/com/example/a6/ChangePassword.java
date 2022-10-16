@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,10 +37,10 @@ public class ChangePassword extends AppCompatActivity {
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
 
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     private TextInputLayout oldpass, newpass, repeatnewpass;
-    Button changepasswd;
+    private Button changepasswd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +51,7 @@ public class ChangePassword extends AppCompatActivity {
         newpass = findViewById(R.id.newpassword);
         repeatnewpass = findViewById(R.id.repeatnewpassword);
         changepasswd = findViewById(R.id.bntchangepasswd);
+
         sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String login = sharedPreferences.getString(KEY_LOGIN, null);
 
