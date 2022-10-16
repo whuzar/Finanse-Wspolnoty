@@ -3,12 +3,15 @@ package com.example.a6;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -32,9 +35,10 @@ public class FirstFragment extends Fragment {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     private SwipeRefreshLayout refreshLayout;
-    private TextView timehello;
+    private TextView timehello, moneytextset, ideamoneyset, themeidea, countertime;
     private EditText typeidea;
-    private LinearLayout linearLayoutonoff, linearLayoutshow;
+    private LinearLayout linearLayoutonoff, linearLayoutshow, linearshowbutton;
+    private Button btnsendidea;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,9 +49,22 @@ public class FirstFragment extends Fragment {
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
+
         timehello = rootView.findViewById(R.id.texthello);
+        moneytextset = rootView.findViewById(R.id.setideamoney);
+        ideamoneyset = rootView.findViewById(R.id.textmoney);
+        themeidea = rootView.findViewById(R.id.setideatheme);
+        countertime = rootView.findViewById(R.id.counterdowntime);
+
+        linearLayoutshow = rootView.findViewById(R.id.ideaonoff);
+        linearLayoutonoff = rootView.findViewById(R.id.ideashownothing);
+        linearshowbutton = rootView.findViewById(R.id.buttonlinearidea);
 
         showtime();
+
+        int minute=Integer.parseInt("2880");
+        long min= minute*60*1000;
+        counter(min);
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -57,7 +74,6 @@ public class FirstFragment extends Fragment {
                 refreshLayout.setRefreshing(false);
             }
         });
-
 
         return rootView;
     }
@@ -73,14 +89,24 @@ public class FirstFragment extends Fragment {
                     for (DataSnapshot ds : task.getResult().getChildren()) {
                         String team = task.getResult().child(who).child(login).child("team").getValue(String.class);
 
-//                        String theme = task.getResult().child("wspolnota").child(team).child("createidea").child("thememessage").getValue(String.class);
-//                        String message = task.getResult().child("wspolnota").child(team).child("createidea").child("message").getValue(String.class);
-//                        String sendby = task.getResult().child("wspolnota").child(team).child("createidea").child("sendby").getValue(String.class);
+                        String money = task.getResult().child("wspolnota").child(team).child("typeidea").child("money").getValue(String.class);
+                        String theme = task.getResult().child("wspolnota").child(team).child("typeidea").child("themevote").getValue(String.class);
 
-//                        themes.setText(theme);
-//                        mes.setText(message);
-//                        ashares.setText(shares);
+                        if(money.equals("0")){
+                            moneytextset.setVisibility(View.GONE);
+                            ideamoneyset.setVisibility(View.GONE);
+                        }else{
+                            moneytextset.setText(money);
+                        }
 
+                        if(theme.equals("")){
+                            linearLayoutonoff.setVisibility(View.GONE);
+                            linearLayoutshow.setVisibility(View.VISIBLE);
+                            linearshowbutton.setVisibility(View.GONE);
+                        }
+//                        String name = task.getResult().child("wspolnota").child(team).child("notice").child("sendby").getValue(String.class);
+
+                        themeidea.setText(theme);
                     }
                 }
             }
@@ -96,5 +122,21 @@ public class FirstFragment extends Fragment {
         }else{
             timehello.setText("Dobry wieczór");
         }
+    }
+
+    private void counter(long min) {
+        CountDownTimer timer = new CountDownTimer(min, 1000) {
+            public void onTick(long millisUntilFinished) {
+                int seconds = (int) (millisUntilFinished / 1000) % 60;
+                int minutes = (int) ((millisUntilFinished / (1000 * 60)) % 60);
+                int hours = (int) ((millisUntilFinished / (1000 * 60 * 60)) % 24);
+                int days = (int) ((millisUntilFinished / (1000 * 60 * 60)) / 24);
+                countertime.setText(String.format("%d:%d:%d:%d", days, hours, minutes, seconds));
+            }
+            public void onFinish() {
+                Toast.makeText(getActivity(), "koniec", Toast.LENGTH_SHORT).show();
+            }
+        };
+        timer.start();
     }
 }

@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,8 +19,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -32,7 +35,7 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     private TextView dateText;
-    private EditText valuefor, votetheme, sugger;
+    private EditText valuefor, votetheme;
     private Button btndate, sendvote;
     private RadioButton valuer1, valuer2;
     @Override
@@ -42,14 +45,13 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
 
         sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
-        dateText = findViewById(R.id.cos);
+        dateText = findViewById(R.id.showdate);
         btndate = findViewById(R.id.choosedate);
         valuefor = findViewById(R.id.showedit);
         valuer2 = findViewById(R.id.radiochoice2value);
         valuer1 = findViewById(R.id.radiochoice1value);
         sendvote = findViewById(R.id.sendtoonevote);
         votetheme = findViewById(R.id.themevote);
-        sugger = findViewById(R.id.suggest);
 
         final String themevt = votetheme.getText().toString();
         System.out.println(themevt);
@@ -60,8 +62,6 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
                 showDatePickerDialog();
             }
         });
-
-//        int kwota = 0;
 
         valuer2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,9 +91,8 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
             public void onClick(View view) {
 
                 String vt = votetheme.getText().toString();
-                String sg = sugger.getText().toString();
-                String bd = btndate.getText().toString();
-                Toast.makeText(VoteOnIdeaAdmin.this, bd, Toast.LENGTH_SHORT).show();
+                String vf = valuefor.getText().toString();
+                String dt = dateText.getText().toString();
 
                 DatabaseReference uidRef = databaseReference.child("admin").child(login);
                 uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -103,34 +102,40 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
                             for (DataSnapshot ds : task.getResult().getChildren()) {
                                 String teamwspo = task.getResult().child("team").getValue(String.class);
 
-//                                DatabaseReference textRef = databaseReference.child("wspolnota").child(teamwspo);
-//                                textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                                        if (task.isSuccessful()) {
-//                                            DataSnapshot snapshot = task.getResult();
-//
-//                                            databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
-//                                                @Override
-//                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                                    databaseReference.child("wspolnota").child(teamwspo).child("notice").child("thememessage").setValue(tm);
-//                                                    databaseReference.child("wspolnota").child(teamwspo).child("notice").child("message").setValue(ma);
-//                                                    databaseReference.child("wspolnota").child(teamwspo).child("notice").child("sendby").setValue(login);
-//                                                }
-//
-//                                                @Override
-//                                                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                                                }
-//                                            });
-//                                            Toast.makeText(VoteOnIdeaAdmin.this, "Utworzono głosowanie", Toast.LENGTH_SHORT).show();
-//                                            theme.setText("");
-//                                            message.setText("");
-//                                        } else {
-//                                            Log.d("TAG", task.getException().getMessage());
-//                                        }
-//                                    }
-//                                });;
+                                DatabaseReference textRef = databaseReference.child("wspolnota").child(teamwspo);
+                                textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DataSnapshot snapshot = task.getResult();
+
+                                            databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("themevote").setValue(vt);
+                                                    databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("sendby").setValue(login);
+                                                    databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("enddate").setValue(dt);
+                                                    if(!vf.isEmpty()){
+                                                        databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("money").setValue(vf);
+                                                    }else {
+                                                        databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("money").setValue("0");
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+                                            Toast.makeText(VoteOnIdeaAdmin.this, "Utworzono głosowanie", Toast.LENGTH_SHORT).show();
+                                            valuefor.setText("");
+                                            votetheme.setText("");
+                                            dateText.setText("Nie wybrano jeszcze daty");
+                                        } else {
+                                            Log.d("TAG", task.getException().getMessage());
+                                        }
+                                    }
+                                });;
                             }
                         }
                     }
@@ -156,10 +161,5 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String date = dayOfMonth + "-" + month + "-" + year;
         dateText.setText(date);
-        metoda(date);
-    }
-    public void metoda(String date){
-
-        return;
     }
 }
