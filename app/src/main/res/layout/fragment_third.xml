@@ -118,7 +118,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/zarzadcaclick"
-                android:clickable="true">
+                android:clickable="true"
+                android:layout_marginBottom="10dp">
                 <ImageView
                     android:id="@+id/security"
                     android:layout_width="40dp"
@@ -148,7 +149,6 @@
             <RelativeLayout
                 android:id="@+id/aboutyou"
                 android:clickable="true"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
