@@ -149,13 +149,25 @@ public class EditPhotoPicture extends AppCompatActivity {
     }
 
     private void uploadtofirebase() {
-
+        String login = sharedPreferences.getString(KEY_LOGIN, null);
         ProgressDialog dialog = new ProgressDialog(this);
         dialog.setTitle("File Uploader");
         dialog.show();
-
+//        DatabaseReference uidRef = databaseReference.child(who).child(login).child("pimage");
+//        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                        String picprof = task.getResult().getValue(String.class);
+//                    StorageReference deleteOldImgReference = FirebaseStorage.getInstance().getReference().child(picprof);
+//                    deleteOldImgReference.delete();
+//
+//
+//                }
+//            }
+//        });
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference uploader = storage.getReference("Image1" + new Random().nextInt(50));
+        StorageReference uploader = storage.getReference(login);
 
         uploader.putFile(filepath)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -191,6 +203,8 @@ public class EditPhotoPicture extends AppCompatActivity {
 
                     }
                 });
+
+
 
     }
 }
