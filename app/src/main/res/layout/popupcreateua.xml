@@ -1,78 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="350dp"
+android:orientation="vertical"
+android:layout_width="350dp"
+android:layout_height="wrap_content"
+android:background="@color/pprimary"
+android:padding="5dp"
+android:layout_gravity="center">
+
+<LinearLayout
+    android:background="@drawable/back_wh"
+    android:layout_margin="20dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/pprimary"
-    android:padding="5dp"
-    android:layout_gravity="center">
+    android:layout_marginTop="15dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:text="Czy na pewno chcesz dodać tą osobę jako UŻYTKOWNIKA?"
+        android:textSize="15dp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"/>
+
 
     <LinearLayout
-        android:background="@drawable/back_wh"
-        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:gravity="center"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="15dp">
 
-        <TextView
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+        <androidx.appcompat.widget.AppCompatButton
+            android:onClick="CreateUserAccept"
             android:layout_width="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
-            android:text="Jeżeli napewno chcesz usunąć konto wpisz swój login"
-            android:textSize="15dp"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"/>
+            android:layout_height="40dp"
+            android:paddingStart="30dp"
+            android:text="tak"
+            android:paddingEnd="30dp"
+            android:textColor="@color/pprimary"
+            android:layout_gravity="center"
+            android:background="@drawable/back_second"
+            android:layout_marginRight="30dp"/>
 
-        <EditText
-            android:id="@+id/yourlogin"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:orientation="horizontal"
-            android:padding="15dp">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:onClick="Deleteacc"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:paddingStart="30dp"
-                android:text="usuń"
-                android:paddingEnd="30dp"
-                android:textColor="@color/pprimary"
-                android:layout_gravity="center"
-                android:background="@drawable/back_second"
-                android:layout_marginRight="30dp"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/back"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:paddingStart="30dp"
-                android:text="wróć"
-                android:paddingEnd="30dp"
-                android:textColor="@color/pprimary"
-                android:layout_gravity="center"
-                android:background="@drawable/back_second"/>
-        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/backtocreateuser"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:paddingStart="30dp"
+            android:text="nie"
+            android:paddingEnd="30dp"
+            android:textColor="@color/pprimary"
+            android:layout_gravity="center"
+            android:background="@drawable/back_second"/>
     </LinearLayout>
+</LinearLayout>
 
 </LinearLayout>
