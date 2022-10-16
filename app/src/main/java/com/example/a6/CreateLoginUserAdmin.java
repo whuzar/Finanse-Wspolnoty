@@ -44,6 +44,7 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
     private String sharesau;
     private String login;
     private String finalPassword;
+    private boolean noExistAdmin = false, noExistUser = false;
 
     Dialog mDialog;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
@@ -172,10 +173,26 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
     }
 
     private void addUser(){
-        databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.hasChild(login)){
+                    noExistAdmin = false;
+//                    Toast.makeText(CreateLoginUserAdmin.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
+                }else{
+                    noExistAdmin = true;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.hasChild(login) || !noExistAdmin){
                     generateUsername();
                     addUser();
 //                    Toast.makeText(CreateLoginUserAdmin.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
@@ -209,10 +226,26 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
     }
 
     private void addAdmin(){
-        databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.hasChild(login)){
+                    noExistUser = false;
+//                    Toast.makeText(CreateLoginUserAdmin.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
+                }else{
+                   noExistUser = true;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.hasChild(login) || !noExistUser){
                     generateUsername();
                     addAdmin();
 //                    Toast.makeText(CreateLoginUserAdmin.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
