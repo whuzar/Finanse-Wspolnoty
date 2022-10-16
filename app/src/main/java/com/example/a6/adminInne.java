@@ -112,18 +112,19 @@ public class adminInne extends AppCompatActivity {
                     for (DataSnapshot ds : task.getResult().getChildren()) {
                         String picprof = task.getResult().child("pimage").getValue(String.class);
 
-                        Transformation transformation = new RoundedTransformationBuilder()
-                                .borderColor(Color.WHITE)
-                                .borderWidthDp(1)
-                                .cornerRadiusDp(100)
-                                .oval(true)
-                                .build();
+                        if(picprof != null){
+                            Transformation transformation = new RoundedTransformationBuilder()
+                                    .borderColor(Color.WHITE)
+                                    .borderWidthDp(1)
+                                    .cornerRadiusDp(100)
+                                    .oval(true)
+                                    .build();
 
-                        Picasso.get()
-                                .load(picprof)
-                                .fit()
-                                .transform(transformation)
-                                .into(profilepohoto);
+                            Picasso.get()
+                                    .load(picprof)
+                                    .fit()
+                                    .transform(transformation)
+                                    .into(profilepohoto);}
                     }
                 }
             }
