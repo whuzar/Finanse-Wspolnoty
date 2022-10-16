@@ -161,5 +161,6 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String date = dayOfMonth + "-" + month + "-" + year;
         dateText.setText(date);
+
     }
 }

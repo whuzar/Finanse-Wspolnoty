@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class FirstFragment extends Fragment {
 
@@ -60,7 +64,13 @@ public class FirstFragment extends Fragment {
         linearLayoutonoff = rootView.findViewById(R.id.ideashownothing);
         linearshowbutton = rootView.findViewById(R.id.buttonlinearidea);
 
+        btnsendidea = rootView.findViewById(R.id.btnsendidea);
+
+        typeidea = rootView.findViewById(R.id.youridea);
+
         showtime();
+        shownoteidea();
+        getdata();
 
         int minute=Integer.parseInt("2880");
         long min= minute*60*1000;
@@ -71,10 +81,53 @@ public class FirstFragment extends Fragment {
             public void onRefresh() {
                 showtime();
                 shownoteidea();
+                getdata();
                 refreshLayout.setRefreshing(false);
             }
         });
 
+        String login = sharedPreferences.getString(KEY_LOGIN, null);
+        String who = sharedPreferences.getString(KEY_LOGED, null);
+
+        linearLayoutonoff.setVisibility(View.VISIBLE);
+        linearLayoutshow.setVisibility(View.GONE);
+        linearshowbutton.setVisibility(View.GONE);
+
+        btnsendidea.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String gv = typeidea.getText().toString();
+
+                DatabaseReference textRef = databaseReference.child(who).child(login);
+                textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DataSnapshot snapshot = task.getResult();
+                                databaseReference.child(who).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        databaseReference.child(who).child(login).child("ideas").child("idea").setValue(gv);
+                                        databaseReference.child(who).child(login).child("ideas").child("send").setValue("true");
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                                typeidea.setEnabled(false);
+                                btnsendidea.setText("Już wpisałeś swój pomysł");
+                                btnsendidea.setEnabled(false);
+                                Toast.makeText(getActivity(), "Pomysł został wysłany pomyślnie", Toast.LENGTH_SHORT).show();
+                                typeidea.setText("");
+                        } else {
+                            Log.d("TAG", task.getException().getMessage());
+                        }
+                    }
+                });
+            }
+        });
         return rootView;
     }
 
@@ -91,22 +144,22 @@ public class FirstFragment extends Fragment {
 
                         String money = task.getResult().child("wspolnota").child(team).child("typeidea").child("money").getValue(String.class);
                         String theme = task.getResult().child("wspolnota").child(team).child("typeidea").child("themevote").getValue(String.class);
+                        if(money != null && theme != null){
+                            if(money.equals("0")){
+                                moneytextset.setVisibility(View.GONE);
+                                ideamoneyset.setVisibility(View.GONE);
+                            }else{
+                                moneytextset.setText(money);
+                            }
 
-                        if(money.equals("0")){
-                            moneytextset.setVisibility(View.GONE);
-                            ideamoneyset.setVisibility(View.GONE);
-                        }else{
-                            moneytextset.setText(money);
+                            if(theme.equals("")){
+                                linearLayoutonoff.setVisibility(View.GONE);
+                                linearLayoutshow.setVisibility(View.VISIBLE);
+                                linearshowbutton.setVisibility(View.GONE);
+                            }
+
+                            themeidea.setText(theme);
                         }
-
-                        if(theme.equals("")){
-                            linearLayoutonoff.setVisibility(View.GONE);
-                            linearLayoutshow.setVisibility(View.VISIBLE);
-                            linearshowbutton.setVisibility(View.GONE);
-                        }
-//                        String name = task.getResult().child("wspolnota").child(team).child("notice").child("sendby").getValue(String.class);
-
-                        themeidea.setText(theme);
                     }
                 }
             }
@@ -139,4 +192,36 @@ public class FirstFragment extends Fragment {
         };
         timer.start();
     }
+
+    public void getdata(){
+        String login = sharedPreferences.getString(KEY_LOGIN, null);
+        String who = sharedPreferences.getString(KEY_LOGED, null);
+        DatabaseReference uidRef = databaseReference;
+        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
+                        String check = task.getResult().child(who).child(login).child("ideas").child("send").getValue(String.class);
+                        if(Objects.equals(check, "true")){
+                            typeidea.setEnabled(false);
+                            btnsendidea.setText("Już wpisałeś swój pomysł");
+                            btnsendidea.setEnabled(false);
+                        }
+//                        Calendar calendar = Calendar.getInstance();
+//                        int day = calendar.get(Calendar.HOUR_OF_DAY);
+//                        int year = calendar.get(Calendar.YEAR);
+//                        int month = calendar.get(Calendar.MONTH);
+//
+//                        String team = task.getResult().child(who).child(login).child("team").getValue(String.class);
+//                        String date = task.getResult().child("wspolnota").child(team).child("typeidea").child("enddate").getValue(String.class);
+//
+//                        int iend = date.indexOf("-");
+
+                    }
+                }
+            }
+        });
+    }
+
 }

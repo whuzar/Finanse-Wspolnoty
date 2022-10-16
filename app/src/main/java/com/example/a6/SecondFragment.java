@@ -29,7 +29,7 @@ public class SecondFragment extends Fragment {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     private SwipeRefreshLayout refreshLayout;
-    private TextView themes, mes;
+    private TextView themes, mes, fromwho;
     private LinearLayout linearLayoutonoff, linearLayoutshow;
 
     @Override
@@ -45,6 +45,7 @@ public class SecondFragment extends Fragment {
         mes = rootView.findViewById(R.id.setmessage);
         linearLayoutonoff = rootView.findViewById(R.id.noticeonoff);
         linearLayoutshow = rootView.findViewById(R.id.noticeshownothing);
+        fromwho = rootView.findViewById(R.id.from);
 
         shownotice();
 
@@ -72,15 +73,18 @@ public class SecondFragment extends Fragment {
 
                         String theme = task.getResult().child("wspolnota").child(team).child("notice").child("thememessage").getValue(String.class);
                         String message = task.getResult().child("wspolnota").child(team).child("notice").child("message").getValue(String.class);
-                        if(theme.equals("") || message.equals("")){
-                            linearLayoutonoff.setVisibility(View.GONE);
-                            linearLayoutshow.setVisibility(View.VISIBLE);
+                        String sendby = task.getResult().child("wspolnota").child(team).child("notice").child("sendby").getValue(String.class);
+                        if(theme == null || message == null){
+                                linearLayoutonoff.setVisibility(View.GONE);
+                                linearLayoutshow.setVisibility(View.VISIBLE);
+
+                        }else{
+                            linearLayoutonoff.setVisibility(View.VISIBLE);
+                            linearLayoutshow.setVisibility(View.GONE);
+                            themes.setText(theme);
+                            mes.setText(message);
+                            fromwho.setText("Ogłoszenie od " + sendby);
                         }
-//                        String name = task.getResult().child("wspolnota").child(team).child("notice").child("sendby").getValue(String.class);
-
-                        themes.setText(theme);
-                        mes.setText(message);
-
                     }
                 }
             }

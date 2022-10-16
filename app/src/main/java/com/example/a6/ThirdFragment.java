@@ -1,18 +1,24 @@
 package com.example.a6;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -21,11 +27,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
+
+import java.util.Objects;
 
 public class ThirdFragment extends Fragment{
 
@@ -37,6 +47,7 @@ public class ThirdFragment extends Fragment{
     private static final String KEY_LOGED = "wloged";
     private static final String KEY_NUMBER = "number";
     private String who;
+    Dialog mDialog;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     @SuppressLint("SetTextI18n")
@@ -45,6 +56,8 @@ public class ThirdFragment extends Fragment{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_third,
                 container, false);
+
+        mDialog = new Dialog(getActivity());
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout3);
 
@@ -161,6 +174,55 @@ public class ThirdFragment extends Fragment{
                 }
             }
         });
+    }
+
+    public void ShowDelete(View v){
+        mDialog.setContentView(R.layout.popupdeleteacc);
+        Button btnexit = mDialog.findViewById(R.id.back);
+        btnexit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDialog.dismiss();
+            }
+        });
+        mDialog.show();
+    }
+
+    public void Deleteacc(View v){
+        EditText loginy = mDialog.findViewById(R.id.yourlogin);
+        String ly = loginy.getText().toString();
+        String login = sharedPreferences.getString(KEY_LOGIN, null);
+        DatabaseReference uidRef = databaseReference.child(who).child(login);
+        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
+                        String sure = task.getResult().getValue(String.class);
+                        if(Objects.equals(sure, ly)){
+
+                            DatabaseReference uid = databaseReference.child(who).child(login);
+                            uid.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot remov: dataSnapshot.getChildren()) {
+                                        remov.getRef().removeValue();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    Log.e(TAG, "onCancelled", databaseError.toException());
+                                }
+                            });
+
+                        }
+                    }
+                }
+            }
+        });
+        Toast.makeText(getActivity(), "Konto zostało usunięte", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getActivity(), Login.class));
     }
 
     public void updateDetail() {

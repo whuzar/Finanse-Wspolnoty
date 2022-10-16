@@ -56,6 +56,19 @@
                 android:visibility="visible">
 
                 <TextView
+                    android:id="@+id/from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAllCaps="true"
+                    android:text="Ogłoszenie od - "
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="10dp"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:layout_marginTop="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -80,7 +93,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
