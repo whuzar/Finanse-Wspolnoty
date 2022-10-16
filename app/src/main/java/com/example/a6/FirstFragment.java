@@ -98,12 +98,14 @@ public class FirstFragment extends Fragment {
             public void onClick(View view) {
                 String gv = typeidea.getText().toString();
 
-                DatabaseReference textRef = databaseReference.child(who).child(login);
-                textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DataSnapshot snapshot = task.getResult();
+                if(!gv.equals("")) {
+
+                    DatabaseReference textRef = databaseReference.child(who).child(login);
+                    textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DataSnapshot snapshot = task.getResult();
                                 databaseReference.child(who).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -121,11 +123,14 @@ public class FirstFragment extends Fragment {
                                 btnsendidea.setEnabled(false);
                                 Toast.makeText(getActivity(), "Pomysł został wysłany pomyślnie", Toast.LENGTH_SHORT).show();
                                 typeidea.setText("");
-                        } else {
-                            Log.d("TAG", task.getException().getMessage());
+                            } else {
+                                Log.d("TAG", task.getException().getMessage());
+                            }
                         }
-                    }
-                });
+                    });
+                }else{
+                    Toast.makeText(getActivity(), "Pole nie może być puste", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return rootView;
@@ -156,6 +161,10 @@ public class FirstFragment extends Fragment {
                                 linearLayoutonoff.setVisibility(View.GONE);
                                 linearLayoutshow.setVisibility(View.VISIBLE);
                                 linearshowbutton.setVisibility(View.GONE);
+                            }else {
+                                linearLayoutonoff.setVisibility(View.GONE);
+                                linearLayoutshow.setVisibility(View.VISIBLE);
+                                linearshowbutton.setVisibility(View.VISIBLE);
                             }
 
                             themeidea.setText(theme);
