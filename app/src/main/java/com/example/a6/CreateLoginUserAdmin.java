@@ -45,7 +45,7 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
     private boolean noExistAdmin = false, noExistUser = false;
 
     Dialog mDialog;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

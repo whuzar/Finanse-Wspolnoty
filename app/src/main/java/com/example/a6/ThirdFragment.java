@@ -65,6 +65,7 @@ public class ThirdFragment extends Fragment{
         RelativeLayout aboutyou = rootView.findViewById(R.id.aboutyou);
         RelativeLayout contacta = rootView.findViewById(R.id.contactwithadmin);
         RelativeLayout deleteacc = rootView.findViewById(R.id.delet);
+        RelativeLayout breaks = rootView.findViewById(R.id.reportbreaks);
 
         Button editprofileb = rootView.findViewById(R.id.btneditprofile);
 
@@ -138,6 +139,13 @@ public class ThirdFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 ShowDelete(view);
+            }
+        });
+
+        breaks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), Breaks.class));
             }
         });
 

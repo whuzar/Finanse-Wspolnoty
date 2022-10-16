@@ -48,9 +48,9 @@ public class adminInne extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-    private RelativeLayout voteIdea, createlogin, editanuser, sendmes, deleteaccuser;
+    private RelativeLayout voteIdea, createlogin, editanuser, sendmes, deleteaccuser, voteon;
     private TextView logina, phonea;
-    private ImageView img;
+    private ImageView img, back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +64,13 @@ public class adminInne extends AppCompatActivity {
         editanuser = findViewById(R.id.editanotheruser);
         sendmes = findViewById(R.id.sendmessage);
         deleteaccuser = findViewById(R.id.deletuser);
+        voteon = findViewById(R.id.voteonideaclick);
 
         logina = findViewById(R.id.setloginadmin);
         phonea = findViewById(R.id.setphoneadmin);
 
         img = findViewById(R.id.photopic);
+        back = findViewById(R.id.backlastview);
 
         sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         who = sharedPreferences.getString(KEY_LOGED, null);
@@ -111,10 +113,24 @@ public class adminInne extends AppCompatActivity {
             }
         });
 
+        voteon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(adminInne.this, VoteOnIdeaFinish.class));
+            }
+        });
+
         deleteaccuser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ShowDeleteUser(view);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
