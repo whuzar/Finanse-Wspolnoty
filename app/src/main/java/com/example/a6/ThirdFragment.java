@@ -178,6 +178,9 @@ public class ThirdFragment extends Fragment{
                         }
                     });
                     Toast.makeText(getActivity(), "Usunięto użytkownika", Toast.LENGTH_SHORT).show();
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(KEY_LOGIN, null);
+                    editor.apply();
                     startActivity(new Intent(getActivity(), Login.class));
                 }else{
                     Toast.makeText(getActivity(), "Nie poprawny login", Toast.LENGTH_SHORT).show();

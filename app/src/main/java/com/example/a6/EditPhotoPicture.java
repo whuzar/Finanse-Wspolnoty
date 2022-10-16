@@ -40,7 +40,6 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 import java.io.InputStream;
-import java.util.Random;
 
 public class EditPhotoPicture extends AppCompatActivity {
 
