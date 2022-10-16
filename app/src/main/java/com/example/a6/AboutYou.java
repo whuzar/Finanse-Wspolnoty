@@ -26,7 +26,7 @@ public class AboutYou extends AppCompatActivity {
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
 
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     TextView anamesur, aemail, aphone, ashares;
     Button btnchange;

@@ -8,7 +8,10 @@
     android:orientation="vertical"
     tools:context=".ThirdFragment">
 
-
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -41,6 +44,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/noticeonoff"
                 android:background="@drawable/back_wh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,9 +52,23 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
-                android:padding="15dp">
+                android:padding="15dp"
+                android:visibility="visible">
 
                 <TextView
+                    android:id="@+id/from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAllCaps="true"
+                    android:text="Ogłoszenie od - "
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="10dp"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:layout_marginTop="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -58,22 +76,24 @@
                     android:text="Temat ogłoszenia"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:textSize="14dp"
+                    android:textSize="10dp"
                     android:padding="5dp"/>
 
                 <TextView
+                    android:id="@+id/settheme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
                     android:textAllCaps="true"
-                    android:text="theme"
                     android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:textSize="14dp"
-                    android:layout_marginTop="5dp"/>
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -81,23 +101,50 @@
                     android:text="Wiadomość"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:textSize="14dp"
+                    android:textSize="10dp"
                     android:padding="5dp"/>
 
                 <TextView
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:id="@+id/setmessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:textAllCaps="true"
+                    android:gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/noticeshownothing"
+                android:background="@drawable/back_wh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:visibility="gone">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:text="theme"
+                    android:text="Żaden zarządca jeszcze tutaj nic nie dodał :("
+                    android:gravity="center"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:textSize="14dp"
-                    android:layout_marginTop="5dp"/>
+                    android:textSize="18dp"
+                    android:padding="5dp" />
 
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </LinearLayout>

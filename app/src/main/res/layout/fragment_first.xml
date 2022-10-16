@@ -44,7 +44,7 @@
                 android:background="@drawable/back_wh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
@@ -62,24 +62,24 @@
                         android:padding="10dp"/>
 
                     <TextView
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
-                        android:text="0,00zł"
-                        android:textSize="20dp"
+                        android:text="360,264,00zł"
+                        android:textSize="15dp"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold"
                         android:padding="10dp"/>
 
             </LinearLayout>
             <LinearLayout
-
+                android:id="@+id/ideaonoff"
                 android:background="@drawable/back_wh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
@@ -89,11 +89,152 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Tutaj jeszcze nic nie ma :("
+                    android:textAllCaps="true"
+                    android:text="Trwają pomysły"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="24dp"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/counterdowntime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAllCaps="true"
+                    android:text="time"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAllCaps="true"
+                    android:text="Temat"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="10dp"
+                    android:padding="5dp"/>
+
+                <TextView
+                    android:id="@+id/setideatheme"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_gravity="center"
+                    android:textAllCaps="true"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textmoney"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAllCaps="true"
+                    android:text="Maksymalna ilość pieniędzy na pomysł"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="10dp"
+                    android:padding="5dp"
+                    android:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/setideamoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:textAllCaps="true"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:visibility="visible"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAllCaps="true"
+                    android:text="Wpisz swój pomysł!"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="10dp"
+                    android:padding="5dp"/>
+
+                <EditText
+                    android:id="@+id/youridea"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/white"
+                    android:maxLength="255"
+                    android:textAlignment="center"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/buttonlinearidea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/back_wh"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:visibility="visible">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnsendidea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/back_second"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
+                    android:text="Prześlij swój pomysł"
+                    android:textAllCaps="false"
+                    android:textColor="@color/pprimary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ideashownothing"
+                android:background="@drawable/back_wh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAllCaps="true"
+                    android:text="Żaden zarządca jeszcze tutaj nic nie dodał :("
+                    android:gravity="center"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
                     android:textSize="18dp"
-                    android:padding="10dp"/>
+                    android:padding="5dp" />
 
             </LinearLayout>
         </LinearLayout>

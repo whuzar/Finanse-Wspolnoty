@@ -24,20 +24,10 @@
             android:layout_width="wrap_content"
             android:gravity="center_horizontal"
             android:layout_height="wrap_content"
-            android:text="Jeżeli napewno chcesz usunąć konto wpisz swój login"
+            android:text="Czy na pewno chcesz dodać tą osobę jako UŻYTKOWNIKA?"
             android:textSize="15dp"
             android:textColor="#FFFFFF"
             android:textStyle="bold"/>
-
-        <EditText
-            android:id="@+id/yourlogin"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textColor="@color/white"
-            android:textAlignment="center"
-            />
 
 
         <LinearLayout
@@ -51,11 +41,11 @@
             android:padding="15dp">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:onClick="Deleteacc"
+                android:onClick="CreateUserAccept"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:paddingStart="30dp"
-                android:text="usuń"
+                android:text="tak"
                 android:paddingEnd="30dp"
                 android:textColor="@color/pprimary"
                 android:layout_gravity="center"
@@ -63,11 +53,11 @@
                 android:layout_marginRight="30dp"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/back"
+                android:id="@+id/backtocreateuser"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:paddingStart="30dp"
-                android:text="wróć"
+                android:text="nie"
                 android:paddingEnd="30dp"
                 android:textColor="@color/pprimary"
                 android:layout_gravity="center"

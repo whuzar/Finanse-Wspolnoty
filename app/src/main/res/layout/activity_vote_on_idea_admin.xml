@@ -74,8 +74,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white"
+                        android:textAlignment="center"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:background="@drawable/back_wh"
                     android:layout_width="match_parent"
@@ -107,7 +109,7 @@
                         android:background="@drawable/back_second"/>
                     <TextView
                         android:layout_marginTop="30dp"
-                        android:id="@+id/cos"
+                        android:id="@+id/showdate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Nie wybrano jeszcze daty"
@@ -116,42 +118,42 @@
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
                 </LinearLayout>
-                <LinearLayout
-                    android:background="@drawable/back_wh"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:orientation="vertical"
-                    android:padding="15dp">
+<!--                <LinearLayout-->
+<!--                    android:background="@drawable/back_wh"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:layout_marginStart="5dp"-->
+<!--                    android:layout_marginEnd="5dp"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:padding="15dp">-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Wybierz siłę głosowania"
-                        android:textSize="15dp"
-                        android:layout_gravity="center"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Wybierz siłę głosowania"-->
+<!--                        android:textSize="15dp"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:textColor="#FFFFFF"-->
+<!--                        android:textStyle="bold" />-->
 
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
-                        <RadioButton
-                            android:id="@+id/radiochoice1vote"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="1 osoba = 1 głos"
-                            android:textColor="@color/white"/>
-                        <RadioButton
-                            android:id="@+id/radiochoice2vote"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Zależne od ilości udziałów"
-                            android:textColor="@color/white"/>
-                    </RadioGroup>
-                </LinearLayout>
+<!--                    <RadioGroup-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent" >-->
+<!--                        <RadioButton-->
+<!--                            android:id="@+id/radiochoice1vote"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="1 osoba = 1 głos"-->
+<!--                            android:textColor="@color/white"/>-->
+<!--                        <RadioButton-->
+<!--                            android:id="@+id/radiochoice2vote"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="Zależne od ilości udziałów"-->
+<!--                            android:textColor="@color/white"/>-->
+<!--                    </RadioGroup>-->
+<!--                </LinearLayout>-->
                 <LinearLayout
                     android:background="@drawable/back_wh"
                     android:layout_width="match_parent"
@@ -199,7 +201,8 @@
                         android:inputType="number"
                         android:textColor="@color/white"
                         android:focusedByDefault="false"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:textAlignment="center"/>
                 </LinearLayout>
                 <LinearLayout
                     android:background="@drawable/back_wh"
@@ -212,7 +215,7 @@
                     android:padding="15dp">
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/senddatavote"
+                        android:id="@+id/sendtoonevote"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:paddingStart="30dp"
