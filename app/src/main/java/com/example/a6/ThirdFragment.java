@@ -35,8 +35,6 @@ import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
-import java.util.Objects;
-
 public class ThirdFragment extends Fragment{
 
     private SwipeRefreshLayout refreshLayout;
@@ -66,6 +64,7 @@ public class ThirdFragment extends Fragment{
         RelativeLayout changepwd = rootView.findViewById(R.id.changepasswd);
         RelativeLayout aboutyou = rootView.findViewById(R.id.aboutyou);
         RelativeLayout contacta = rootView.findViewById(R.id.contactwithadmin);
+        RelativeLayout deleteacc = rootView.findViewById(R.id.delet);
 
         Button editprofileb = rootView.findViewById(R.id.btneditprofile);
 
@@ -135,7 +134,57 @@ public class ThirdFragment extends Fragment{
             }
         });
 
+        deleteacc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowDelete(view);
+            }
+        });
+
         return rootView;
+    }
+    public void ShowDelete(View v){
+        mDialog.setContentView(R.layout.popupdeleteacc);
+        Button btnexit = mDialog.findViewById(R.id.back);
+        btnexit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mDialog.dismiss();
+            }
+        });
+        Button btndel = mDialog.findViewById(R.id.delt);
+
+        EditText loginy = mDialog.findViewById(R.id.yourlogin);
+        String login = sharedPreferences.getString(KEY_LOGIN, null);
+
+        btndel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String ly = loginy.getText().toString();
+                if(login.equals(ly)){
+
+                    DatabaseReference uid = databaseReference.child(who).child(login);
+                    uid.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            for (DataSnapshot remov: dataSnapshot.getChildren()) {
+                                remov.getRef().removeValue();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Log.e(TAG, "onCancelled", databaseError.toException());
+                        }
+                    });
+                    Toast.makeText(getActivity(), "Usunięto użytkownika", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getActivity(), Login.class));
+                }else{
+                    Toast.makeText(getActivity(), "Nie poprawny login", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        mDialog.show();
     }
 
     private void refresh(TextView login_underphoto, TextView number_telephone, ImageView profilepohoto) {
@@ -176,53 +225,8 @@ public class ThirdFragment extends Fragment{
         });
     }
 
-    public void ShowDelete(View v){
-        mDialog.setContentView(R.layout.popupdeleteacc);
-        Button btnexit = mDialog.findViewById(R.id.back);
-        btnexit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mDialog.dismiss();
-            }
-        });
-        mDialog.show();
-    }
-
     public void Deleteacc(View v){
-        EditText loginy = mDialog.findViewById(R.id.yourlogin);
-        String ly = loginy.getText().toString();
-        String login = sharedPreferences.getString(KEY_LOGIN, null);
-        DatabaseReference uidRef = databaseReference.child(who).child(login);
-        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (DataSnapshot ds : task.getResult().getChildren()) {
-                        String sure = task.getResult().getValue(String.class);
-                        if(Objects.equals(sure, ly)){
 
-                            DatabaseReference uid = databaseReference.child(who).child(login);
-                            uid.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot remov: dataSnapshot.getChildren()) {
-                                        remov.getRef().removeValue();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                    Log.e(TAG, "onCancelled", databaseError.toException());
-                                }
-                            });
-
-                        }
-                    }
-                }
-            }
-        });
-        Toast.makeText(getActivity(), "Konto zostało usunięte", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getActivity(), Login.class));
     }
 
     public void updateDetail() {
