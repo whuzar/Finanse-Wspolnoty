@@ -36,6 +36,7 @@ public class Login extends AppCompatActivity {
     private static final String KEY_LOGIN = "login";
     private static final String KEY_LOGED = "wloged";
     private static final String KEY_NUMBER = "number";
+    private Boolean isLogin = false, isPassword = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -57,6 +58,7 @@ public class Login extends AppCompatActivity {
 
         if (loginremember != null){
             startActivity(new Intent(Login.this, MainActivity.class));
+            finish();
         }
 
 
@@ -93,13 +95,17 @@ public class Login extends AppCompatActivity {
 
                                     Toast.makeText(Login.this, "Witamy ponownie", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(Login.this, MainActivity.class));
+                                    isLogin = false;
+                                    isPassword = false;
                                     finish();
                                 }else {
-                                    password.setError("Niepoprawne hasło");
+                                    isPassword = true;
+//                                    password.setError("Niepoprawne hasło");
 //                                    Toast.makeText(Login.this, "Niepoprawne hasło", Toast.LENGTH_SHORT).show();
                                 }
                             }else {
-                                logi.setError("Niepoprawny login");
+                                isLogin = true;
+//                                logi.setError("Niepoprawny login");
 //                                Toast.makeText(Login.this, "Niepoprawny login", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -124,13 +130,17 @@ public class Login extends AppCompatActivity {
 
                                     Toast.makeText(Login.this, "Witamy ponownie", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(Login.this, MainActivity.class));
+                                    isLogin = false;
+                                    isPassword = false;
                                     finish();
                                 }else {
-                                    password.setError("Niepoprawne hasło");
+                                    isPassword = true;
+//                                    password.setError("Niepoprawne hasło");
 //                                    Toast.makeText(Login.this, "Niepoprawne hasło", Toast.LENGTH_SHORT).show();
                                 }
                             }else {
-                                logi.setError("Niepoprawny login");
+                                isLogin = true;
+//                                logi.setError("Niepoprawny login");
 //                                Toast.makeText(Login.this, "Niepoprawny login", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -140,6 +150,12 @@ public class Login extends AppCompatActivity {
 
                         }
                     });
+                    if(isPassword){
+                        password.setError("Niepoprawne hasło");
+                    }
+                    if (isLogin){
+                        logi.setError("Niepoprawny login");
+                    }
                 }
             }
         });

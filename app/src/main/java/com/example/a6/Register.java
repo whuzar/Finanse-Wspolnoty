@@ -56,6 +56,7 @@ public class Register extends AppCompatActivity {
     private String name;
     private String surname;
     private String shares;
+    private boolean noExistUser = false, noExistAdmin = false;
 
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://loginres-5779b-default-rtdb.firebaseio.com/");
@@ -231,13 +232,9 @@ public class Register extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.hasChild(logtxt)){
 //                    Toast.makeText(Register.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
-                    generateUsername();
-                    addUser();
+                    noExistAdmin = false;
                 }else{
-                    JavaMailAPI javaMailAPI = new JavaMailAPI(Register.this, emailtxt, "Kod potwierdzający rejestracje", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Twój kod Aktywacyjny</h1><h2 style='text-align:center;padding-bottom:30px'>"+code+"</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o weryfikacje zignoruj tą wiadomość</h4></div>");
-                    javaMailAPI.execute();
-                    passData();
-                    finish();
+                    noExistAdmin = true;
                 }
             }
 
@@ -246,6 +243,28 @@ public class Register extends AppCompatActivity {
 
             }
         });
+        databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.hasChild(logtxt)){
+//                    Toast.makeText(Register.this, "Ten login już istnieje", Toast.LENGTH_SHORT).show();
+                    noExistUser = false;
+                }else{
+                    noExistUser = true;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        if(noExistUser && noExistAdmin){
+            JavaMailAPI javaMailAPI = new JavaMailAPI(Register.this, emailtxt, "Kod potwierdzający rejestracje", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Twój kod Aktywacyjny</h1><h2 style='text-align:center;padding-bottom:30px'>"+code+"</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o weryfikacje zignoruj tą wiadomość</h4></div>");
+            javaMailAPI.execute();
+            passData();
+            finish();
+        }
     }
 
 
