@@ -65,7 +65,7 @@ public class ThirdFragment extends Fragment{
         RelativeLayout aboutyou = rootView.findViewById(R.id.aboutyou);
         RelativeLayout contacta = rootView.findViewById(R.id.contactwithadmin);
         RelativeLayout deleteacc = rootView.findViewById(R.id.delet);
-        RelativeLayout breaks = rootView.findViewById(R.id.reportbreaks);
+        RelativeLayout breaks = rootView.findViewById(R.id.report);
 
         Button editprofileb = rootView.findViewById(R.id.btneditprofile);
 
