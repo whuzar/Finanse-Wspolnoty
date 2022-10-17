@@ -73,7 +73,7 @@
                     android:padding="15dp">
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/bntreport"
+                        android:id="@+id/btnreport"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:paddingStart="30dp"
