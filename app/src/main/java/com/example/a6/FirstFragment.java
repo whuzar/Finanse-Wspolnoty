@@ -1,5 +1,6 @@
 package com.example.a6;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -26,8 +28,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 public class FirstFragment extends Fragment {
 
@@ -43,6 +50,8 @@ public class FirstFragment extends Fragment {
     private EditText typeidea;
     private LinearLayout linearLayoutonoff, linearLayoutshow, linearshowbutton;
     private Button btnsendidea;
+    private CountDownTimer timer;
+    long diff, diffold, oldLong, NewLong;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,10 +80,6 @@ public class FirstFragment extends Fragment {
         showtime();
         shownoteidea();
         getdata();
-
-        int minute=Integer.parseInt("2880");
-        long min= minute*60*1000;
-        counter(min);
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -149,6 +154,10 @@ public class FirstFragment extends Fragment {
 
                         String money = task.getResult().child("wspolnota").child(team).child("typeidea").child("money").getValue(String.class);
                         String theme = task.getResult().child("wspolnota").child(team).child("typeidea").child("themevote").getValue(String.class);
+                        String day = task.getResult().child("wspolnota").child(team).child("typeidea").child("day").getValue(String.class);
+                        String month = task.getResult().child("wspolnota").child(team).child("typeidea").child("month").getValue(String.class);
+                        String year = task.getResult().child("wspolnota").child(team).child("typeidea").child("year").getValue(String.class);
+
                         if(money != null && theme != null){
                             if(money.equals("0")){
                                 moneytextset.setVisibility(View.GONE);
@@ -166,8 +175,42 @@ public class FirstFragment extends Fragment {
                                 linearLayoutshow.setVisibility(View.VISIBLE);
                                 linearshowbutton.setVisibility(View.VISIBLE);
                             }
-
                             themeidea.setText(theme);
+
+                            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+2"));
+                            int yr = calendar.get(Calendar.YEAR);
+                            int mh = calendar.get(Calendar.MONTH);
+                            int dom = calendar.get(Calendar.DAY_OF_MONTH);
+
+                            int hr = calendar.get(Calendar.HOUR_OF_DAY);
+                            int mm = calendar.get(Calendar.MINUTE);
+                            int sc = calendar.get(Calendar.SECOND);
+
+                            System.out.println(sc);
+
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
+                            String oldTime = dom + "." + mh + "." + yr + ", " + hr + ":" + mm + ":" + sc;//Timer date 1
+                            String NewTime = day + "." + month + "." + year + ", 23:59:00";//Timer date 2
+                            Date oldDate, newDate;
+                            try {
+                                oldDate = formatter.parse(oldTime);
+                                newDate = formatter.parse(NewTime);
+                                oldLong = oldDate.getTime();
+                                NewLong = newDate.getTime();
+                                diff = NewLong - oldLong;
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if(timer == null){
+//                                counterstop();
+                                counter(diff);
+                                diffold = diff;
+                            }
+                            if (diffold != diff){
+                                timer.cancel();
+                                counter(diff);
+                                diffold = diff;
+                            }
                         }
                     }
                 }
@@ -187,16 +230,17 @@ public class FirstFragment extends Fragment {
     }
 
     private void counter(long min) {
-        CountDownTimer timer = new CountDownTimer(min, 1000) {
+        timer = new CountDownTimer(min, 1000) {
             public void onTick(long millisUntilFinished) {
-                int seconds = (int) (millisUntilFinished / 1000) % 60;
-                int minutes = (int) ((millisUntilFinished / (1000 * 60)) % 60);
-                int hours = (int) ((millisUntilFinished / (1000 * 60 * 60)) % 24);
-                int days = (int) ((millisUntilFinished / (1000 * 60 * 60)) / 24);
-                countertime.setText(String.format("%d:%d:%d:%d", days, hours, minutes, seconds));
+                long millis = millisUntilFinished;
+                @SuppressLint("DefaultLocale") String hms = (String.format("%02d", TimeUnit.MILLISECONDS.toDays(millis))) + ":"
+                        + (String.format("%02d", TimeUnit.MILLISECONDS.toHours(millis) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millis))) + ":")
+                        + (String.format("%02d", TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis))) + ":"
+                        + (String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)))));
+                countertime.setText(/*context.getString(R.string.ends_in) + " " +*/ hms);
             }
             public void onFinish() {
-                Toast.makeText(getActivity(), "koniec", Toast.LENGTH_SHORT).show();
+                countertime.setText("Czas upłynął");
             }
         };
         timer.start();
@@ -217,20 +261,16 @@ public class FirstFragment extends Fragment {
                             btnsendidea.setText("Już wpisałeś swój pomysł");
                             btnsendidea.setEnabled(false);
                         }
-//                        Calendar calendar = Calendar.getInstance();
-//                        int day = calendar.get(Calendar.HOUR_OF_DAY);
-//                        int year = calendar.get(Calendar.YEAR);
-//                        int month = calendar.get(Calendar.MONTH);
-//
-//                        String team = task.getResult().child(who).child(login).child("team").getValue(String.class);
-//                        String date = task.getResult().child("wspolnota").child(team).child("typeidea").child("enddate").getValue(String.class);
-//
-//                        int iend = date.indexOf("-");
-
                     }
                 }
             }
         });
     }
 
+
+    @Override
+    public void onResume() {
+        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        super.onResume();
+    }
 }
