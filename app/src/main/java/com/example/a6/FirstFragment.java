@@ -186,8 +186,6 @@ public class FirstFragment extends Fragment {
                             int mm = calendar.get(Calendar.MINUTE);
                             int sc = calendar.get(Calendar.SECOND);
 
-                            System.out.println(sc);
-
                             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
                             String oldTime = dom + "." + mh + "." + yr + ", " + hr + ":" + mm + ":" + sc;//Timer date 1
                             String NewTime = day + "." + month + "." + year + ", 23:59:00";//Timer date 2
@@ -202,7 +200,6 @@ public class FirstFragment extends Fragment {
                                 e.printStackTrace();
                             }
                             if(timer == null){
-//                                counterstop();
                                 counter(diff);
                                 diffold = diff;
                             }
@@ -266,7 +263,6 @@ public class FirstFragment extends Fragment {
             }
         });
     }
-
 
     @Override
     public void onResume() {
