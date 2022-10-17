@@ -87,15 +87,17 @@
                 android:padding="15dp">
 
                 <TextView
+                    android:id="@+id/setideatheme"
+                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:text="Trwają pomysły"
                     android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:textSize="24dp"
-                    android:padding="5dp"/>
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_marginTop="10dp"
@@ -109,31 +111,6 @@
                     android:textStyle="bold"
                     android:textSize="15dp"
                     android:padding="5dp"/>
-
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textAllCaps="true"
-                    android:text="Temat"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:textSize="10dp"
-                    android:padding="5dp"/>
-
-                <TextView
-                    android:id="@+id/setideatheme"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_gravity="center"
-                    android:textAllCaps="true"
-                    android:textColor="#FFFFFF"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textmoney"
@@ -169,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:text="Wpisz swój pomysł!"
+                    android:text="Opisz swój pomysł!"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
                     android:textSize="10dp"
@@ -198,7 +175,8 @@
                 android:background="@drawable/back_wh"
                 android:orientation="vertical"
                 android:padding="15dp"
-                android:visibility="visible">
+                android:visibility="visible"
+                android:layout_marginBottom="70dp">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnsendidea"

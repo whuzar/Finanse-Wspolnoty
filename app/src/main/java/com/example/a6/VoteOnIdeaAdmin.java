@@ -1,5 +1,6 @@
 package com.example.a6;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -34,7 +35,7 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-    private TextView dateText;
+    private TextView dateTextd, dateTextm, dateTexty;
     private EditText valuefor, votetheme;
     private Button btndate, sendvote;
     private RadioButton valuer1, valuer2;
@@ -45,7 +46,9 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
 
         sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
 
-        dateText = findViewById(R.id.showdate);
+        dateTextd = findViewById(R.id.showdateday);
+        dateTextm = findViewById(R.id.showdatemonth);
+        dateTexty = findViewById(R.id.showdateyear);
         btndate = findViewById(R.id.choosedate);
         valuefor = findViewById(R.id.showedit);
         valuer2 = findViewById(R.id.radiochoice2value);
@@ -92,54 +95,66 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
 
                 String vt = votetheme.getText().toString();
                 String vf = valuefor.getText().toString();
-                String dt = dateText.getText().toString();
+                String dy = dateTexty.getText().toString();
+                String dm = dateTextm.getText().toString();
+                String dd = dateTextd.getText().toString();
 
-                DatabaseReference uidRef = databaseReference.child("admin").child(login);
-                uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (DataSnapshot ds : task.getResult().getChildren()) {
-                                String teamwspo = task.getResult().child("team").getValue(String.class);
+                if(!vt.equals("") && !dy.equals("")) {
+                    DatabaseReference uidRef = databaseReference.child("admin").child(login);
+                    uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (DataSnapshot ds : task.getResult().getChildren()) {
+                                    String teamwspo = task.getResult().child("team").getValue(String.class);
 
-                                DatabaseReference textRef = databaseReference.child("wspolnota").child(teamwspo);
-                                textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                        if (task.isSuccessful()) {
-                                            DataSnapshot snapshot = task.getResult();
+                                    DatabaseReference textRef = databaseReference.child("wspolnota").child(teamwspo);
+                                    textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                DataSnapshot snapshot = task.getResult();
 
-                                            databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                    databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("themevote").setValue(vt);
-                                                    databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("sendby").setValue(login);
-                                                    databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("enddate").setValue(dt);
-                                                    if(!vf.isEmpty()){
-                                                        databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("money").setValue(vf);
-                                                    }else {
-                                                        databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("money").setValue("0");
+                                                databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                        databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("themevote").setValue(vt);
+                                                        databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("sendby").setValue(login);
+
+                                                        databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("day").setValue(dd);
+                                                        databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("year").setValue(dy);
+                                                        databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("month").setValue(dm);
+                                                        if (!vf.isEmpty()) {
+                                                            databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("money").setValue(vf);
+                                                        } else {
+                                                            databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("money").setValue("0");
+                                                        }
                                                     }
-                                                }
 
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError error) {
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError error) {
 
-                                                }
-                                            });
-                                            Toast.makeText(VoteOnIdeaAdmin.this, "Utworzono głosowanie", Toast.LENGTH_SHORT).show();
-                                            valuefor.setText("");
-                                            votetheme.setText("");
-                                            dateText.setText("Nie wybrano jeszcze daty");
-                                        } else {
-                                            Log.d("TAG", task.getException().getMessage());
+                                                    }
+                                                });
+                                                Toast.makeText(VoteOnIdeaAdmin.this, "Utworzono głosowanie", Toast.LENGTH_SHORT).show();
+                                                valuefor.setText("");
+                                                votetheme.setText("");
+                                                dateTexty.setText("");
+                                                dateTextm.setText("");
+                                                dateTextd.setText("");
+                                            } else {
+                                                Log.d("TAG", task.getException().getMessage());
+                                            }
                                         }
-                                    }
-                                });;
+                                    });
+                                    ;
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }else{
+                    Toast.makeText(VoteOnIdeaAdmin.this, "Uzupełnij dane", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -157,10 +172,14 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
         datePickerDialog.show();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        String date = dayOfMonth + "-" + month + "-" + year;
-        dateText.setText(date);
-
+        String y = String.valueOf(year);
+        String m = String.valueOf(month);
+        String d = String.valueOf(dayOfMonth);
+        dateTexty.setText(y);
+        dateTextm.setText(m);
+        dateTextd.setText(d);
     }
 }
