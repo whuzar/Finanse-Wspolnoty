@@ -1,5 +1,6 @@
 package com.example.a6;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class FirstFragment extends Fragment {
@@ -48,9 +50,8 @@ public class FirstFragment extends Fragment {
     private EditText typeidea;
     private LinearLayout linearLayoutonoff, linearLayoutshow, linearshowbutton;
     private Button btnsendidea;
-    long diff;
-    long oldLong;
-    long NewLong;
+    private CountDownTimer timer;
+    long diff, diffold, oldLong, NewLong;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -176,21 +177,20 @@ public class FirstFragment extends Fragment {
                             }
                             themeidea.setText(theme);
 
-                            Calendar calendar = Calendar.getInstance();
+                            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+2"));
                             int yr = calendar.get(Calendar.YEAR);
                             int mh = calendar.get(Calendar.MONTH);
                             int dom = calendar.get(Calendar.DAY_OF_MONTH);
 
                             int hr = calendar.get(Calendar.HOUR_OF_DAY);
                             int mm = calendar.get(Calendar.MINUTE);
+                            int sc = calendar.get(Calendar.SECOND);
 
-//                            int minute=Integer.parseInt("2880");
-//                            long min= minute*60*1000;
-//                            counter(min);
+                            System.out.println(sc);
 
-                            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
-                            String oldTime = dom + "." + mh + "." + yr + ", " + hr + ":" + mm;//Timer date 1
-                            String NewTime = day + "." + month + "." + year + ", 23:59";//Timer date 2
+                            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
+                            String oldTime = dom + "." + mh + "." + yr + ", " + hr + ":" + mm + ":" + sc;//Timer date 1
+                            String NewTime = day + "." + month + "." + year + ", 23:59:00";//Timer date 2
                             Date oldDate, newDate;
                             try {
                                 oldDate = formatter.parse(oldTime);
@@ -201,7 +201,16 @@ public class FirstFragment extends Fragment {
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            counter(diff);
+                            if(timer == null){
+//                                counterstop();
+                                counter(diff);
+                                diffold = diff;
+                            }
+                            if (diffold != diff){
+                                timer.cancel();
+                                counter(diff);
+                                diffold = diff;
+                            }
                         }
                     }
                 }
@@ -221,13 +230,13 @@ public class FirstFragment extends Fragment {
     }
 
     private void counter(long min) {
-        CountDownTimer timer = new CountDownTimer(min, 1000) {
+        timer = new CountDownTimer(min, 1000) {
             public void onTick(long millisUntilFinished) {
                 long millis = millisUntilFinished;
-                String hms = (TimeUnit.MILLISECONDS.toDays(millis)) + ":"
-                        + (TimeUnit.MILLISECONDS.toHours(millis) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millis)) + ":")
-                        + (TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)) + ":"
-                        + (TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))));
+                @SuppressLint("DefaultLocale") String hms = (String.format("%02d", TimeUnit.MILLISECONDS.toDays(millis))) + ":"
+                        + (String.format("%02d", TimeUnit.MILLISECONDS.toHours(millis) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millis))) + ":")
+                        + (String.format("%02d", TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis))) + ":"
+                        + (String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)))));
                 countertime.setText(/*context.getString(R.string.ends_in) + " " +*/ hms);
             }
             public void onFinish() {
@@ -257,7 +266,6 @@ public class FirstFragment extends Fragment {
             }
         });
     }
-
 
 
     @Override
