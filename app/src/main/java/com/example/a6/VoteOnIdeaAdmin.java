@@ -56,9 +56,6 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
         sendvote = findViewById(R.id.sendtoonevote);
         votetheme = findViewById(R.id.themevote);
 
-        final String themevt = votetheme.getText().toString();
-        System.out.println(themevt);
-
         btndate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
