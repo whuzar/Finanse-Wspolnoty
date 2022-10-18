@@ -76,4 +76,11 @@ public class ContactToAdmin extends AppCompatActivity {
         super.onStop();
         adapter.stopListening();
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter != null){
+            adapter.startListening();
+        }
+    }
 }
