@@ -52,39 +52,151 @@
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
                 android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAllCaps="true"
+                    android:text="Wpisz pomysł"
+                    android:textSize="15dp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"/>
+
+                <EditText
+                    android:id="@+id/ideainsert"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/white"
+                    android:maxLength="100"
+                    android:textAlignment="center"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/addidea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:paddingStart="30dp"
+                    android:text="Dodaj pomysł do listy"
+                    android:paddingEnd="30dp"
+                    android:textColor="@color/pprimary"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    android:background="@drawable/back_second"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:background="@drawable/back_wh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="lista pomyslow i wybranie"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/back_wh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                android:padding="15dp">
+                <TextView
+                    android:layout_marginBottom="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Wybierz do kiedy trwa głosowanie"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/choosedatef"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:paddingStart="30dp"
+                    android:text="Wybierz datę"
+                    android:paddingEnd="30dp"
+                    android:textColor="@color/pprimary"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    android:background="@drawable/back_second"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
                     <TextView
+                        android:id="@+id/showdatedayf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="lista pomyslow i wybranie"
+                        android:textSize="15dp"
+                        android:layout_gravity="center"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/showdatemonthf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:layout_gravity="center"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/showdateyearf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:textSize="15dp"
                         android:layout_gravity="center"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
 
                 </LinearLayout>
+            </LinearLayout>
 
-                <LinearLayout
-                    android:background="@drawable/back_wh"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:orientation="vertical"
-                    android:padding="15dp">
+            <LinearLayout
+                android:background="@drawable/back_wh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                android:padding="15dp">
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/sendtoonevote"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:paddingStart="30dp"
-                        android:text="Stwórz głosowanie"
-                        android:paddingEnd="30dp"
-                        android:textColor="@color/pprimary"
-                        android:textAllCaps="false"
-                        android:layout_gravity="center"
-                        android:background="@drawable/back_second"/>
-                </LinearLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/create"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:paddingStart="30dp"
+                    android:text="Stwórz głosowanie"
+                    android:paddingEnd="30dp"
+                    android:textColor="@color/pprimary"
+                    android:textAllCaps="false"
+                    android:layout_gravity="center"
+                    android:background="@drawable/back_second"/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
