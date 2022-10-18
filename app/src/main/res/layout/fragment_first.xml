@@ -75,6 +75,7 @@
                         android:padding="10dp"/>
 
             </LinearLayout>
+<!--            poczatek-->
             <LinearLayout
                 android:id="@+id/ideaonoff"
                 android:background="@drawable/back_wh"
@@ -84,7 +85,8 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
-                android:padding="15dp">
+                android:padding="15dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/setideatheme"
@@ -175,7 +177,7 @@
                 android:background="@drawable/back_wh"
                 android:orientation="vertical"
                 android:padding="15dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginBottom="70dp">
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -217,9 +219,12 @@
 
             </LinearLayout>
 
+<!--            koniec-->
+
             <LinearLayout
                 android:id="@+id/chooseidea"
                 android:background="@drawable/back_wh"
+                android:layout_marginBottom="70dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -227,7 +232,7 @@
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
                 android:padding="15dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     android:layout_marginTop="10dp"
@@ -235,10 +240,22 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:text="Wybierz pomysł który ma wygrać"
+                    android:text="Nadszedł czas wyboru"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
                     android:textSize="18dp"
+                    android:padding="5dp"
+                    android:visibility="visible"/>
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAllCaps="true"
+                    android:text="Wybierz najlepszy pomysł"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="10dp"
                     android:padding="5dp"
                     android:visibility="visible"/>
 
@@ -267,6 +284,24 @@
                     android:textStyle="bold"
                     android:textSize="15dp"
                     android:padding="5dp"/>
+
+                <LinearLayout
+                    android:id="@+id/showlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical"
+                    android:padding="15dp"
+                    android:visibility="visible">
+
+                    <view class="androidx.recyclerview.widget.RecyclerView"
+                        android:id="@+id/recycleshowideas"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </view>
+
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>

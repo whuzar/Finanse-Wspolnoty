@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,6 +42,9 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 public class FirstFragment extends Fragment {
+
+    private RecyclerView recyclerView;
+    myadapteridea adapter2;
 
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
@@ -62,7 +67,38 @@ public class FirstFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_first,
                 container, false);
 
+        recyclerView = rootView.findViewById(R.id.recycleshowideas);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String login = sharedPreferences.getString(KEY_LOGIN, null);
+        String who = sharedPreferences.getString(KEY_LOGED, null);
+
+//        DatabaseReference uidRef = databaseReference.child(who).child(login);
+//        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    for (DataSnapshot ds : task.getResult().getChildren()) {
+//                        String team = task.getResult().child("team").getValue(String.class);
+
+//                        FirebaseRecyclerOptions<modelidea> options = new FirebaseRecyclerOptions
+//                                .Builder<modelidea>()
+//                                .setQuery(FirebaseDatabase.getInstance().getReference().child("wspolnota").child("138274").child("createdpoll"), modelidea.class)
+//                                .build();
+////
+////                            FirebaseRecyclerOptions<modelidea> options = new FirebaseRecyclerOptions
+////                                    .Builder<modelidea>()
+////                                    .setQuery(FirebaseDatabase.getInstance().getReference().child("admin"), modelidea.class)
+////                                    .build();
+//
+//                        adapter2 = new myadapteridea(options);
+//                        recyclerView.setAdapter(adapter2);
+//                        adapter2.startListening();
+//                    }
+//                }
+//            }
+//        });
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
 
@@ -93,9 +129,6 @@ public class FirstFragment extends Fragment {
                 refreshLayout.setRefreshing(false);
             }
         });
-
-        String login = sharedPreferences.getString(KEY_LOGIN, null);
-        String who = sharedPreferences.getString(KEY_LOGED, null);
 
         linearLayoutonoff.setVisibility(View.VISIBLE);
         linearLayoutshow.setVisibility(View.GONE);
@@ -299,4 +332,16 @@ public class FirstFragment extends Fragment {
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         super.onResume();
     }
+//    @Override
+//    public void onStart(){
+//        super.onStart();
+//    }
+//
+//    @Override
+//    public void onStop(){
+//        super.onStop();
+//        adapter2.stopListening();
+//    }
+
+
 }

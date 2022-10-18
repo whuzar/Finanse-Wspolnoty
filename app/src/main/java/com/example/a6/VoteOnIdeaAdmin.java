@@ -144,7 +144,6 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
                                             }
                                         }
                                     });
-                                    ;
                                 }
                             }
                         }

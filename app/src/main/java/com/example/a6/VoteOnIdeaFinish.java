@@ -77,9 +77,9 @@ public class VoteOnIdeaFinish extends AppCompatActivity {
                                                             databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("count").setValue(String.valueOf(x));
                                                             databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("ideas").child(String.valueOf(x)).setValue(ii);
                                                         }else {
-                                                            int y = 1;
+                                                            String y = "1";
                                                             databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("count").setValue(y);
-                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("ideas").child(String.valueOf(y)).setValue(ii);
+                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("ideas").child(y).setValue(ii);
                                                         }
 
 
