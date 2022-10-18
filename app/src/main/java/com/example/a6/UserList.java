@@ -1,28 +1,23 @@
 package com.example.a6;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-public class ContactToAdmin extends AppCompatActivity {
-
+public class UserList extends AppCompatActivity {
     private RecyclerView recyclerView;
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
@@ -36,10 +31,10 @@ public class ContactToAdmin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_to_admin);
+        setContentView(R.layout.activity_user_list);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        recyclerView = findViewById(R.id.recycle);
+        recyclerView = findViewById(R.id.userRecykler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         who = sharedPreferences.getString(KEY_LOGED, null);
@@ -56,7 +51,7 @@ public class ContactToAdmin extends AppCompatActivity {
                     team = String.valueOf(task.getResult().getValue());
                     FirebaseRecyclerOptions<modelrec> options = new FirebaseRecyclerOptions
                             .Builder<modelrec>()
-                            .setQuery(FirebaseDatabase.getInstance().getReference().child("admin").orderByChild("team").equalTo(team), modelrec.class)
+                            .setQuery(FirebaseDatabase.getInstance().getReference().child("user").orderByChild("team").equalTo(team), modelrec.class)
                             .build();
 
                     adapter = new myadapterrec(options);
@@ -65,17 +60,13 @@ public class ContactToAdmin extends AppCompatActivity {
                 }
             }
         });
-
-
-
     }
-
-
     @Override
     protected void onStop(){
         super.onStop();
         adapter.stopListening();
     }
+
     @Override
     protected void onResume() {
         super.onResume();

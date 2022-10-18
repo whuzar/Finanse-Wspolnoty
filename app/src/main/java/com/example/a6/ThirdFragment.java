@@ -64,6 +64,7 @@ public class ThirdFragment extends Fragment{
         RelativeLayout changepwd = rootView.findViewById(R.id.changepasswd);
         RelativeLayout aboutyou = rootView.findViewById(R.id.aboutyou);
         RelativeLayout contacta = rootView.findViewById(R.id.contactwithadmin);
+        RelativeLayout userList = rootView.findViewById(R.id.userlist);
         RelativeLayout deleteacc = rootView.findViewById(R.id.delet);
         RelativeLayout breaks = rootView.findViewById(R.id.report);
 
@@ -132,6 +133,13 @@ public class ThirdFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity(), ContactToAdmin.class));
+            }
+        });
+
+        userList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), UserList.class));
             }
         });
 

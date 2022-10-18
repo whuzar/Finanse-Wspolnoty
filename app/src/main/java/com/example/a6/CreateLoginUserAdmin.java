@@ -1,7 +1,10 @@
 package com.example.a6;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +27,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 public class CreateLoginUserAdmin extends AppCompatActivity {
+    SharedPreferences sharedPreferences;
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
                     //"(?=.*[0-9])" +         //at least 1 digit
@@ -32,7 +39,9 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
                     "$");
     private static final Pattern PHONE_PATTERN =
             Pattern.compile("^[0-9]{9}$");
-
+    private static final String SHARED_PREF_NAME = "mypref";
+    private static final String KEY_LOGED = "wloged";
+    private static final String KEY_LOGIN = "login";
     private static final Pattern NAME_PATTERN = Pattern.compile("^[A-Za-zĘÓĄŚŁŻŹĆŃęóąśłżźć]+");
     private TextInputLayout name, username, email, phonenumber, sharesuser;
     private String nameau;
@@ -42,6 +51,9 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
     private String sharesau;
     private String login;
     private String finalPassword;
+    private String team;
+    private String who;
+    private String whoLogin;
     private boolean noExistAdmin = false, noExistUser = false;
 
     Dialog mDialog;
@@ -56,7 +68,9 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
         email = findViewById(R.id.emailuseroradmin);
         phonenumber = findViewById(R.id.phoneuseroradmin);
         sharesuser = findViewById(R.id.sharesuseroradmin);
-
+        sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        who = sharedPreferences.getString(KEY_LOGED, null);
+        whoLogin = sharedPreferences.getString(KEY_LOGIN, null);
         mDialog = new Dialog(this);
 
     }
@@ -87,11 +101,11 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
     public void CreateAdminAccept(View v){
         mDialog.setContentView(R.layout.popupcreateua2);
 
-        nameau = name.getEditText().getText().toString();
-        surnameau = username.getEditText().getText().toString();
-        mailau = email.getEditText().getText().toString();
-        phoneau = phonenumber.getEditText().getText().toString();
-        sharesau = sharesuser.getEditText().getText().toString();
+        nameau = name.getEditText().getText().toString().trim();
+        surnameau = username.getEditText().getText().toString().trim();
+        mailau = email.getEditText().getText().toString().trim();
+        phoneau = phonenumber.getEditText().getText().toString().trim();
+        sharesau = sharesuser.getEditText().getText().toString().trim();
 
         Random rand = new Random();
 
@@ -116,8 +130,21 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
         else {
             nameau = nameau.substring(0, 1).toUpperCase() + nameau.substring(1).toLowerCase();
             surnameau = surnameau.substring(0, 1).toUpperCase() + surnameau.substring(1).toLowerCase();
-            generateUsername();
-            addAdmin();
+            databaseReference.child(who).child(whoLogin).child("team").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error getting data", task.getException());
+                    }
+                    else {
+                        Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                        team = String.valueOf(task.getResult().getValue());
+                        generateUsername();
+                        addAdmin();
+                    }
+                }
+            });
+
         }
 
 
@@ -126,13 +153,13 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
     public void CreateUserAccept(View v){
         mDialog.setContentView(R.layout.popupcreateua);
 
-        nameau = name.getEditText().getText().toString();
+        nameau = name.getEditText().getText().toString().trim();
 
-        surnameau = username.getEditText().getText().toString();
+        surnameau = username.getEditText().getText().toString().trim();
 
-        mailau = email.getEditText().getText().toString();
-        phoneau = phonenumber.getEditText().getText().toString();
-        sharesau = sharesuser.getEditText().getText().toString();
+        mailau = email.getEditText().getText().toString().trim();
+        phoneau = phonenumber.getEditText().getText().toString().trim();
+        sharesau = sharesuser.getEditText().getText().toString().trim();
 
         Random rand = new Random();
 
@@ -157,8 +184,21 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
         else {
             nameau = nameau.substring(0, 1).toUpperCase() + nameau.substring(1).toLowerCase();
             surnameau = surnameau.substring(0, 1).toUpperCase() + surnameau.substring(1).toLowerCase();
-            generateUsername();
-            addUser();
+            databaseReference.child(who).child(whoLogin).child("team").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (!task.isSuccessful()) {
+                        Log.e("firebase", "Error getting data", task.getException());
+                    }
+                    else {
+                        Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                        team = String.valueOf(task.getResult().getValue());
+                        generateUsername();
+                        addUser();
+                    }
+                }
+            });
+
 
         }
 
@@ -201,7 +241,7 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
                     databaseReference.child("user").child(login).child("password").setValue(finalPassword);
                     databaseReference.child("user").child(login).child("phone").setValue(phoneau);
                     databaseReference.child("user").child(login).child("shares").setValue(sharesau);
-                    databaseReference.child("user").child(login).child("team").setValue("1");
+                    databaseReference.child("user").child(login).child("team").setValue(team);
                     JavaMailAPI javaMailAPI = new JavaMailAPI(CreateLoginUserAdmin.this, mailau, "Utworzono dla ciebo konto w Organizator Budżetu", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Zostało dla ciebie utworzone konto w aplikacji Organizator budżetu</h1><h2 style='text-align:center;padding-bottom:30px'>Login: "+login+"</h2><h2 style='text-align:center;padding-bottom:30px'>Hasło: "+finalPassword+"</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o to konto zignoruj tą wiadomość</h4></div>");
                     javaMailAPI.execute();
                 }
@@ -254,7 +294,7 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
                     databaseReference.child("admin").child(login).child("password").setValue(finalPassword);
                     databaseReference.child("admin").child(login).child("phone").setValue(phoneau);
                     databaseReference.child("admin").child(login).child("shares").setValue(sharesau);
-                    databaseReference.child("admin").child(login).child("team").setValue("1");
+                    databaseReference.child("admin").child(login).child("team").setValue(team);
                     JavaMailAPI javaMailAPI = new JavaMailAPI(CreateLoginUserAdmin.this, mailau, "Utworzono dla ciebo konto administratora w Organizator Budżetu", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Zostało dla ciebie utworzone konto w aplikacji Organizator budżetu</h1><h2 style='text-align:center;padding-bottom:30px'>Login: "+login+"</h2><h2 style='text-align:center;padding-bottom:30px'>Hasło: "+finalPassword+"</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o to konto zignoruj tą wiadomość</h4></div>");
                     javaMailAPI.execute();
                 }
