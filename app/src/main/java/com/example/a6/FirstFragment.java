@@ -1,7 +1,10 @@
 package com.example.a6;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -140,7 +143,6 @@ public class FirstFragment extends Fragment {
         });
         return rootView;
     }
-
     private void shownoteidea() {
         String login = sharedPreferences.getString(KEY_LOGIN, null);
         String who = sharedPreferences.getString(KEY_LOGED, null);
@@ -188,7 +190,7 @@ public class FirstFragment extends Fragment {
 
                             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
                             String oldTime = dom + "." + mh + "." + yr + ", " + hr + ":" + mm + ":" + sc;//Timer date 1
-                            String NewTime = day + "." + month + "." + year + ", 23:59:00";//Timer date 2
+                            String NewTime = day + "." + month + "." + year + ", 23:59:59";//Timer date 2
                             Date oldDate, newDate;
                             try {
                                 oldDate = formatter.parse(oldTime);
@@ -227,6 +229,8 @@ public class FirstFragment extends Fragment {
     }
 
     private void counter(long min) {
+        String login = sharedPreferences.getString(KEY_LOGIN, null);
+        String who = sharedPreferences.getString(KEY_LOGED, null);
         timer = new CountDownTimer(min, 1000) {
             public void onTick(long millisUntilFinished) {
                 long millis = millisUntilFinished;
@@ -238,6 +242,32 @@ public class FirstFragment extends Fragment {
             }
             public void onFinish() {
                 countertime.setText("Czas upłynął");
+                DatabaseReference uidRef = databaseReference;
+                uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DataSnapshot ds : task.getResult().getChildren()) {
+                                String team = task.getResult().child(who).child(login).child("team").getValue(String.class);
+                                DatabaseReference uid = databaseReference.child("wspolnota").child(team).child("typeidea");
+                                uid.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot remov: dataSnapshot.getChildren()) {
+                                            remov.getRef().removeValue();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Log.e(TAG, "onCancelled", databaseError.toException());
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+                startActivity(new Intent(getActivity(), FirstFragment.class));
             }
         };
         timer.start();
