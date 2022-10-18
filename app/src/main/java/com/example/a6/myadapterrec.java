@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,6 +43,12 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
     public myviewrec onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singlerowrec, parent, false);
         myviewrec viewHolder = new myviewrec(view);
+        viewHolder.line.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(parent.getContext(), "Test Click"+String.valueOf(viewHolder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
+            }
+        });
         return viewHolder;
     }
 
