@@ -52,7 +52,8 @@ public class Breaks extends AppCompatActivity {
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                databaseReference.child(who).child(login).child("breaks").child("problems").setValue(tb);
+                                databaseReference.child(who).child(login).child("breaks").child("problem").setValue(tb);
+
                                 Toast.makeText(Breaks.this, "Pomyślnie dodano usterkę", Toast.LENGTH_SHORT).show();
                                 typebreak.setText("");
                         }

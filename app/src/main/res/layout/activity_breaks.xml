@@ -61,18 +61,9 @@
                         android:maxLength="255"
                         android:textAlignment="center"
                         />
-                </LinearLayout>
-                <LinearLayout
-                    android:background="@drawable/back_wh"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:orientation="vertical"
-                    android:padding="15dp">
 
                     <androidx.appcompat.widget.AppCompatButton
+                        android:layout_marginTop="10dp"
                         android:id="@+id/btnreport"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
@@ -83,6 +74,7 @@
                         android:textAllCaps="false"
                         android:layout_gravity="center"
                         android:background="@drawable/back_second"/>
+
                 </LinearLayout>
                 <LinearLayout
                     android:background="@drawable/back_wh"
@@ -103,6 +95,13 @@
                         android:textSize="15dp"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
+
+                    <view class="androidx.recyclerview.widget.RecyclerView"
+                        android:id="@+id/recyclebreaks"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    </view>
 
                 </LinearLayout>
             </LinearLayout>
