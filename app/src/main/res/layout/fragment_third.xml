@@ -148,40 +148,8 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/aboutyou"
-                android:clickable="true"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/aboutus"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/notif"
-                    android:padding="12dp"
-                    android:src="@drawable/information" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_toEndOf="@id/aboutus"
-                    android:text="Twoje informacje"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_right_go"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true" />
-            </RelativeLayout>
-            <RelativeLayout
                 android:id="@+id/report"
                 android:clickable="true"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -223,11 +191,43 @@
                 android:orientation="vertical"
                 android:padding="15dp">
 
-                <!--Create vote for idea-->
+                <RelativeLayout
+                    android:id="@+id/aboutyou"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/aboutus"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/notif"
+                        android:padding="12dp"
+                        android:src="@drawable/information" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_toEndOf="@id/aboutus"
+                        android:text="Twoje dane"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_right_go"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/changepasswd"
+                    android:layout_marginTop="10dp"
                     android:clickable="true">
 
                     <ImageView
@@ -255,10 +255,20 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true" />
                 </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/back_wh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                android:padding="15dp">
 
                 <RelativeLayout
                     android:id="@+id/contactwithadmin"
-                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true">

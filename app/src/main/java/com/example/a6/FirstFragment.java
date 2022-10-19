@@ -4,7 +4,6 @@ import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -25,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -44,7 +44,7 @@ import java.util.concurrent.TimeUnit;
 public class FirstFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    myadapteridea adapter2;
+    myadaptervote adapter;
 
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
@@ -59,6 +59,7 @@ public class FirstFragment extends Fragment {
     private LinearLayout linearLayoutonoff, linearLayoutshow, linearshowbutton;
     private Button btnsendidea;
     private CountDownTimer timer;
+    private String team;
     long diff, diffold, oldLong, NewLong;
 
     @Override
@@ -73,32 +74,6 @@ public class FirstFragment extends Fragment {
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String login = sharedPreferences.getString(KEY_LOGIN, null);
         String who = sharedPreferences.getString(KEY_LOGED, null);
-
-//        DatabaseReference uidRef = databaseReference.child(who).child(login);
-//        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    for (DataSnapshot ds : task.getResult().getChildren()) {
-//                        String team = task.getResult().child("team").getValue(String.class);
-
-//                        FirebaseRecyclerOptions<modelidea> options = new FirebaseRecyclerOptions
-//                                .Builder<modelidea>()
-//                                .setQuery(FirebaseDatabase.getInstance().getReference().child("wspolnota").child("138274").child("createdpoll"), modelidea.class)
-//                                .build();
-////
-////                            FirebaseRecyclerOptions<modelidea> options = new FirebaseRecyclerOptions
-////                                    .Builder<modelidea>()
-////                                    .setQuery(FirebaseDatabase.getInstance().getReference().child("admin"), modelidea.class)
-////                                    .build();
-//
-//                        adapter2 = new myadapteridea(options);
-//                        recyclerView.setAdapter(adapter2);
-//                        adapter2.startListening();
-//                    }
-//                }
-//            }
-//        });
 
         refreshLayout = rootView.findViewById(R.id.refreshLayout);
 
@@ -174,8 +149,43 @@ public class FirstFragment extends Fragment {
                 }
             }
         });
+        databaseReference.child(who).child(login).child("team").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    team = String.valueOf(task.getResult().getValue());
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("wspolnota").child("138274").child("createdpoll");
+                    ref.addListenerForSingleValueEvent(
+                            new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                    //handle databaseError
+                                }
+                            });
+
+                    FirebaseRecyclerOptions<modelvote> options = new FirebaseRecyclerOptions
+                            .Builder<modelvote>()
+                            .setQuery(FirebaseDatabase.getInstance().getReference().child("wspolnota").child(team).child("createdpoll"), modelvote.class)
+                            .build();
+
+                    adapter = new myadaptervote(options);
+                    recyclerView.setAdapter(adapter);
+                    adapter.startListening();
+                }
+            }
+        });
         return rootView;
     }
+
     private void shownoteidea() {
         String login = sharedPreferences.getString(KEY_LOGIN, null);
         String who = sharedPreferences.getString(KEY_LOGED, null);
@@ -300,7 +310,6 @@ public class FirstFragment extends Fragment {
                         }
                     }
                 });
-                startActivity(new Intent(getActivity(), FirstFragment.class));
             }
         };
         timer.start();
@@ -332,16 +341,4 @@ public class FirstFragment extends Fragment {
         requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         super.onResume();
     }
-//    @Override
-//    public void onStart(){
-//        super.onStart();
-//    }
-//
-//    @Override
-//    public void onStop(){
-//        super.onStop();
-//        adapter2.stopListening();
-//    }
-
-
 }

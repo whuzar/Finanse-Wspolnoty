@@ -65,21 +65,22 @@ public class VoteOnIdeaFinish extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<DataSnapshot> task) {
                                             if (task.isSuccessful()) {
                                                 DataSnapshot snapshot = task.getResult();
-                                                String number = task.getResult().child("wspolnota").child(teamwspo).child("createdpoll").child("count").getValue(String.class);
+                                                String idea = task.getResult().child("wspolnota").child(teamwspo).child("createdpoll").child("idea").getValue(String.class);
 
                                                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                                        if(number != null){
-                                                            int x = Integer.parseInt(number);
-                                                            x = x + 1;
-                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("count").setValue(String.valueOf(x));
-                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("ideas").child(String.valueOf(x)).setValue(ii);
+                                                        if(idea != null){
+//                                                            int x = Integer.parseInt(number);
+//                                                            x = x + 1;
+//                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("count").setValue(String.valueOf(x));
+                                                                databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("idea").setValue(idea + "&" + ii);
                                                         }else {
-                                                            String y = "1";
-                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("count").setValue(y);
-                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("ideas").child(y).setValue(ii);
+//                                                            String y = "1";
+//                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("count").setValue(y);
+//                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(y).child("idea").setValue(ii);
+                                                                databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("idea").setValue(ii);
                                                         }
 
 

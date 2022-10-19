@@ -1,14 +1,14 @@
 package com.example.a6;
 
-public class modelidea {
-
+public class modelvote {
     String idea;
 
-    modelidea(){
+    modelvote(){
+
 
     }
 
-    public modelidea(String idea) {
+    public modelvote(String idea) {
         this.idea = idea;
     }
 
@@ -16,8 +16,7 @@ public class modelidea {
         return idea;
     }
 
-    public void setIdea(String name) {
+    public void setIdea(String idea) {
         this.idea = idea;
     }
-
 }

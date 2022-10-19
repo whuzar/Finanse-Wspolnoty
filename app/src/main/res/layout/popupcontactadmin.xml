@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:background="@color/pprimary"
+    android:padding="5dp"
+    android:layout_gravity="center">
+
+
+
+<LinearLayout
+
+    android:background="@drawable/back_wh"
+    android:layout_margin="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+
+    <ImageView
+        android:id="@+id/photoprofilepopup"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/profilepic" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <ImageView
+            android:id="@+id/call"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/notif"
+            android:padding="12dp"
+            android:src="@drawable/phone"
+            android:layout_marginRight="90dp"/>
+
+        <ImageView
+            android:id="@+id/sendmail"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/notif"
+            android:padding="12dp"
+            android:src="@drawable/email" />
+    </LinearLayout>
+</LinearLayout>
+
+</LinearLayout>
