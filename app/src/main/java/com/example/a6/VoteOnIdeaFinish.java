@@ -81,46 +81,28 @@ public class VoteOnIdeaFinish extends AppCompatActivity implements DatePickerDia
                                 for (DataSnapshot ds : task.getResult().getChildren()) {
                                     String teamwspo = task.getResult().child("team").getValue(String.class);
 
-                                    DatabaseReference textRef = databaseReference;
-                                    textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                    DatabaseReference textRef = databaseReference.child("wspolnota").child(teamwspo).child("createdpoll");
+                                    textRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
-                                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                            if (task.isSuccessful()) {
-                                                DataSnapshot snapshot = task.getResult();
-                                                String idea = task.getResult().child("wspolnota").child(teamwspo).child("createdpoll").child("idea").getValue(String.class);
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            // get total available quest
+                                            int size = (int) dataSnapshot.getChildrenCount();
+//                                            int size = (int) snapshot.getChildrenCount();
+//                                            Log.i("size before", String.valueOf(size));
+                                                            size = size + 1;
+//                                            Log.i("size after", String.valueOf(size));
+//                                                       databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("count").setValue(String.valueOf(x));
+//                                                        databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("idea").setValue(idea + "&" + ii);
+                                            textRef.child(String.valueOf(size)).child("idea").setValue(ii);
+                                            Toast.makeText(VoteOnIdeaFinish.this, "Dodano", Toast.LENGTH_SHORT).show();
+                                            type.setText("");
+                                        }
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
 
-                                                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                                        if(idea != null){
-//                                                            int x = Integer.parseInt(number);
-//                                                            x = x + 1;
-//                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("count").setValue(String.valueOf(x));
-                                                                databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("idea").setValue(idea + "&" + ii);
-                                                        }else {
-//                                                            String y = "1";
-//                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("count").setValue(y);
-//                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(y).child("idea").setValue(ii);
-                                                                databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("idea").setValue(ii);
-                                                        }
-
-
-                                                    }
-
-                                                    @Override
-                                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                                    }
-                                                });
-                                                Toast.makeText(VoteOnIdeaFinish.this, "Dodano", Toast.LENGTH_SHORT).show();
-                                                type.setText("");
-                                            } else {
-                                                Log.d("TAG", task.getException().getMessage());
-                                            }
                                         }
                                     });
-                                    ;
+//
                                 }
                             }
                         }

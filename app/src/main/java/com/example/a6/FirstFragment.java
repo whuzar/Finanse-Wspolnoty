@@ -164,40 +164,29 @@ public class FirstFragment extends Fragment {
                 }
             }
         });
-//        databaseReference.child(who).child(login).child("team").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (!task.isSuccessful()) {
-//                    Log.e("firebase", "Error getting data", task.getException());
-//                }
-//                else {
-//                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-//                    team = String.valueOf(task.getResult().getValue());
-//                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("wspolnota").child("138274").child("createdpoll");
-//                    ref.addListenerForSingleValueEvent(
-//                            new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(DatabaseError databaseError) {
-//                                    //handle databaseError
-//                                }
-//                            });
-//
-//                    FirebaseRecyclerOptions<modelvote> options = new FirebaseRecyclerOptions
-//                            .Builder<modelvote>()
-//                            .setQuery(FirebaseDatabase.getInstance().getReference().child("wspolnota").child(team).child("createdpoll"), modelvote.class)
-//                            .build();
-//
-//                    adapter = new myadaptervote(options);
-//                    recyclerView.setAdapter(adapter);
-//                    adapter.startListening();
-//                }
-//            }
-//        });
+        databaseReference.child(who).child(login).child("team").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    team = String.valueOf(task.getResult().getValue());
+
+
+                    FirebaseRecyclerOptions<modelvote> options = new FirebaseRecyclerOptions
+                            .Builder<modelvote>()
+                            .setQuery(FirebaseDatabase.getInstance().getReference().child("wspolnota").child(team).child("createdpoll"), modelvote.class)
+                            .build();
+
+                    adapter = new myadaptervote(options);
+                    recyclerView.setAdapter(adapter);
+                    adapter.startListening();
+                }
+            }
+        });
+
         return rootView;
     }
 //wpisywanie głosu
