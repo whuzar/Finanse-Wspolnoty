@@ -56,7 +56,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAllCaps="true"
                     android:text="Wpisz pomysł"
                     android:textSize="15dp"
                     android:textColor="#FFFFFF"
@@ -88,27 +87,6 @@
                     android:background="@drawable/back_second"/>
             </LinearLayout>
 
-
-            <LinearLayout
-                android:background="@drawable/back_wh"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:orientation="vertical"
-                android:padding="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="lista pomyslow i wybranie"
-                    android:textSize="15dp"
-                    android:layout_gravity="center"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:background="@drawable/back_wh"
@@ -184,6 +162,57 @@
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
                 android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Moc głosów"
+                    android:textSize="15dp"
+                    android:layout_gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/groupvalue"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RadioButton
+                        android:id="@+id/radiochoice1valuef"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1 osoba = 1 głos"
+                        android:textColor="@color/white"
+                        />
+                    <RadioButton
+                        android:id="@+id/radiochoice2valuef"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1 osoba = liczba udziałów"
+                        android:textColor="@color/white"/>
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/showedit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textColor="@color/white"
+                    android:focusedByDefault="false"
+                    android:visibility="gone"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:background="@drawable/back_wh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                android:padding="15dp"
+                android:layout_marginBottom="10dp">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/create"
