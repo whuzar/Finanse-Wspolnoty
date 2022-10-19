@@ -158,19 +158,19 @@ public class FirstFragment extends Fragment {
                 else {
                     Log.d("firebase", String.valueOf(task.getResult().getValue()));
                     team = String.valueOf(task.getResult().getValue());
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("wspolnota").child("138274").child("createdpoll");
-                    ref.addListenerForSingleValueEvent(
-                            new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                    //handle databaseError
-                                }
-                            });
+//                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("wspolnota").child("138274").child("createdpoll");
+//                    ref.addListenerForSingleValueEvent(
+//                            new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(DatabaseError databaseError) {
+//                                    //handle databaseError
+//                                }
+//                            });
 
                     FirebaseRecyclerOptions<modelvote> options = new FirebaseRecyclerOptions
                             .Builder<modelvote>()
