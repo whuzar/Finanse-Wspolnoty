@@ -94,6 +94,7 @@ public class FirstFragment extends Fragment {
         ideamoneyset = rootView.findViewById(R.id.textmoney);
         themeidea = rootView.findViewById(R.id.setideatheme);
         countertime = rootView.findViewById(R.id.counterdowntime);
+        countertimefinish = rootView.findViewById(R.id.counterdowntimefinish);
 
         linearLayoutshow = rootView.findViewById(R.id.ideaonoff);
         linearLayoutonoff = rootView.findViewById(R.id.ideashownothing);
@@ -199,7 +200,7 @@ public class FirstFragment extends Fragment {
 //        });
         return rootView;
     }
-
+//wpisywanie głosu
     private void shownoteidea() {
         String login = sharedPreferences.getString(KEY_LOGIN, null);
         String who = sharedPreferences.getString(KEY_LOGED, null);
@@ -261,6 +262,8 @@ public class FirstFragment extends Fragment {
             }
         });
     }
+
+//    głosowanie na pomysl
 
     private void showselectidea() {
         String login = sharedPreferences.getString(KEY_LOGIN, null);
@@ -334,10 +337,18 @@ public class FirstFragment extends Fragment {
                         + (String.format("%02d", TimeUnit.MILLISECONDS.toHours(millis) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millis))) + ":")
                         + (String.format("%02d", TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis))) + ":"
                         + (String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)))));
-                countertime.setText(/*context.getString(R.string.ends_in) + " " +*/ hms);
+                if(linearLayoutshow.getVisibility() == View.VISIBLE) {
+                    countertime.setText(/*context.getString(R.string.ends_in) + " " +*/ hms);
+                }else {
+                    countertimefinish.setText(/*context.getString(R.string.ends_in) + " " +*/ hms);
+                }
             }
             public void onFinish() {
+                if(linearLayoutshow.getVisibility() == View.VISIBLE) {
                 countertime.setText("Czas upłynął");
+                }else {
+                    countertimefinish.setText("Czas upłynął");
+                }
                 DatabaseReference uidRef = databaseReference;
                 uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
