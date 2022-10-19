@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -54,13 +53,26 @@ public class FirstFragment extends Fragment {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     private SwipeRefreshLayout refreshLayout;
-    private TextView timehello, moneytextset, ideamoneyset, themeidea, countertime;
+    private TextView timehello, moneytextset, ideamoneyset, themeidea, countertime, countertimefinish;
     private EditText typeidea;
-    private LinearLayout linearLayoutonoff, linearLayoutshow, linearshowbutton;
+    private LinearLayout linearLayoutonoff, linearLayoutshow, linearshowbutton, choosefinish;
     private Button btnsendidea;
     private CountDownTimer timer;
     private String team;
     long diff, diffold, oldLong, NewLong;
+
+    Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+2"));
+    int yr = calendar.get(Calendar.YEAR);
+    int mh = calendar.get(Calendar.MONTH);
+    int dom = calendar.get(Calendar.DAY_OF_MONTH);
+
+    int hr = calendar.get(Calendar.HOUR_OF_DAY);
+    int mm = calendar.get(Calendar.MINUTE);
+    int sc = calendar.get(Calendar.SECOND);
+
+    SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
+    String oldTime = dom + "." + mh + "." + yr + ", " + hr + ":" + mm + ":" + sc;//Timer date 1
+    Date oldDate, newDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,6 +94,7 @@ public class FirstFragment extends Fragment {
         ideamoneyset = rootView.findViewById(R.id.textmoney);
         themeidea = rootView.findViewById(R.id.setideatheme);
         countertime = rootView.findViewById(R.id.counterdowntime);
+        countertimefinish = rootView.findViewById(R.id.counterdowntimefinish);
 
         linearLayoutshow = rootView.findViewById(R.id.ideaonoff);
         linearLayoutonoff = rootView.findViewById(R.id.ideashownothing);
@@ -92,6 +105,7 @@ public class FirstFragment extends Fragment {
         typeidea = rootView.findViewById(R.id.youridea);
 
         showtime();
+        showselectidea();
         shownoteidea();
         getdata();
 
@@ -99,6 +113,7 @@ public class FirstFragment extends Fragment {
             @Override
             public void onRefresh() {
                 showtime();
+                showselectidea();
                 shownoteidea();
                 getdata();
                 refreshLayout.setRefreshing(false);
@@ -158,19 +173,7 @@ public class FirstFragment extends Fragment {
                 else {
                     Log.d("firebase", String.valueOf(task.getResult().getValue()));
                     team = String.valueOf(task.getResult().getValue());
-//                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("wspolnota").child("138274").child("createdpoll");
-//                    ref.addListenerForSingleValueEvent(
-//                            new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(DatabaseError databaseError) {
-//                                    //handle databaseError
-//                                }
-//                            });
+
 
                     FirebaseRecyclerOptions<modelvote> options = new FirebaseRecyclerOptions
                             .Builder<modelvote>()
@@ -183,9 +186,10 @@ public class FirstFragment extends Fragment {
                 }
             }
         });
+
         return rootView;
     }
-
+//wpisywanie głosu
     private void shownoteidea() {
         String login = sharedPreferences.getString(KEY_LOGIN, null);
         String who = sharedPreferences.getString(KEY_LOGED, null);
@@ -222,19 +226,7 @@ public class FirstFragment extends Fragment {
                             }
                             themeidea.setText(theme);
 
-                            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+2"));
-                            int yr = calendar.get(Calendar.YEAR);
-                            int mh = calendar.get(Calendar.MONTH);
-                            int dom = calendar.get(Calendar.DAY_OF_MONTH);
-
-                            int hr = calendar.get(Calendar.HOUR_OF_DAY);
-                            int mm = calendar.get(Calendar.MINUTE);
-                            int sc = calendar.get(Calendar.SECOND);
-
-                            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss");
-                            String oldTime = dom + "." + mh + "." + yr + ", " + hr + ":" + mm + ":" + sc;//Timer date 1
                             String NewTime = day + "." + month + "." + year + ", 23:59:59";//Timer date 2
-                            Date oldDate, newDate;
                             try {
                                 oldDate = formatter.parse(oldTime);
                                 newDate = formatter.parse(NewTime);
@@ -260,6 +252,59 @@ public class FirstFragment extends Fragment {
         });
     }
 
+//    głosowanie na pomysl
+
+    private void showselectidea() {
+        String login = sharedPreferences.getString(KEY_LOGIN, null);
+        String who = sharedPreferences.getString(KEY_LOGED, null);
+        DatabaseReference uidRef = databaseReference;
+        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
+                        String team = task.getResult().child(who).child(login).child("team").getValue(String.class);
+
+                        String day = task.getResult().child("wspolnota").child(team).child("selectidea").child("day").getValue(String.class);
+                        String month = task.getResult().child("wspolnota").child(team).child("selectidea").child("month").getValue(String.class);
+                        String year = task.getResult().child("wspolnota").child(team).child("selectidea").child("year").getValue(String.class);
+
+//                            if(day.equals("")){
+//                                linearLayoutonoff.setVisibility(View.GONE);
+//                                linearLayoutshow.setVisibility(View.VISIBLE);
+//                                linearshowbutton.setVisibility(View.GONE);
+//                            }else {
+//                                linearLayoutonoff.setVisibility(View.GONE);
+//                                linearLayoutshow.setVisibility(View.VISIBLE);
+//                                linearshowbutton.setVisibility(View.VISIBLE);
+//                            }
+
+                            String NewTime = day + "." + month + "." + year + ", 23:59:59";//Timer date 2
+
+                            try {
+                                oldDate = formatter.parse(oldTime);
+                                newDate = formatter.parse(NewTime);
+                                oldLong = oldDate.getTime();
+                                NewLong = newDate.getTime();
+                                diff = NewLong - oldLong;
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            if(timer == null){
+                                counter(diff);
+                                diffold = diff;
+                            }
+                            if (diffold != diff){
+                                timer.cancel();
+                                counter(diff);
+                                diffold = diff;
+                            }
+                        }
+                    }
+                }
+        });
+    }
+
     public void showtime(){
         Calendar c = Calendar.getInstance();
         int hr1 = c.get(Calendar.HOUR_OF_DAY);
@@ -281,10 +326,18 @@ public class FirstFragment extends Fragment {
                         + (String.format("%02d", TimeUnit.MILLISECONDS.toHours(millis) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millis))) + ":")
                         + (String.format("%02d", TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis))) + ":"
                         + (String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)))));
-                countertime.setText(/*context.getString(R.string.ends_in) + " " +*/ hms);
+                if(linearLayoutshow.getVisibility() == View.VISIBLE) {
+                    countertime.setText(/*context.getString(R.string.ends_in) + " " +*/ hms);
+                }else {
+                    countertimefinish.setText(/*context.getString(R.string.ends_in) + " " +*/ hms);
+                }
             }
             public void onFinish() {
+                if(linearLayoutshow.getVisibility() == View.VISIBLE) {
                 countertime.setText("Czas upłynął");
+                }else {
+                    countertimefinish.setText("Czas upłynął");
+                }
                 DatabaseReference uidRef = databaseReference;
                 uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
