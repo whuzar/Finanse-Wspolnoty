@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAllCaps="true"
-                    android:text="Informacje o tobie"
+                    android:text="Dane o tobie"
                     android:textSize="23dp"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold" />

@@ -4,7 +4,6 @@ import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -300,7 +299,6 @@ public class FirstFragment extends Fragment {
                         }
                     }
                 });
-                startActivity(new Intent(getActivity(), FirstFragment.class));
             }
         };
         timer.start();
