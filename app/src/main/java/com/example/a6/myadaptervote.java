@@ -129,6 +129,8 @@ public class myadaptervote extends FirebaseRecyclerAdapter<modelvote, myadapterv
 //                                                        Log.i("2", y);
                                                     }
 
+                                                            databaseReference.child(who).child(login).child("voted").child("send").setValue("true");
+
                                                 }
 
                                                 @Override

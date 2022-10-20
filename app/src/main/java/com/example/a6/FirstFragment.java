@@ -54,7 +54,7 @@ public class FirstFragment extends Fragment {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     private SwipeRefreshLayout refreshLayout;
-    private TextView timehello, moneytextset, ideamoneyset, themeidea, countertime, countertimefinish;
+    private TextView timehello, moneytextset, ideamoneyset, themeidea, countertime, countertimefinish, endchoose;
     private EditText typeidea;
     private LinearLayout nothing, showtypeidea, showtypeideabutton, showchooseidea;
     private Button btnsendidea;
@@ -96,6 +96,7 @@ public class FirstFragment extends Fragment {
         themeidea = rootView.findViewById(R.id.setideatheme);
         countertime = rootView.findViewById(R.id.counterdowntime);
         countertimefinish = rootView.findViewById(R.id.counterdowntimefinish);
+        endchoose = rootView.findViewById(R.id.youchoosed);
 
         showtypeidea = rootView.findViewById(R.id.ideaonoff);
         nothing = rootView.findViewById(R.id.ideashownothing);
@@ -105,6 +106,7 @@ public class FirstFragment extends Fragment {
         btnsendidea = rootView.findViewById(R.id.btnsendidea);
 
         typeidea = rootView.findViewById(R.id.youridea);
+
 
         showtime();
         showselectidea();
@@ -126,6 +128,7 @@ public class FirstFragment extends Fragment {
         showtypeidea.setVisibility(View.GONE);
         showtypeideabutton.setVisibility(View.GONE);
         showchooseidea.setVisibility(View.GONE);
+        endchoose.setVisibility(View.GONE);
 
         btnsendidea.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -267,12 +270,21 @@ public class FirstFragment extends Fragment {
                         String month = task.getResult().child("wspolnota").child(team).child("showidea").child("month").getValue(String.class);
                         String year = task.getResult().child("wspolnota").child(team).child("showidea").child("year").getValue(String.class);
 
+                        String check = task.getResult().child(who).child(login).child("voted").child("send").getValue(String.class);
+
                             if(day != null) {
+
                                 showchooseidea.setVisibility(View.VISIBLE);
                                 showtypeidea.setVisibility(View.GONE);
                                 showtypeideabutton.setVisibility(View.GONE);
-                                nothing.setVisibility(View.GONE);
 
+                                if(Objects.equals(check, "true")){
+                                    nothing.setVisibility(View.GONE);
+                                    endchoose.setVisibility(View.VISIBLE);
+                                    recyclerView.setVisibility(View.GONE);
+                                }else{
+                                    nothing.setVisibility(View.GONE);
+                                }
 
                                 String NewTime = day + "." + month + "." + year + ", 23:59:59";//Timer date 2
 
