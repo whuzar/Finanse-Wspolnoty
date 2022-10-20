@@ -85,8 +85,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
-                android:padding="15dp"
-                android:visibility="gone">
+                android:padding="15dp">
 
                 <TextView
                     android:id="@+id/setideatheme"
@@ -177,7 +176,6 @@
                 android:background="@drawable/back_wh"
                 android:orientation="vertical"
                 android:padding="15dp"
-                android:visibility="gone"
                 android:layout_marginBottom="70dp">
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -203,7 +201,7 @@
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
                 android:padding="15dp"
-                android:visibility="gone">
+                android:layout_marginBottom="70dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -231,8 +229,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
-                android:padding="15dp"
-                android:visibility="visible">
+                android:padding="15dp">
 
                 <TextView
                     android:layout_marginTop="10dp"
@@ -273,10 +270,24 @@
                     android:padding="5dp"
                     android:layout_marginBottom="10dp"/>
 
+                <TextView
+                    android:id="@+id/youchoosed"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAllCaps="true"
+                    android:text="oddałeś już swój głos czekaj na wyniki"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:padding="5dp"
+                    android:layout_marginBottom="10dp"/>
+
                     <view class="androidx.recyclerview.widget.RecyclerView"
                         android:id="@+id/recycleshowideas"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="400dp">
 
                     </view>
 
