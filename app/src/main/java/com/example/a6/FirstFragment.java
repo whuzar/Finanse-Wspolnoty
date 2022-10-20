@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -55,7 +56,7 @@ public class FirstFragment extends Fragment {
     private SwipeRefreshLayout refreshLayout;
     private TextView timehello, moneytextset, ideamoneyset, themeidea, countertime, countertimefinish;
     private EditText typeidea;
-    private LinearLayout linearLayoutonoff, linearLayoutshow, linearshowbutton, choosefinish;
+    private LinearLayout nothing, showtypeidea, showtypeideabutton, showchooseidea;
     private Button btnsendidea;
     private CountDownTimer timer;
     private String team;
@@ -96,9 +97,10 @@ public class FirstFragment extends Fragment {
         countertime = rootView.findViewById(R.id.counterdowntime);
         countertimefinish = rootView.findViewById(R.id.counterdowntimefinish);
 
-        linearLayoutshow = rootView.findViewById(R.id.ideaonoff);
-        linearLayoutonoff = rootView.findViewById(R.id.ideashownothing);
-        linearshowbutton = rootView.findViewById(R.id.buttonlinearidea);
+        showtypeidea = rootView.findViewById(R.id.ideaonoff);
+        nothing = rootView.findViewById(R.id.ideashownothing);
+        showtypeideabutton = rootView.findViewById(R.id.buttonlinearidea);
+        showchooseidea = rootView.findViewById(R.id.chooseidea);
 
         btnsendidea = rootView.findViewById(R.id.btnsendidea);
 
@@ -120,9 +122,10 @@ public class FirstFragment extends Fragment {
             }
         });
 
-        linearLayoutonoff.setVisibility(View.VISIBLE);
-        linearLayoutshow.setVisibility(View.GONE);
-        linearshowbutton.setVisibility(View.GONE);
+        nothing.setVisibility(View.VISIBLE);
+        showtypeidea.setVisibility(View.GONE);
+        showtypeideabutton.setVisibility(View.GONE);
+        showchooseidea.setVisibility(View.GONE);
 
         btnsendidea.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,15 +218,10 @@ public class FirstFragment extends Fragment {
                                 moneytextset.setText(money);
                             }
 
-                            if(theme.equals("")){
-                                linearLayoutonoff.setVisibility(View.GONE);
-                                linearLayoutshow.setVisibility(View.VISIBLE);
-                                linearshowbutton.setVisibility(View.GONE);
-                            }else {
-                                linearLayoutonoff.setVisibility(View.GONE);
-                                linearLayoutshow.setVisibility(View.VISIBLE);
-                                linearshowbutton.setVisibility(View.VISIBLE);
-                            }
+                            nothing.setVisibility(View.GONE);
+                            showtypeidea.setVisibility(View.VISIBLE);
+                            showtypeideabutton.setVisibility(View.VISIBLE);
+
                             themeidea.setText(theme);
 
                             String NewTime = day + "." + month + "." + year + ", 23:59:59";//Timer date 2
@@ -265,39 +263,37 @@ public class FirstFragment extends Fragment {
                     for (DataSnapshot ds : task.getResult().getChildren()) {
                         String team = task.getResult().child(who).child(login).child("team").getValue(String.class);
 
-                        String day = task.getResult().child("wspolnota").child(team).child("selectidea").child("day").getValue(String.class);
-                        String month = task.getResult().child("wspolnota").child(team).child("selectidea").child("month").getValue(String.class);
-                        String year = task.getResult().child("wspolnota").child(team).child("selectidea").child("year").getValue(String.class);
+                        String day = task.getResult().child("wspolnota").child(team).child("showidea").child("day").getValue(String.class);
+                        String month = task.getResult().child("wspolnota").child(team).child("showidea").child("month").getValue(String.class);
+                        String year = task.getResult().child("wspolnota").child(team).child("showidea").child("year").getValue(String.class);
 
-//                            if(day.equals("")){
-//                                linearLayoutonoff.setVisibility(View.GONE);
-//                                linearLayoutshow.setVisibility(View.VISIBLE);
-//                                linearshowbutton.setVisibility(View.GONE);
-//                            }else {
-//                                linearLayoutonoff.setVisibility(View.GONE);
-//                                linearLayoutshow.setVisibility(View.VISIBLE);
-//                                linearshowbutton.setVisibility(View.VISIBLE);
-//                            }
+                            if(day != null) {
+                                showchooseidea.setVisibility(View.VISIBLE);
+                                showtypeidea.setVisibility(View.GONE);
+                                showtypeideabutton.setVisibility(View.GONE);
+                                nothing.setVisibility(View.GONE);
 
-                            String NewTime = day + "." + month + "." + year + ", 23:59:59";//Timer date 2
 
-                            try {
-                                oldDate = formatter.parse(oldTime);
-                                newDate = formatter.parse(NewTime);
-                                oldLong = oldDate.getTime();
-                                NewLong = newDate.getTime();
-                                diff = NewLong - oldLong;
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            if(timer == null){
-                                counter(diff);
-                                diffold = diff;
-                            }
-                            if (diffold != diff){
-                                timer.cancel();
-                                counter(diff);
-                                diffold = diff;
+                                String NewTime = day + "." + month + "." + year + ", 23:59:59";//Timer date 2
+
+                                try {
+                                    oldDate = formatter.parse(oldTime);
+                                    newDate = formatter.parse(NewTime);
+                                    oldLong = oldDate.getTime();
+                                    NewLong = newDate.getTime();
+                                    diff = NewLong - oldLong;
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                if (timer == null) {
+                                    counter(diff);
+                                    diffold = diff;
+                                }
+                                if (diffold != diff) {
+                                    timer.cancel();
+                                    counter(diff);
+                                    diffold = diff;
+                                }
                             }
                         }
                     }
@@ -326,14 +322,14 @@ public class FirstFragment extends Fragment {
                         + (String.format("%02d", TimeUnit.MILLISECONDS.toHours(millis) - TimeUnit.DAYS.toHours(TimeUnit.MILLISECONDS.toDays(millis))) + ":")
                         + (String.format("%02d", TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis))) + ":"
                         + (String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)))));
-                if(linearLayoutshow.getVisibility() == View.VISIBLE) {
+                if(showtypeidea.getVisibility() == View.VISIBLE) {
                     countertime.setText(/*context.getString(R.string.ends_in) + " " +*/ hms);
                 }else {
                     countertimefinish.setText(/*context.getString(R.string.ends_in) + " " +*/ hms);
                 }
             }
             public void onFinish() {
-                if(linearLayoutshow.getVisibility() == View.VISIBLE) {
+                if(showtypeidea.getVisibility() == View.VISIBLE) {
                 countertime.setText("Czas upłynął");
                 }else {
                     countertimefinish.setText("Czas upłynął");

@@ -196,7 +196,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="20dp"
                         android:layout_toEndOf="@id/edituser"
-                        android:text="Edytuj informacje użytkonika"
+                        android:text="Edytuj dane użytkownika"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
 

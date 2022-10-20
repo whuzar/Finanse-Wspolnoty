@@ -32,6 +32,7 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
+    private static final String KEY_LOGED = "wloged";
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -55,6 +56,7 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
         valuer1 = findViewById(R.id.radiochoice1value);
         sendvote = findViewById(R.id.sendtoonevote);
         votetheme = findViewById(R.id.themevote);
+
 
         btndate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +87,7 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
         });
 
         String login = sharedPreferences.getString(KEY_LOGIN, null);
+        String who = sharedPreferences.getString(KEY_LOGED, null);
 
         sendvote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,22 +100,24 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
                 String dd = dateTextd.getText().toString();
 
                 if(!vt.equals("") && !dy.equals("")) {
-                    DatabaseReference uidRef = databaseReference.child("admin").child(login);
+                    DatabaseReference uidRef = databaseReference.child(who).child(login);
                     uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (DataSnapshot ds : task.getResult().getChildren()) {
                                     String teamwspo = task.getResult().child("team").getValue(String.class);
+//                                    String send = task.getResult().child("ideas").child("send").getValue(String.class);
+//                                    databaseReference.child(who).child(login).child("ideas").orderByChild("send").equalTo(send);
 
-                                    DatabaseReference textRef = databaseReference.child("wspolnota").child(teamwspo);
+                                    DatabaseReference textRef = databaseReference;
                                     textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                         @Override
                                         public void onComplete(@NonNull Task<DataSnapshot> task) {
                                             if (task.isSuccessful()) {
                                                 DataSnapshot snapshot = task.getResult();
 
-                                                databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                         databaseReference.child("wspolnota").child(teamwspo).child("typeidea").child("themevote").setValue(vt);
@@ -148,6 +153,9 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
                             }
                         }
                     });
+
+
+
                 }else{
                     Toast.makeText(VoteOnIdeaAdmin.this, "Uzupełnij dane", Toast.LENGTH_SHORT).show();
                 }
