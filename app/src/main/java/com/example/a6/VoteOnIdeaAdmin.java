@@ -40,6 +40,7 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
     private EditText valuefor, votetheme;
     private Button btndate, sendvote;
     private RadioButton valuer1, valuer2;
+    String team;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +139,67 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
 
                                                     }
                                                 });
+
+                                                databaseReference.child(who).child(login).child("team").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                                        if (!task.isSuccessful()) {
+                                                            Log.e("firebase", "Error getting data", task.getException());
+                                                        } else {
+                                                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                                                            team = String.valueOf(task.getResult().getValue());
+                                                            databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                    for (DataSnapshot ds : snapshot.getChildren()) {
+                                                                        if(String.valueOf(ds.child("team").getValue()).equals(team)){
+                                                                            String ideas = String.valueOf(ds.child("ideas").getValue());
+                                                                            if(ideas != null){
+                                                                                ds.child("ideas").getRef().removeValue();
+                                                                            }
+                                                                        }
+
+
+                                                                    }
+
+                                                                }
+
+                                                                @Override
+                                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                }
+                                                            });
+                                                            databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                    for (DataSnapshot ds : snapshot.getChildren()) {
+                                                                        if(String.valueOf(ds.child("team").getValue()).equals(team)){
+                                                                            String ideas = String.valueOf(ds.child("ideas").getValue());
+                                                                            if(ideas != null){
+                                                                                ds.child("ideas").getRef().removeValue();
+                                                                            }
+                                                                        }
+
+
+                                                                    }
+
+                                                                }
+
+                                                                @Override
+                                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                }
+                                                            });
+                                                        }
+
+                                                    }
+                                                });
+
+
+
+//                                                Log.i("users", String.valueOf(databaseReference.child("user").orderByChild("team").equalTo(team).get()));
+
+
                                                 Toast.makeText(VoteOnIdeaAdmin.this, "Utworzono głosowanie", Toast.LENGTH_SHORT).show();
                                                 valuefor.setText("");
                                                 votetheme.setText("");
