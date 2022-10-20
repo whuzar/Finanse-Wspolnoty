@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class myadaptervote extends FirebaseRecyclerAdapter<modelvote, myadaptervote.myviewvote> {
 
@@ -105,7 +106,9 @@ public class myadaptervote extends FirebaseRecyclerAdapter<modelvote, myadapterv
                         if (task.isSuccessful()) {
                             for (DataSnapshot ds : task.getResult().getChildren()) {
                                 String teamwspo = task.getResult().child(who).child(login).child("team").getValue(String.class);
+                                String shares = task.getResult().child(who).child(login).child("shares").getValue(String.class);
                                 String number = task.getResult().child("wspolnota").child(teamwspo).child("createdpoll").child(String.valueOf(i1+1)).child("count").getValue(String.class);
+                                String power = task.getResult().child("wspolnota").child(teamwspo).child("showidea").child("power").getValue(String.class);
 
                                 DatabaseReference textRef = databaseReference;
                                 textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -118,19 +121,31 @@ public class myadaptervote extends FirebaseRecyclerAdapter<modelvote, myadapterv
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                                    if(number != null){
+
+                                                    if(Objects.equals(power, "shares")){
+                                                        if (number != null) {
+                                                            int x = Integer.parseInt(number);
+                                                            x = Integer.parseInt(x + shares);
+                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(String.valueOf(i1 + 1)).child("count").setValue(String.valueOf(x));
+//                                                            Log.i("1", String.valueOf(x));
+                                                        } else {
+                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(String.valueOf(i1 + 1)).child("count").setValue(shares);
+//                                                        Log.i("2", y);
+                                                        }
+
+                                                    }else if(Objects.equals(power, "one")) {
+                                                        if (number != null) {
                                                             int x = Integer.parseInt(number);
                                                             x = x + 1;
-                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(String.valueOf(i1+1)).child("count").setValue(String.valueOf(x));
+                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(String.valueOf(i1 + 1)).child("count").setValue(String.valueOf(x));
 //                                                            Log.i("1", String.valueOf(x));
-                                                    }else {
+                                                        } else {
                                                             String y = "1";
-                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(String.valueOf(i1+1)).child("count").setValue(y);
+                                                            databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(String.valueOf(i1 + 1)).child("count").setValue(y);
 //                                                        Log.i("2", y);
+                                                        }
                                                     }
-
-                                                            databaseReference.child(who).child(login).child("voted").child("send").setValue("true");
-
+                                                    databaseReference.child(who).child(login).child("voted").child("send").setValue("true");
                                                 }
 
                                                 @Override

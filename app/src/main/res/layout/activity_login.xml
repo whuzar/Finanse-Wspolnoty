@@ -39,7 +39,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@android:color/transparent"
-            android:drawableStart="@drawable/ic_login"
             android:hint="Login"
             android:inputType="text"
             android:maxLines="1"
@@ -67,9 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableStart="@drawable/ic_lock"
             android:hint="Hasło"
-
             android:inputType="textPassword"
             android:maxLines="1"
             android:textColor="@color/white"

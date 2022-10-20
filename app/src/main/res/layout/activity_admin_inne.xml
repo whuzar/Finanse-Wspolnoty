@@ -133,21 +133,12 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true" />
                 </RelativeLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:background="@drawable/back_wh"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:orientation="vertical"
-                android:padding="15dp">
 
                 <RelativeLayout
                     android:id="@+id/sendmessage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:clickable="true">
 
                     <ImageView
@@ -175,8 +166,18 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true" />
                 </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:background="@drawable/back_wh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                android:padding="15dp">
+
                 <RelativeLayout
-                    android:layout_marginTop="10dp"
                     android:id="@+id/editanotheruser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
