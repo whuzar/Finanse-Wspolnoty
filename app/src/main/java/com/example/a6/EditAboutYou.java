@@ -30,6 +30,7 @@ public class EditAboutYou extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
+    private static final String KEY_LOGED = "wloged";
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -51,8 +52,8 @@ public class EditAboutYou extends AppCompatActivity {
 
         sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String login = sharedPreferences.getString(KEY_LOGIN, null);
-
-        DatabaseReference uidRef = databaseReference.child("admin").child(login);
+        String who = sharedPreferences.getString(KEY_LOGED, null);
+        DatabaseReference uidRef = databaseReference.child(who).child(login);
         uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -81,7 +82,7 @@ public class EditAboutYou extends AppCompatActivity {
                     return;
                 }
                 else {
-                    DatabaseReference textRef = databaseReference.child("admin").child(login).child("email");
+                    DatabaseReference textRef = databaseReference.child(who).child(login).child("email");
                     textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -94,10 +95,10 @@ public class EditAboutYou extends AppCompatActivity {
                                     changeemail.setError("Email jest taki sam jak poprzedni");
 //                                    Toast.makeText(EditAboutYou.this, "Email jest taki sam jak poprzedni", Toast.LENGTH_SHORT).show();
                                 }else {
-                                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    databaseReference.child(who).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            databaseReference.child("admin").child(login).child("email").setValue(ce);
+                                            databaseReference.child(who).child(login).child("email").setValue(ce);
                                         }
 
                                         @Override
@@ -111,7 +112,7 @@ public class EditAboutYou extends AppCompatActivity {
                             }
                         }
                     });
-                    DatabaseReference textRef2 = databaseReference.child("admin").child(login).child("phone");
+                    DatabaseReference textRef2 = databaseReference.child(who).child(login).child("phone");
                     textRef2.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -124,10 +125,10 @@ public class EditAboutYou extends AppCompatActivity {
                                     changephone.setError("Telefon jest taki sam jak poprzedni");
 //                                    Toast.makeText(EditAboutYou.this, "Telefon jest taki sam jak poprzedni", Toast.LENGTH_SHORT).show();
                                 }else {
-                                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    databaseReference.child(who).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            databaseReference.child("admin").child(login).child("phone").setValue(cp);
+                                            databaseReference.child(who).child(login).child("phone").setValue(cp);
                                         }
 
                                         @Override
@@ -141,7 +142,7 @@ public class EditAboutYou extends AppCompatActivity {
                             }
                         }
                     });
-                    DatabaseReference textRef3 = databaseReference.child("admin").child(login).child("shares");
+                    DatabaseReference textRef3 = databaseReference.child(who).child(login).child("shares");
                     textRef3.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -154,10 +155,10 @@ public class EditAboutYou extends AppCompatActivity {
                                     changeshares.setError("Udziały są takie same jak ostatnio");
 //                                    Toast.makeText(EditAboutYou.this, "Udziały są takie same jak ostatnio", Toast.LENGTH_SHORT).show();
                                 }else {
-                                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    databaseReference.child(who).addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            databaseReference.child("admin").child(login).child("shares").setValue(cs);
+                                            databaseReference.child(who).child(login).child("shares").setValue(cs);
                                         }
 
                                         @Override

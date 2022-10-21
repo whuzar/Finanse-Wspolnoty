@@ -36,6 +36,7 @@ public class ChangePassword extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
+    private static final String KEY_LOGED = "wloged";
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -54,6 +55,7 @@ public class ChangePassword extends AppCompatActivity {
 
         sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String login = sharedPreferences.getString(KEY_LOGIN, null);
+        String who = sharedPreferences.getString(KEY_LOGED, null);
 
         oldpass.clearFocus();
 
@@ -65,7 +67,7 @@ public class ChangePassword extends AppCompatActivity {
                 String np = newpass.getEditText().getText().toString();
                 String rnp = repeatnewpass.getEditText().getText().toString();
 
-                DatabaseReference textRef = databaseReference.child("admin").child(login).child("password");
+                DatabaseReference textRef = databaseReference.child(who).child(login).child("password");
                 textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -75,7 +77,7 @@ public class ChangePassword extends AppCompatActivity {
                             if(!Objects.equals(text, op)){
                                 oldpass.setError("Nie zgodne jest stare hasło");
 //                                Toast.makeText(ChangePassword.this, "Nie zgodne jest stare hasło", Toast.LENGTH_SHORT).show();
-                            }else if(op == np){
+                            }else if(op.equals(np)){
                                 newpass.setError("Hasło nie może być takie samo jak poprzednie");
 //                                Toast.makeText(ChangePassword.this, "Hasło nie może być takie samo jak poprzednie", Toast.LENGTH_SHORT).show();
                             }else if(!PASSWORD_PATTERN.matcher(np).matches()){
@@ -84,10 +86,10 @@ public class ChangePassword extends AppCompatActivity {
                                 repeatnewpass.setError("Hasła nie są takie same");
 //                                Toast.makeText(ChangePassword.this, "Hasła nie są takie same", Toast.LENGTH_SHORT).show();
                             }else {
-                                databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                                databaseReference.child(who).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        databaseReference.child("admin").child(login).child("password").setValue(np);
+                                        databaseReference.child(who).child(login).child("password").setValue(np);
                                     }
 
                                     @Override
