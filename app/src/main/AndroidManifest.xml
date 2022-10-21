@@ -14,6 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.6">
         <activity
+            android:name=".AdminIdeasList"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".UserList"
             android:exported="false">
             <meta-data

@@ -48,7 +48,7 @@ public class adminInne extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
-    private RelativeLayout voteIdea, createlogin, editanuser, sendmes, deleteaccuser, voteon;
+    private RelativeLayout voteIdea, createlogin, editanuser, sendmes, deleteaccuser, voteon, adminIdeaList;
     private TextView logina, phonea;
     private ImageView img, back;
 
@@ -65,6 +65,7 @@ public class adminInne extends AppCompatActivity {
         sendmes = findViewById(R.id.sendmessage);
         deleteaccuser = findViewById(R.id.deletuser);
         voteon = findViewById(R.id.voteonideaclick);
+        adminIdeaList = findViewById(R.id.adminidealist);
 
         logina = findViewById(R.id.setloginadmin);
         phonea = findViewById(R.id.setphoneadmin);
@@ -90,6 +91,12 @@ public class adminInne extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(adminInne.this, VoteOnIdeaAdmin.class));
+            }
+        });
+        adminIdeaList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(adminInne.this, AdminIdeasList.class));
             }
         });
 
