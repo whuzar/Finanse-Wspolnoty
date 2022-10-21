@@ -25,6 +25,7 @@ public class AboutYou extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
+    private static final String KEY_LOGED = "wloged";
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -66,7 +67,8 @@ public class AboutYou extends AppCompatActivity {
     }
     private void showay() {
         String login = sharedPreferences.getString(KEY_LOGIN, null);
-        DatabaseReference uidRef = databaseReference.child("admin").child(login);
+        String who = sharedPreferences.getString(KEY_LOGED, null);
+        DatabaseReference uidRef = databaseReference.child(who).child(login);
         uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
