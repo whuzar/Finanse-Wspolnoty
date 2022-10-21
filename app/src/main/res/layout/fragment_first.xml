@@ -85,7 +85,8 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
-                android:padding="15dp">
+                android:padding="15dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/setideatheme"
@@ -107,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:text=""
+                    android:text="Czas upłynął"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
                     android:textSize="15dp"
@@ -176,7 +177,8 @@
                 android:background="@drawable/back_wh"
                 android:orientation="vertical"
                 android:padding="15dp"
-                android:layout_marginBottom="70dp">
+                android:layout_marginBottom="70dp"
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnsendidea"
@@ -229,9 +231,11 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
-                android:padding="15dp">
+                android:padding="15dp"
+                android:visibility="gone">
 
                 <TextView
+                    android:id="@+id/titlename"
                     android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -244,6 +248,7 @@
                     android:padding="5dp"
                     android:visibility="visible"/>
                 <TextView
+                    android:id="@+id/titlenamelower"
                     android:layout_marginTop="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -263,7 +268,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:text=""
+                    android:text="Czas upłynął"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
                     android:textSize="15dp"
