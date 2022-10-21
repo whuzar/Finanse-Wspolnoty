@@ -1,5 +1,7 @@
 package com.example.a6;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -101,6 +103,8 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
                 String dd = dateTextd.getText().toString();
 
                 if(!vt.equals("") && !dy.equals("")) {
+                    endtypeidea(who, login);
+                    endchoose(who, login);
                     DatabaseReference uidRef = databaseReference.child(who).child(login);
                     uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
@@ -215,9 +219,6 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
                             }
                         }
                     });
-
-
-
                 }else{
                     Toast.makeText(VoteOnIdeaAdmin.this, "Uzupełnij dane", Toast.LENGTH_SHORT).show();
                 }
@@ -242,10 +243,78 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         String y = String.valueOf(year);
-        String m = String.valueOf(month);
+        String m = String.valueOf(month+1);
         String d = String.valueOf(dayOfMonth);
         dateTexty.setText(y);
         dateTextm.setText(m);
         dateTextd.setText(d);
+    }
+    public void endtypeidea(String who, String login){
+        DatabaseReference uidRef = databaseReference;
+        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
+                        String team = task.getResult().child(who).child(login).child("team").getValue(String.class);
+                        DatabaseReference uid = databaseReference.child("wspolnota").child(team).child("typeidea");
+                        uid.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot remov: dataSnapshot.getChildren()) {
+                                    remov.getRef().removeValue();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e(TAG, "onCancelled", databaseError.toException());
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+    public void endchoose(String who, String login){
+        DatabaseReference uidRef = databaseReference;
+        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
+                        String team = task.getResult().child(who).child(login).child("team").getValue(String.class);
+                        DatabaseReference uid = databaseReference.child("wspolnota").child(team).child("showidea");
+                        uid.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot remov: dataSnapshot.getChildren()) {
+                                    remov.getRef().removeValue();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e(TAG, "onCancelled", databaseError.toException());
+                            }
+                        });
+                        DatabaseReference uid2 = databaseReference.child("wspolnota").child(team).child("createdpoll");
+                        uid2.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot remov2: dataSnapshot.getChildren()) {
+                                    remov2.getRef().removeValue();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e(TAG, "onCancelled", databaseError.toException());
+                            }
+                        });
+                    }
+                }
+            }
+        });
     }
 }

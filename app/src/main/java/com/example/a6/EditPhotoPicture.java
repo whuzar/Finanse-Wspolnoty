@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +40,8 @@ import com.squareup.picasso.Transformation;
 
 import java.io.InputStream;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class EditPhotoPicture extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
@@ -51,7 +52,7 @@ public class EditPhotoPicture extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     private Uri filepath;
-    private ImageView img;
+    private CircleImageView img;
     private Button browse, save;
     private Bitmap bitmap;
     private String who;
@@ -152,19 +153,6 @@ public class EditPhotoPicture extends AppCompatActivity {
         ProgressDialog dialog = new ProgressDialog(this);
         dialog.setTitle("File Uploader");
         dialog.show();
-//        DatabaseReference uidRef = databaseReference.child(who).child(login).child("pimage");
-//        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                        String picprof = task.getResult().getValue(String.class);
-//                    StorageReference deleteOldImgReference = FirebaseStorage.getInstance().getReference().child(picprof);
-//                    deleteOldImgReference.delete();
-//
-//
-//                }
-//            }
-//        });
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference uploader = storage.getReference(login);
 
@@ -186,7 +174,7 @@ public class EditPhotoPicture extends AppCompatActivity {
                                 root.child(login).child("pimage").setValue(uri.toString());
 
                                 img.setImageResource(R.drawable.profilepic);
-                                Toast.makeText(EditPhotoPicture.this, "Zmieniono", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EditPhotoPicture.this, "Zmieniono pomyślnie", Toast.LENGTH_SHORT).show();
 
                             }
                         });

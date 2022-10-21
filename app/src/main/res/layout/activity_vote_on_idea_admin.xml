@@ -205,6 +205,15 @@
                     android:textAllCaps="false"
                     android:layout_gravity="center"
                     android:background="@drawable/back_second"/>
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Uwaga! Jeżeli istnieje już jakiekolwiek głosowanie na ekranie głównym to zostanie one usunięte"
+                    android:textSize="15dp"
+                    android:gravity="center"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

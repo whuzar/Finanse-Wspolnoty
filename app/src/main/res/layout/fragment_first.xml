@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:text="time"
+                    android:text=""
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
                     android:textSize="15dp"
@@ -263,7 +263,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:text="time"
+                    android:text=""
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
                     android:textSize="15dp"
@@ -272,24 +272,30 @@
 
                 <TextView
                     android:id="@+id/youchoosed"
-                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textAllCaps="true"
-                    android:text="oddałeś już swój głos czekaj na wyniki"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
-                    android:textSize="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:padding="5dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:text="oddałeś już swój głos czekaj na wyniki"
+                    android:textAllCaps="true"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
 
-                    <view class="androidx.recyclerview.widget.RecyclerView"
+                <view class="androidx.recyclerview.widget.RecyclerView"
                         android:id="@+id/recycleshowideas"
                         android:layout_width="match_parent"
-                        android:layout_height="400dp">
+                        android:layout_height="350dp">
 
-                    </view>
+                </view>
+                <view class="androidx.recyclerview.widget.RecyclerView"
+                    android:id="@+id/recycleshowrank"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp">
+
+                </view>
 
             </LinearLayout>
         </LinearLayout>

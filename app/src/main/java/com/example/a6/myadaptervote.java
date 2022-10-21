@@ -121,11 +121,10 @@ public class myadaptervote extends FirebaseRecyclerAdapter<modelvote, myadapterv
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-
                                                     if(Objects.equals(power, "shares")){
                                                         if (number != null) {
                                                             int x = Integer.parseInt(number);
-                                                            x = Integer.parseInt(x + shares);
+                                                            x = Integer.parseInt(String.valueOf(x + Integer.parseInt(shares)));
                                                             databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(String.valueOf(i1 + 1)).child("count").setValue(String.valueOf(x));
 //                                                            Log.i("1", String.valueOf(x));
                                                         } else {
