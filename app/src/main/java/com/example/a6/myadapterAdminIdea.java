@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,52 +63,71 @@ public class myadapterAdminIdea extends FirebaseRecyclerAdapter<modelvote, myada
         viewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String itemName = name.get(viewHolder.getAdapterPosition());
+                deleteElement(itemName, parent);
 //                ShowPopup(view, parent, viewHolder.getAdapterPosition());
 //                Toast.makeText(parent.getContext(), "elo", Toast.LENGTH_SHORT).show();
-                name.remove(viewHolder.getAdapterPosition());
-                notifyItemRemoved(viewHolder.getAdapterPosition());
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-                SharedPreferences sharedPreferences;
 
-                sharedPreferences = parent.getContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-                String login = sharedPreferences.getString(KEY_LOGIN, null);
-                String who = sharedPreferences.getString(KEY_LOGED, null);
-                databaseReference.child(who).child(login).child("team").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (!task.isSuccessful()) {
-                            Log.e("firebase", "Error getting data", task.getException());
-                        } else {
-                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                            String team = String.valueOf(task.getResult().getValue());
-                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                    Log.i("cos", String.valueOf(snapshot.child("wspolnota").child(team).child("createdpol").child(String.valueOf(viewHolder.getAdapterPosition()+1)).getValue()));
-                                    snapshot.child("wspolnota").child(team).child("createdpoll").child(String.valueOf(viewHolder.getAdapterPosition()+1)).getRef().removeValue();
-                                    Log.i("usuwam", "usuwam");
-
-
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-
-                        }
-
-                    }
-                });
 //                Log.i("name", String.valueOf(name.size()));
 //                Log.i("name", String.valueOf(viewHolder.getAdapterPosition()));
 
             }
         });
         return viewHolder;
+    }
+
+    public void deleteElement(String itemName, ViewGroup parent){
+        Log.i("position", String.valueOf(viewHolder.getAdapterPosition()));
+        Log.i("array lengts", String.valueOf(name.size()));
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        SharedPreferences sharedPreferences;
+
+        sharedPreferences = parent.getContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        String login = sharedPreferences.getString(KEY_LOGIN, null);
+        String who = sharedPreferences.getString(KEY_LOGED, null);
+        databaseReference.child(who).child(login).child("team").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                } else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    String team = String.valueOf(task.getResult().getValue());
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(itemName == null){
+                                return;
+                            }
+                            snapshot.child("wspolnota").child(team).child("createdpoll").child(itemName).getRef().removeValue();
+//                                    for (DataSnapshot ds : snapshot.child("wspolnota").child(team).child("createdpoll").getChildren()) {
+//
+//                                        if(String.valueOf(ds.child("idea").getValue()).equals(itemName)){
+//                                            ds.getRef().removeValue();
+//                                        }
+//
+//
+//                                    }
+
+//                                    Log.i("cos", String.valueOf(snapshot.child("wspolnota").child(team).child("createdpol").child(String.valueOf(viewHolder.getAdapterPosition()+1)).getValue()));
+
+//                                    Log.i("usuwam", "usuwam");
+
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+
+            }
+        });
     }
 
     class myviewAdminIdea extends RecyclerView.ViewHolder{
@@ -117,7 +137,6 @@ public class myadapterAdminIdea extends FirebaseRecyclerAdapter<modelvote, myada
 
         public myviewAdminIdea(@NonNull View intemview){
             super(intemview);
-
             button = itemView.findViewById(R.id.deleteIdeaAdmin);
             idea = itemView.findViewById(R.id.ideaAdmin);
 

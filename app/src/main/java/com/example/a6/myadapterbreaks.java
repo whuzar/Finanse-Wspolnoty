@@ -42,13 +42,7 @@ public class myadapterbreaks extends FirebaseRecyclerAdapter<modelbreaks, myadap
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singlerowbreak, parent, false);
         myviewbreaks viewHolder = new myviewbreaks(view);
 
-        viewHolder.line.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ShowPopup(view, parent, viewHolder.idea);
 
-            }
-        });
         return viewHolder;
     }
 
@@ -65,23 +59,5 @@ public class myadapterbreaks extends FirebaseRecyclerAdapter<modelbreaks, myadap
 
         }
     }
-    public void ShowPopup(View v, ViewGroup parent, TextView t1){
-        Dialog mDialog;
-        mDialog = new Dialog(parent.getContext());
-        mDialog.setContentView(R.layout.popupcontactadmin);
-        ImageView mail = mDialog.findViewById(R.id.sendmail);
-        ImageView profpopup = mDialog.findViewById(R.id.photoprofilepopup);
-        String emailmail = String.valueOf(t1.getText());
-
-        mail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_VIEW
-                        , Uri.parse("mailto:" + emailmail));
-                parent.getContext().startActivity(intent);
-            }
-        });
-
-        mDialog.show();
-    }
+    
 }

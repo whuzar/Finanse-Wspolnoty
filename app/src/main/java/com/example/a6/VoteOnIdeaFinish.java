@@ -3,6 +3,7 @@ package com.example.a6;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -81,19 +82,16 @@ public class VoteOnIdeaFinish extends AppCompatActivity implements DatePickerDia
                                 for (DataSnapshot ds : task.getResult().getChildren()) {
                                     String teamwspo = task.getResult().child("team").getValue(String.class);
 
-                                    DatabaseReference textRef = databaseReference.child("wspolnota").child(teamwspo).child("createdpoll");
+                                    DatabaseReference textRef = databaseReference.child("wspolnota").child(teamwspo);
                                     textRef.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                             // get total available quest
-                                            int size = (int) dataSnapshot.getChildrenCount();
-//                                            int size = (int) snapshot.getChildrenCount();
-//                                            Log.i("size before", String.valueOf(size));
-                                                            size = size + 1;
+
 //                                            Log.i("size after", String.valueOf(size));
 //                                                       databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("count").setValue(String.valueOf(x));
 //                                                        databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child("idea").setValue(idea + "&" + ii);
-                                            textRef.child(String.valueOf(size)).child("idea").setValue(ii);
+                                            textRef.child("createdpoll").child(ii).child("idea").setValue(ii);
                                             Toast.makeText(VoteOnIdeaFinish.this, "Dodano", Toast.LENGTH_SHORT).show();
                                             type.setText("");
                                         }
@@ -165,6 +163,48 @@ public class VoteOnIdeaFinish extends AppCompatActivity implements DatePickerDia
                                             } else {
                                                 Log.d("TAG", task.getException().getMessage());
                                             }
+                                        }
+                                    });
+                                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                                if(String.valueOf(ds.child("team").getValue()).equals(teamwspo)){
+                                                    String ideas = String.valueOf(ds.child("voted").getValue());
+                                                    if(ideas != null){
+                                                        ds.child("voted").getRef().removeValue();
+                                                    }
+                                                }
+
+
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                    databaseReference.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            for (DataSnapshot ds : snapshot.getChildren()) {
+                                                if(String.valueOf(ds.child("team").getValue()).equals(teamwspo)){
+                                                    String ideas = String.valueOf(ds.child("voted").getValue());
+                                                    if(ideas != null){
+                                                        ds.child("voted").getRef().removeValue();
+                                                    }
+                                                }
+
+
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
                                         }
                                     });
                                 }
