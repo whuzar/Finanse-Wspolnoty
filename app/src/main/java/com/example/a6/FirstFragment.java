@@ -1,7 +1,5 @@
 package com.example.a6;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -43,8 +41,9 @@ import java.util.concurrent.TimeUnit;
 
 public class FirstFragment extends Fragment {
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView, recyclerViewrank;
     myadaptervote adapter;
+    myadapterrankidea adapter2;
 
     SharedPreferences sharedPreferences;
     private static final String SHARED_PREF_NAME = "mypref";
@@ -54,7 +53,7 @@ public class FirstFragment extends Fragment {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
 
     private SwipeRefreshLayout refreshLayout;
-    private TextView timehello, moneytextset, ideamoneyset, themeidea, countertime, countertimefinish, endchoose;
+    private TextView timehello, moneytextset, ideamoneyset, themeidea, countertime, countertimefinish, endchoose, nametitle, nametitlow;
     private EditText typeidea;
     private LinearLayout nothing, showtypeidea, showtypeideabutton, showchooseidea;
     private Button btnsendidea;
@@ -84,6 +83,9 @@ public class FirstFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recycleshowideas);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        recyclerViewrank = rootView.findViewById(R.id.recycleshowrank);
+        recyclerViewrank.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         String login = sharedPreferences.getString(KEY_LOGIN, null);
         String who = sharedPreferences.getString(KEY_LOGED, null);
@@ -97,6 +99,8 @@ public class FirstFragment extends Fragment {
         countertime = rootView.findViewById(R.id.counterdowntime);
         countertimefinish = rootView.findViewById(R.id.counterdowntimefinish);
         endchoose = rootView.findViewById(R.id.youchoosed);
+        nametitle = rootView.findViewById(R.id.titlename);
+        nametitlow = rootView.findViewById(R.id.titlenamelower);
 
         showtypeidea = rootView.findViewById(R.id.ideaonoff);
         nothing = rootView.findViewById(R.id.ideashownothing);
@@ -120,15 +124,17 @@ public class FirstFragment extends Fragment {
                 showselectidea();
                 shownoteidea();
                 getdata();
+
                 refreshLayout.setRefreshing(false);
             }
         });
 
-        nothing.setVisibility(View.VISIBLE);
-        showtypeidea.setVisibility(View.GONE);
-        showtypeideabutton.setVisibility(View.GONE);
-        showchooseidea.setVisibility(View.GONE);
-        endchoose.setVisibility(View.GONE);
+//        nothing.setVisibility(View.VISIBLE);
+//        showtypeidea.setVisibility(View.GONE);
+//        showtypeideabutton.setVisibility(View.GONE);
+//        showchooseidea.setVisibility(View.GONE);
+//        endchoose.setVisibility(View.GONE);
+//        recyclerViewrank.setVisibility(View.GONE);
 
         btnsendidea.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,6 +199,29 @@ public class FirstFragment extends Fragment {
             }
         });
 
+        databaseReference.child(who).child(login).child("team").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    team = String.valueOf(task.getResult().getValue());
+
+
+                    FirebaseRecyclerOptions<modelrankidea> options2 = new FirebaseRecyclerOptions
+                            .Builder<modelrankidea>()
+                            .setQuery(FirebaseDatabase.getInstance().getReference().child("wspolnota").child(team).child("createdpoll"), modelrankidea.class)
+                            .build();
+
+                    adapter2 = new myadapterrankidea(options2);
+                    recyclerViewrank.setAdapter(adapter2);
+                    adapter2.startListening();
+                }
+            }
+        });
+
         return rootView;
     }
 //wpisywanie głosu
@@ -227,7 +256,9 @@ public class FirstFragment extends Fragment {
 
                             themeidea.setText(theme);
 
-                            String NewTime = day + "." + month + "." + year + ", 23:59:59";//Timer date 2
+                            int finalmonth = Integer.parseInt(month) - 1;
+
+                            String NewTime = day + "." + finalmonth + "." + year + ", 23:59:59";//Timer date 2
                             try {
                                 oldDate = formatter.parse(oldTime);
                                 newDate = formatter.parse(NewTime);
@@ -254,7 +285,6 @@ public class FirstFragment extends Fragment {
     }
 
 //    głosowanie na pomysl
-
     private void showselectidea() {
         String login = sharedPreferences.getString(KEY_LOGIN, null);
         String who = sharedPreferences.getString(KEY_LOGED, null);
@@ -273,39 +303,59 @@ public class FirstFragment extends Fragment {
                         String check = task.getResult().child(who).child(login).child("voted").child("send").getValue(String.class);
 
                             if(day != null) {
+                                DatabaseReference checkfinish = databaseReference;
+                                checkfinish.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (DataSnapshot ds : task.getResult().getChildren()) {
+                                                String finish = task.getResult().child("wspolnota").child(team).child("finish").getValue(String.class);
 
-                                showchooseidea.setVisibility(View.VISIBLE);
-                                showtypeidea.setVisibility(View.GONE);
-                                showtypeideabutton.setVisibility(View.GONE);
+                                                showchooseidea.setVisibility(View.VISIBLE);
+                                                showtypeidea.setVisibility(View.GONE);
+                                                showtypeideabutton.setVisibility(View.GONE);
+                                                nothing.setVisibility(View.GONE);
 
-                                if(Objects.equals(check, "true")){
-                                    nothing.setVisibility(View.GONE);
-                                    endchoose.setVisibility(View.VISIBLE);
-                                    recyclerView.setVisibility(View.GONE);
-                                }else{
-                                    nothing.setVisibility(View.GONE);
-                                }
+                                                if(finish != null) {
+                                                    thebest();
+                                                }else{
 
-                                String NewTime = day + "." + month + "." + year + ", 23:59:59";//Timer date 2
+                                                    if(Objects.equals(check, "true")){
+                                                        nothing.setVisibility(View.GONE);
+                                                        endchoose.setVisibility(View.VISIBLE);
+                                                        recyclerView.setVisibility(View.GONE);
+                                                    }else{
+                                                        nothing.setVisibility(View.GONE);
+                                                    }
 
-                                try {
-                                    oldDate = formatter.parse(oldTime);
-                                    newDate = formatter.parse(NewTime);
-                                    oldLong = oldDate.getTime();
-                                    NewLong = newDate.getTime();
-                                    diff = NewLong - oldLong;
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                if (timer == null) {
-                                    counter(diff);
-                                    diffold = diff;
-                                }
-                                if (diffold != diff) {
-                                    timer.cancel();
-                                    counter(diff);
-                                    diffold = diff;
-                                }
+                                                    int finalmonth = Integer.parseInt(month) - 1;
+
+                                                    String NewTime = day + "." + finalmonth + "." + year + ", 23:59:59";//Timer date 2
+
+                                                    try {
+                                                        oldDate = formatter.parse(oldTime);
+                                                        newDate = formatter.parse(NewTime);
+                                                        oldLong = oldDate.getTime();
+                                                        NewLong = newDate.getTime();
+                                                        diff = NewLong - oldLong;
+                                                    } catch (ParseException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                    if (timer == null) {
+                                                        counter(diff);
+                                                        diffold = diff;
+                                                    }
+                                                    if (diffold != diff) {
+                                                        timer.cancel();
+                                                        counter(diff);
+                                                        diffold = diff;
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                });
                             }
                         }
                     }
@@ -325,8 +375,6 @@ public class FirstFragment extends Fragment {
     }
 
     private void counter(long min) {
-        String login = sharedPreferences.getString(KEY_LOGIN, null);
-        String who = sharedPreferences.getString(KEY_LOGED, null);
         timer = new CountDownTimer(min, 1000) {
             public void onTick(long millisUntilFinished) {
                 long millis = millisUntilFinished;
@@ -336,41 +384,42 @@ public class FirstFragment extends Fragment {
                         + (String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)))));
                 if(showtypeidea.getVisibility() == View.VISIBLE) {
                     countertime.setText(/*context.getString(R.string.ends_in) + " " +*/ hms);
-                }else {
+                }else if(showchooseidea.getVisibility() == View.VISIBLE){
                     countertimefinish.setText(/*context.getString(R.string.ends_in) + " " +*/ hms);
                 }
             }
             public void onFinish() {
-                if(showtypeidea.getVisibility() == View.VISIBLE) {
-                countertime.setText("Czas upłynął");
-                }else {
-                    countertimefinish.setText("Czas upłynął");
-                }
-                DatabaseReference uidRef = databaseReference;
-                uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (DataSnapshot ds : task.getResult().getChildren()) {
-                                String team = task.getResult().child(who).child(login).child("team").getValue(String.class);
-                                DatabaseReference uid = databaseReference.child("wspolnota").child(team).child("typeidea");
-                                uid.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot remov: dataSnapshot.getChildren()) {
-                                            remov.getRef().removeValue();
-                                        }
-                                    }
 
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
-                                        Log.e(TAG, "onCancelled", databaseError.toException());
-                                    }
-                                });
+                if(showtypeidea.getVisibility() == View.VISIBLE) {
+                    countertime.setText("Czas upłynął");
+                }else if(showchooseidea.getVisibility() == View.VISIBLE) {
+
+                    DatabaseReference textRef3 = databaseReference;
+                    textRef3.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DataSnapshot snapshot = task.getResult();
+                                    databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            databaseReference.child("wspolnota").child(team).child("finish").setValue("true");
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                }else {
+                                Log.d("TAG", task.getException().getMessage());
                             }
                         }
-                    }
-                });
+                    });
+
+                    countertimefinish.setText("Czas upłynął");
+                    thebest();
+                }
             }
         };
         timer.start();
@@ -395,6 +444,17 @@ public class FirstFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void thebest(){
+        nametitle.setText("Głosowanie dobiegło końca");
+        endchoose.setText("Ranking pomysłów");
+        endchoose.setVisibility(View.VISIBLE);
+        nametitlow.setVisibility(View.GONE);
+        countertimefinish.setVisibility(View.GONE);
+        recyclerViewrank.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
     }
 
     @Override

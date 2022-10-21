@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,6 +28,7 @@ public class Breaks extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout refreshLayout;
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
     private static final String KEY_LOGED = "wloged";
@@ -45,6 +47,7 @@ public class Breaks extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclebreaks);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         sharedPreferences = this.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        refreshLayout = findViewById(R.id.refreshLayoutay);
 
         typebreak = findViewById(R.id.reportbreaks);
         btnsendbreak = findViewById(R.id.btnreport);
@@ -52,24 +55,13 @@ public class Breaks extends AppCompatActivity {
         String login = sharedPreferences.getString(KEY_LOGIN, null);
         String who = sharedPreferences.getString(KEY_LOGED, null);
 
-        databaseReference.child(who).child(login).child("team").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                    team = String.valueOf(task.getResult().getValue());
-                    FirebaseRecyclerOptions<modelbreaks> options = new FirebaseRecyclerOptions
-                            .Builder<modelbreaks>()
-                            .setQuery(FirebaseDatabase.getInstance().getReference().child("wspolnota").child(team).child("breaks"), modelbreaks.class)
-                            .build();
+        getbreaks(who, login);
 
-                    adapter = new myadapterbreaks(options);
-                    recyclerView.setAdapter(adapter);
-                    adapter.startListening();
-                }
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getbreaks(who, login);
+                refreshLayout.setRefreshing(false);
             }
         });
 
@@ -116,6 +108,28 @@ public class Breaks extends AppCompatActivity {
             }
         });
 
+    }
+    public void getbreaks(String who, String login){
+        databaseReference.child(who).child(login).child("team").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                    team = String.valueOf(task.getResult().getValue());
+                    FirebaseRecyclerOptions<modelbreaks> options = new FirebaseRecyclerOptions
+                            .Builder<modelbreaks>()
+                            .setQuery(FirebaseDatabase.getInstance().getReference().child("wspolnota").child(team).child("breaks"), modelbreaks.class)
+                            .build();
+
+                    adapter = new myadapterbreaks(options);
+                    recyclerView.setAdapter(adapter);
+                    adapter.startListening();
+                }
+            }
+        });
     }
     @Override
     protected void onStop(){
