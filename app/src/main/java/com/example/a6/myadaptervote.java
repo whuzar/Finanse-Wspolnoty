@@ -117,7 +117,7 @@ public class myadaptervote extends FirebaseRecyclerAdapter<modelvote, myadapterv
                                                 for (DataSnapshot ds : task.getResult().getChildren()) {
                                                     String teamwspo = task.getResult().child(who).child(login).child("team").getValue(String.class);
                                                     String shares = task.getResult().child(who).child(login).child("shares").getValue(String.class);
-                                                    String number = task.getResult().child("wspolnota").child(teamwspo).child("createdpoll").child(String.valueOf(i1 + 1)).child("count").getValue(String.class);
+                                                    String number = task.getResult().child("wspolnota").child(teamwspo).child("createdpoll").child(word).child("count").getValue(String.class);
                                                     String power = task.getResult().child("wspolnota").child(teamwspo).child("showidea").child("power").getValue(String.class);
 
                                                     DatabaseReference textRef = databaseReference;
@@ -135,10 +135,10 @@ public class myadaptervote extends FirebaseRecyclerAdapter<modelvote, myadapterv
                                                                             if (number != null) {
                                                                                 int x = Integer.parseInt(number);
                                                                                 x = Integer.parseInt(String.valueOf(x + Integer.parseInt(shares)));
-                                                                                databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(String.valueOf(i1 + 1)).child("count").setValue(String.valueOf(x));
+                                                                                databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(word).child("count").setValue(String.valueOf(x));
 //
                                                                             } else {
-                                                                                databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(String.valueOf(i1 + 1)).child("count").setValue(shares);
+                                                                                databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(word).child("count").setValue(shares);
 //
                                                                             }
 
@@ -146,11 +146,11 @@ public class myadaptervote extends FirebaseRecyclerAdapter<modelvote, myadapterv
                                                                             if (number != null) {
                                                                                 int x = Integer.parseInt(number);
                                                                                 x = x + 1;
-                                                                                databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(String.valueOf(i1 + 1)).child("count").setValue(String.valueOf(x));
+                                                                                databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(word).child("count").setValue(String.valueOf(x));
 //
                                                                             } else {
                                                                                 String y = "1";
-                                                                                databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(String.valueOf(i1 + 1)).child("count").setValue(y);
+                                                                                databaseReference.child("wspolnota").child(teamwspo).child("createdpoll").child(word).child("count").setValue(y);
 //
                                                                             }
                                                                         }
