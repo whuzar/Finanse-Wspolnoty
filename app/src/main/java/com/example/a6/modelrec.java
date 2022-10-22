@@ -1,19 +1,20 @@
 package com.example.a6;
 
 public class modelrec {
-    String name, surname, phone, email, pimage;
+    String name, surname, phone, email, pimage, login;
 
     modelrec(){
 
 
     }
 
-    public modelrec(String name, String surname, String phone, String email, String pimage) {
+    public modelrec(String name, String surname, String phone, String email, String pimage, String login) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.email = email;
         this.pimage = pimage;
+        this.login = login;
     }
 
     public String getName() {
@@ -54,5 +55,12 @@ public class modelrec {
 
     public void setPimage(String pimage) {
         this.pimage = pimage;
+    }
+    public String getlogin() {
+        return login;
+    }
+
+    public void setlogin(String login) {
+        this.login = login;
     }
 }
