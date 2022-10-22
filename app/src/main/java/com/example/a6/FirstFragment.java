@@ -152,8 +152,8 @@ public class FirstFragment extends Fragment {
                                 databaseReference.child(who).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        databaseReference.child(who).child(login).child("ideas").child("idea").setValue(gv);
-                                        databaseReference.child(who).child(login).child("ideas").child("send").setValue("true");
+                                        databaseReference.child(who).child(login).child("idea").setValue(gv);
+                                        databaseReference.child(who).child(login).child("send").setValue("true");
                                     }
 
                                     @Override
@@ -434,7 +434,7 @@ public class FirstFragment extends Fragment {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
                     for (DataSnapshot ds : task.getResult().getChildren()) {
-                        String check = task.getResult().child(who).child(login).child("ideas").child("send").getValue(String.class);
+                        String check = task.getResult().child(who).child(login).child("send").getValue(String.class);
                         if(Objects.equals(check, "true")){
                             typeidea.setEnabled(false);
                             btnsendidea.setText("Już wpisałeś swój pomysł");
