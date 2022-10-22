@@ -8,8 +8,6 @@
     android:padding="5dp"
     android:layout_gravity="center">
 
-
-
 <LinearLayout
 
     android:background="@drawable/back_wh"

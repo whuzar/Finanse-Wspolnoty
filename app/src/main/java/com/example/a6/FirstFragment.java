@@ -309,16 +309,18 @@ public class FirstFragment extends Fragment {
                                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                                         if (task.isSuccessful()) {
                                             for (DataSnapshot ds : task.getResult().getChildren()) {
-                                                String finish = task.getResult().child("wspolnota").child(team).child("finish").getValue(String.class);
+                                                String finish = task.getResult().child("wspolnota").child(team).child("finish").child("check").getValue(String.class);
 
                                                 showchooseidea.setVisibility(View.VISIBLE);
                                                 showtypeidea.setVisibility(View.GONE);
                                                 showtypeideabutton.setVisibility(View.GONE);
                                                 nothing.setVisibility(View.GONE);
 
-                                                if(finish != null) {
+                                                if(finish != null && !finish.equals("false")) {
                                                     thebest();
                                                 }else{
+                                                    recyclerViewrank.setVisibility(View.GONE);
+                                                    endchoose.setVisibility(View.GONE);
 
                                                     if(Objects.equals(check, "true")){
                                                         nothing.setVisibility(View.GONE);
@@ -403,7 +405,7 @@ public class FirstFragment extends Fragment {
                                     databaseReference.child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            databaseReference.child("wspolnota").child(team).child("finish").setValue("true");
+                                            databaseReference.child("wspolnota").child(team).child("finish").child("check").setValue("true");
                                         }
 
                                         @Override
@@ -418,7 +420,7 @@ public class FirstFragment extends Fragment {
                     });
 
                     countertimefinish.setText("Czas upłynął");
-                    thebest();
+//                    thebest();
                 }
             }
         };
