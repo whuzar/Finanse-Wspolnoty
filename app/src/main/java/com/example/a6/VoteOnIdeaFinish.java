@@ -5,7 +5,6 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -127,6 +126,7 @@ public class VoteOnIdeaFinish extends AppCompatActivity implements DatePickerDia
                 if(!dy.equals("") && (!valuer1.isChecked() || !valuer2.isChecked())) {
                     endtypeidea(who, login);
                     endchoose(who, login);
+                    clearfinish(who, login);
                     DatabaseReference uidRef = databaseReference.child("admin").child(login);
                     uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                         @Override
@@ -296,20 +296,40 @@ public class VoteOnIdeaFinish extends AppCompatActivity implements DatePickerDia
                                 Log.e(TAG, "onCancelled", databaseError.toException());
                             }
                         });
-//                        DatabaseReference uid2 = databaseReference.child("wspolnota").child(team).child("createdpoll");
-//                        uid2.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(DataSnapshot dataSnapshot) {
-//                                for (DataSnapshot remov2: dataSnapshot.getChildren()) {
-//                                    remov2.getRef().removeValue();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onCancelled(DatabaseError databaseError) {
-//                                Log.e(TAG, "onCancelled", databaseError.toException());
-//                            }
-//                        });
+                    }
+                }
+            }
+        });
+    }
+    public void clearfinish(String who, String login){
+        DatabaseReference uidRef = databaseReference;
+        uidRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (DataSnapshot ds : task.getResult().getChildren()) {
+                        String team = task.getResult().child(who).child(login).child("team").getValue(String.class);
+                        DatabaseReference textRef = databaseReference.child(who).child(login).child("password");
+                        textRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DataSnapshot snapshot = task.getResult();
+                                    String text = snapshot.getValue(String.class);
+                                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            databaseReference.child("wspolnota").child(team).child("finish").child("check").setValue("false");
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                }
+                            }
+                        });
                     }
                 }
             }
