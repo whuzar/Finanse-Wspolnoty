@@ -22,7 +22,7 @@
     android:padding="15dp">
 
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/photoprofilepopup"
         android:layout_width="100dp"
         android:layout_height="100dp"

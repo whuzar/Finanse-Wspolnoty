@@ -34,6 +34,8 @@ import com.squareup.picasso.Transformation;
 
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class adminInne extends AppCompatActivity {
 
     private SwipeRefreshLayout refreshLayout;
@@ -50,7 +52,7 @@ public class adminInne extends AppCompatActivity {
 
     private RelativeLayout voteIdea, createlogin, editanuser, sendmes, deleteaccuser, voteon, adminIdeaList;
     private TextView logina, phonea;
-    private ImageView img, back;
+    private CircleImageView img, back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

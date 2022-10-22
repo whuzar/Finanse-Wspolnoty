@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/backlastview"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -31,7 +31,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"/>
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/photopic"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
@@ -180,7 +180,6 @@
                     android:id="@+id/sendmessage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:clickable="true">
 
                     <ImageView
@@ -272,7 +271,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="20dp"
                         android:layout_toEndOf="@id/aboutus"
-                        android:text="Utwórz login lub loginy"
+                        android:text="Stwórz konto"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
 

@@ -91,7 +91,7 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
         mDialog.setContentView(R.layout.popupcontactadmin);
         ImageView call = mDialog.findViewById(R.id.call);
         ImageView mail = mDialog.findViewById(R.id.sendmail);
-        ImageView profpopup = mDialog.findViewById(R.id.photoprofilepopup);
+        CircleImageView profpopup = mDialog.findViewById(R.id.photoprofilepopup);
         String emailmail = String.valueOf(t2.getText());
         String phonephon = String.valueOf(t1.getText());
         String linkprofil = name.get(i1);

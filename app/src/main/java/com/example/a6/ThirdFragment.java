@@ -35,6 +35,8 @@ import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ThirdFragment extends Fragment{
 
     private SwipeRefreshLayout refreshLayout;
@@ -73,7 +75,7 @@ public class ThirdFragment extends Fragment{
         TextView number_telephone = rootView.findViewById(R.id.number_inne);
         TextView login_underphoto = rootView.findViewById(R.id.login_inne);
 
-        ImageView profilepohoto = rootView.findViewById(R.id.photoprofile);
+        CircleImageView profilepohoto = rootView.findViewById(R.id.photoprofile);
 
         sharedPreferences = this.getActivity().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         who = sharedPreferences.getString(KEY_LOGED, null);
