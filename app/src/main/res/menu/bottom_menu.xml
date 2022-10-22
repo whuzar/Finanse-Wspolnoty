@@ -6,7 +6,7 @@
         android:icon="@drawable/ic_baseline" />
     <item android:title="Ogłoszenia"
         android:id="@+id/secondFragment"
-        android:icon="@drawable/loudspeaker"/>
+        android:icon="@drawable/ic_message"/>
     <item android:title="Inne"
         android:id="@+id/thirdFragment"
         android:icon="@drawable/ic_menu"/>
