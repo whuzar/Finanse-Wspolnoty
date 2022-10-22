@@ -60,7 +60,7 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
         viewHolder.line.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowPopup(view, parent, viewHolder.phone, viewHolder.email, viewHolder.getAdapterPosition());
+                ShowPopup(view, parent, viewHolder.phone, viewHolder.email, viewHolder.namesur, viewHolder.getAdapterPosition());
 
             }
         });
@@ -85,16 +85,20 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
 
         }
     }
-    public void ShowPopup(View v, ViewGroup parent, TextView t1, TextView t2, int i1){
+    public void ShowPopup(View v, ViewGroup parent, TextView t1, TextView t2, TextView t3, int i1){
         Dialog mDialog;
         mDialog = new Dialog(parent.getContext());
         mDialog.setContentView(R.layout.popupcontactadmin);
         ImageView call = mDialog.findViewById(R.id.call);
         ImageView mail = mDialog.findViewById(R.id.sendmail);
-        ImageView profpopup = mDialog.findViewById(R.id.photoprofilepopup);
+        TextView ns = mDialog.findViewById(R.id.namesurname);
+        CircleImageView profpopup = mDialog.findViewById(R.id.photoprofilepopup);
         String emailmail = String.valueOf(t2.getText());
         String phonephon = String.valueOf(t1.getText());
+        String showname = String.valueOf(t3.getText());
         String linkprofil = name.get(i1);
+
+        ns.setText(showname);
 
         if(linkprofil != null){
             Transformation transformation = new RoundedTransformationBuilder()
