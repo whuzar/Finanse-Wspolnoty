@@ -36,7 +36,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:textAllCaps="true"
-                        android:text="Głosowanie na pomysł"
+                        android:gravity="center"
+                        android:text="Ostateczne głosowanie"
                         android:textSize="23dp"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
@@ -229,7 +230,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Uwaga! Jeżeli istnieje już jakiekolwiek głosowanie na ekranie głównym to zostanie one usunięte"
+                    android:text="Uwaga! Jeżeli istnieje już jakiekolwiek głosowanie na ekranie głównym to zostanie ono usunięte"
                     android:textSize="15dp"
                     android:gravity="center"
                     android:textColor="#FFFFFF"

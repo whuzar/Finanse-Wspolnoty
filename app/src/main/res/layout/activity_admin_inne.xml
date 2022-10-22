@@ -122,7 +122,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="20dp"
                         android:layout_toEndOf="@id/voteonidea"
-                        android:text="Głosowanie za pomysłem"
+                        android:text="Ostateczne głosowanie"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
 

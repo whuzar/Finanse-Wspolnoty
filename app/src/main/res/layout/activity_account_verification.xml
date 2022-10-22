@@ -67,8 +67,7 @@
                 android:layout_width="280dp"
                 android:layout_height="49dp"
                 android:text="Weryfikuj"
-                android:background=""
-                />
+                android:background="@color/colorTransparent"/>
 
         </LinearLayout>
 
