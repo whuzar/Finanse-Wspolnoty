@@ -34,7 +34,7 @@
                 android:textStyle="bold" />
         </LinearLayout>
         <LinearLayout
-            android:background="@drawable/back_wh"
+            android:background="@color/colorTransparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"

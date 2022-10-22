@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="350dp"
-    android:layout_height="wrap_content"
-    android:background="@color/pprimary"
-    android:padding="5dp"
-    android:layout_gravity="center">
-
-<LinearLayout
-
-    android:background="@drawable/back_wh"
+    android:background="@drawable/backpopups"
     android:layout_margin="20dp"
-    android:layout_width="match_parent"
+    android:layout_width="320dp"
+    android:layout_gravity="center"
     android:layout_height="wrap_content"
     android:layout_marginStart="5dp"
     android:layout_marginEnd="5dp"
@@ -41,7 +32,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
@@ -65,6 +56,4 @@
             android:padding="12dp"
             android:src="@drawable/email" />
     </LinearLayout>
-</LinearLayout>
-
 </LinearLayout>

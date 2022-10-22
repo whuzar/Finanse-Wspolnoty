@@ -52,7 +52,6 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
             @Override
             public void onClick(View view) {
                 ShowPopup(view, parent, holder.phone, holder.email, holder.namesur, holder.getAdapterPosition());
-
             }
         });
 
@@ -86,9 +85,11 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
 
         }
     }
+
     public void ShowPopup(View v, ViewGroup parent, TextView t1, TextView t2, TextView t3, int i1){
         Dialog mDialog;
         mDialog = new Dialog(parent.getContext());
+        mDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         mDialog.setContentView(R.layout.popupcontactadmin);
         ImageView call = mDialog.findViewById(R.id.call);
         ImageView mail = mDialog.findViewById(R.id.sendmail);

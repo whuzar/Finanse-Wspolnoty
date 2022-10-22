@@ -84,6 +84,7 @@ public class myadaptervote extends FirebaseRecyclerAdapter<modelvote, myadapterv
     public void ShowPopup(View v, ViewGroup parent, int i1){
         Dialog mDialog;
         mDialog = new Dialog(parent.getContext());
+        mDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         mDialog.setContentView(R.layout.popupshowvote);
         Button vote = mDialog.findViewById(R.id.vote);
         Button back = mDialog.findViewById(R.id.backvote);

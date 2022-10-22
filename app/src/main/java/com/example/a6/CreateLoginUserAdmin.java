@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -72,7 +71,7 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
         who = sharedPreferences.getString(KEY_LOGED, null);
         whoLogin = sharedPreferences.getString(KEY_LOGIN, null);
         mDialog = new Dialog(this);
-
+        mDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     }
     public void ShowPopup(View v){
         mDialog.setContentView(R.layout.popupcreateua);
