@@ -36,7 +36,7 @@ public class myadaptervote extends FirebaseRecyclerAdapter<modelvote, myadapterv
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
     private static final String KEY_LOGED = "wloged";
-
+    ViewGroup parent;
     public myadaptervote(@NonNull FirebaseRecyclerOptions<modelvote> options) {
         super(options);
     }
@@ -47,6 +47,13 @@ public class myadaptervote extends FirebaseRecyclerAdapter<modelvote, myadapterv
 
         holder.idea.setText(model.getIdea());
         name.add(model.getIdea());
+        holder.line.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowPopup(view, parent, holder.getAdapterPosition());
+
+            }
+        });
 
     }
 
@@ -54,15 +61,10 @@ public class myadaptervote extends FirebaseRecyclerAdapter<modelvote, myadapterv
     @Override
     public myviewvote onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singlerowidea, parent, false);
+        this.parent = parent;
         myviewvote viewHolder = new myviewvote(view);
 
-        viewHolder.line.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ShowPopup(view, parent, viewHolder.getAdapterPosition());
 
-            }
-        });
         return viewHolder;
     }
 

@@ -148,7 +148,7 @@ public class VoteOnIdeaFinish extends AppCompatActivity implements DatePickerDia
                                                         databaseReference.child("wspolnota").child(teamwspo).child("showidea").child("day").setValue(dd);
                                                         databaseReference.child("wspolnota").child(teamwspo).child("showidea").child("year").setValue(dy);
                                                         databaseReference.child("wspolnota").child(teamwspo).child("showidea").child("month").setValue(dm);
-
+                                                        databaseReference.child("wspolnota").child(teamwspo).child("showidea").child("started").setValue("true");
                                                         if(valuer2.isChecked()){
                                                             databaseReference.child("wspolnota").child(teamwspo).child("showidea").child("power").setValue("shares");
                                                         }else if(valuer1.isChecked()){
@@ -286,6 +286,7 @@ public class VoteOnIdeaFinish extends AppCompatActivity implements DatePickerDia
                         uid.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
+                                dataSnapshot.child("started").getRef().removeValue();
                                 for (DataSnapshot remov: dataSnapshot.getChildren()) {
                                     remov.getRef().removeValue();
                                 }

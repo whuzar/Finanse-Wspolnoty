@@ -34,6 +34,10 @@ public class myadapterAdminIdea extends FirebaseRecyclerAdapter<modelvote, myada
     private static final String SHARED_PREF_NAME = "mypref";
     private static final String KEY_LOGIN = "login";
     private static final String KEY_LOGED = "wloged";
+    SharedPreferences sharedPreferences;
+    ViewGroup parent;
+    String login, who;
+
     myviewAdminIdea viewHolder;
     View view;
     FirebaseRecyclerOptions options;
@@ -47,24 +51,15 @@ public class myadapterAdminIdea extends FirebaseRecyclerAdapter<modelvote, myada
     @SuppressLint("SetTextI18n")
     @Override
     protected void onBindViewHolder(@NonNull myviewAdminIdea holder, int position, @NonNull modelvote model) {
-
         holder.idea.setText(model.getIdea());
         name.add(model.getIdea());
-
-
-    }
-
-    @NonNull
-    @Override
-    public myviewAdminIdea onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singlerowideaadmin, parent, false);
-        viewHolder = new myviewAdminIdea(view);
-
-        viewHolder.button.setOnClickListener(new View.OnClickListener() {
+        holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String itemName = name.get(viewHolder.getAdapterPosition());
-                deleteElement(itemName, parent);
+                String itemName = name.get(holder.getAdapterPosition());
+                Log.i("position", String.valueOf(holder.getAdapterPosition()));
+                Log.i("array lengts", String.valueOf(name.size()));
+                deleteElement(itemName, holder.getAdapterPosition());
 //                ShowPopup(view, parent, viewHolder.getAdapterPosition());
 //                Toast.makeText(parent.getContext(), "elo", Toast.LENGTH_SHORT).show();
 
@@ -73,19 +68,30 @@ public class myadapterAdminIdea extends FirebaseRecyclerAdapter<modelvote, myada
 
             }
         });
+
+
+    }
+
+    @NonNull
+    @Override
+    public myviewAdminIdea onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        sharedPreferences = parent.getContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        login = sharedPreferences.getString(KEY_LOGIN, null);
+        who = sharedPreferences.getString(KEY_LOGED, null);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singlerowideaadmin, parent, false);
+
+        this.parent = parent;
+        viewHolder = new myviewAdminIdea(view);
+
         return viewHolder;
     }
 
-    public void deleteElement(String itemName, ViewGroup parent){
-        Log.i("position", String.valueOf(viewHolder.getAdapterPosition()));
-        Log.i("array lengts", String.valueOf(name.size()));
+    public void deleteElement(String itemName, int pos){
+
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        SharedPreferences sharedPreferences;
 
-        sharedPreferences = parent.getContext().getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        String login = sharedPreferences.getString(KEY_LOGIN, null);
-        String who = sharedPreferences.getString(KEY_LOGED, null);
+
         databaseReference.child(who).child(login).child("team").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -100,7 +106,19 @@ public class myadapterAdminIdea extends FirebaseRecyclerAdapter<modelvote, myada
                             if(itemName == null){
                                 return;
                             }
-                            snapshot.child("wspolnota").child(team).child("createdpoll").child(itemName).getRef().removeValue();
+                            String started = snapshot.child("wspolnota").child(team).child("showidea").child("started").getValue(String.class);
+                            if(started != null){
+                                if(started.equals("true")){
+                                    Toast.makeText(parent.getContext(), "Głosowanie wystartowało nie mozna usunąć", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    snapshot.child("wspolnota").child(team).child("createdpoll").child(itemName).getRef().removeValue();
+                                    name.remove(pos);
+                                }
+                            }else{
+                                snapshot.child("wspolnota").child(team).child("createdpoll").child(itemName).getRef().removeValue();
+                                name.remove(pos);
+                            }
+
 //                                    for (DataSnapshot ds : snapshot.child("wspolnota").child(team).child("createdpoll").getChildren()) {
 //
 //                                        if(String.valueOf(ds.child("idea").getValue()).equals(itemName)){

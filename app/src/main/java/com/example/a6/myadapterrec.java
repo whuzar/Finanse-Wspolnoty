@@ -30,7 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec.myviewrec> {
 
     List<String> name=new ArrayList<String>();
-
+    ViewGroup parent;
     public myadapterrec(@NonNull FirebaseRecyclerOptions<modelrec> options) {
         super(options);
     }
@@ -48,6 +48,13 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
             Glide.with(holder.img.getContext()).load(model.getPimage()).into(holder.img);
             name.add(model.getPimage());
         }
+        holder.line.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowPopup(view, parent, holder.phone, holder.email, holder.namesur, holder.getAdapterPosition());
+
+            }
+        });
 
     }
 
@@ -55,15 +62,9 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
     @Override
     public myviewrec onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.singlerowrec, parent, false);
+        this.parent = parent;
         myviewrec viewHolder = new myviewrec(view);
 
-        viewHolder.line.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ShowPopup(view, parent, viewHolder.phone, viewHolder.email, viewHolder.namesur, viewHolder.getAdapterPosition());
-
-            }
-        });
 
         return viewHolder;
     }
