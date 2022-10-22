@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:text="Mail nie dotar?"
+        android:text="Nie otrzymałeś maila?"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/weryfikuj"
         app:layout_constraintEnd_toEndOf="parent"
