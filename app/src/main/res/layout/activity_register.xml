@@ -150,7 +150,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    android:hint="Udziały"
+                    android:hint="Udziały wspólnoty"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:maxLines="1"
+                    android:background="@android:color/transparent"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="0dp"
+                    android:maxLength="20">
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/usershares"
+                app:errorEnabled="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@android:color/transparent">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Udziały zarządcy"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
                     android:maxLines="1"

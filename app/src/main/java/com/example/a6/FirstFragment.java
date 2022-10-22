@@ -149,10 +149,11 @@ public class FirstFragment extends Fragment {
                         public void onComplete(@NonNull Task<DataSnapshot> task) {
                             if (task.isSuccessful()) {
                                 DataSnapshot snapshot = task.getResult();
+                                team = snapshot.child("team").getValue(String.class);
                                 databaseReference.child(who).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        databaseReference.child(who).child(login).child("idea").setValue(gv);
+                                        databaseReference.child("wspolnota").child(team).child("userIdeas").child(login).child("idea").setValue(gv);
                                         databaseReference.child(who).child(login).child("send").setValue("true");
                                     }
 

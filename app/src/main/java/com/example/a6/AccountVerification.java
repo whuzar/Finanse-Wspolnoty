@@ -30,6 +30,7 @@ public class AccountVerification extends AppCompatActivity {
     private String wspolnotaId;
     private String name;
     private String surname;
+    private String usershares;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class AccountVerification extends AppCompatActivity {
         shares = bundle.getString("shares");
         name = bundle.getString("name");
         surname = bundle.getString("surname");
+        usershares = bundle.getString("usershares");
         wspolnotaId = generateCode();
 
         weryfikuj.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +68,8 @@ public class AccountVerification extends AppCompatActivity {
                                 databaseReference.child("admin").child(login).child("name").setValue(name);
                                 databaseReference.child("admin").child(login).child("surname").setValue(surname);
                                 databaseReference.child("admin").child(login).child("team").setValue(wspolnotaId);
-                                databaseReference.child("admin").child(login).child("shares").setValue(shares);
+                                databaseReference.child("admin").child(login).child("shares").setValue(usershares);
+//                                databaseReference.child("admin").child(login).child("usershares").setValue(usershares);
                                 // przy generowaniu loginu ma nie byc admina chyba ze generuje dla kolejnych zarzadcow
 
                                 Toast.makeText(AccountVerification.this, "Utworzono użytkonika", Toast.LENGTH_SHORT).show();

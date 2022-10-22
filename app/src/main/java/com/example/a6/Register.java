@@ -44,6 +44,7 @@ public class Register extends AppCompatActivity {
     private TextInputLayout nameInput;
     private TextInputLayout surnameInput;
     private TextInputLayout sharesInput;
+    private TextInputLayout usrsharesInput;
     private String emailtxt;
     private String logtxt;
     private String passwordtxt;
@@ -52,6 +53,7 @@ public class Register extends AppCompatActivity {
     private String name;
     private String surname;
     private String shares;
+    private String usrShares;
     private boolean noExistUser = false, noExistAdmin = false;
 
 
@@ -69,6 +71,7 @@ public class Register extends AppCompatActivity {
         nameInput = findViewById(R.id.name);
         surnameInput = findViewById(R.id.surname);
         sharesInput = findViewById(R.id.shares);
+        usrsharesInput = findViewById(R.id.usershares);
 
         final Button registerBtn = findViewById(R.id.registerBtn);
         final TextView login = findViewById(R.id.login);
@@ -86,10 +89,11 @@ public class Register extends AppCompatActivity {
                 surname = surnameInput.getEditText().getText().toString().trim();
                 surname = surname.substring(0, 1).toUpperCase() + surname.substring(1).toLowerCase();
                 shares = sharesInput.getEditText().getText().toString().trim();
+                usrShares = usrsharesInput.getEditText().getText().toString().trim();
                 code = generateCode();
                generateUsername();
 
-                if(!validateEmail() || !validatePhone() || !validatePassword() || !validateName(name, nameInput) || !validateName(surname, surnameInput) || !validateShares()){
+                if(!validateEmail() || !validatePhone() || !validatePassword() || !validateName(name, nameInput) || !validateName(surname, surnameInput) || !validateShares(sharesInput) || !validateShares(usrsharesInput)){
                     return;
                 }
                 else {
@@ -119,6 +123,7 @@ public class Register extends AppCompatActivity {
         passdata_intent.putExtra("name", name);
         passdata_intent.putExtra("surname", surname);
         passdata_intent.putExtra("shares", shares);
+        passdata_intent.putExtra("usershares", usrShares);
         startActivity(passdata_intent);
     }
 
@@ -205,14 +210,15 @@ public class Register extends AppCompatActivity {
         }
     }
 
-    private boolean validateShares() {
-        if (shares.isEmpty()) {
-            sharesInput.setError("Pole udziały nie może być puste");
+    private boolean validateShares(TextInputLayout input) {
+        String s = input.getEditText().getText().toString().trim();
+        if (s.isEmpty()) {
+            input.setError("Pole udziały nie może być puste");
 //            Toast.makeText(Register.this, "Pole numer telefonu nie może być puste", Toast.LENGTH_SHORT).show();
             return false;
         } else {
 //            log.setError(null);
-            sharesInput.setError(null);
+            input.setError(null);
             return true;
         }
     }
