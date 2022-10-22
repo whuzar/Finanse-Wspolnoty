@@ -69,6 +69,7 @@ public class AccountVerification extends AppCompatActivity {
                                 databaseReference.child("admin").child(login).child("surname").setValue(surname);
                                 databaseReference.child("admin").child(login).child("team").setValue(wspolnotaId);
                                 databaseReference.child("admin").child(login).child("shares").setValue(usershares);
+                                databaseReference.child("admin").child(login).child("login").setValue(login);
 //                                databaseReference.child("admin").child(login).child("usershares").setValue(usershares);
                                 // przy generowaniu loginu ma nie byc admina chyba ze generuje dla kolejnych zarzadcow
 

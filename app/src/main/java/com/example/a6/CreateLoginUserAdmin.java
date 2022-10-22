@@ -241,6 +241,7 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
                     databaseReference.child("user").child(login).child("phone").setValue(phoneau);
                     databaseReference.child("user").child(login).child("shares").setValue(sharesau);
                     databaseReference.child("user").child(login).child("team").setValue(team);
+                    databaseReference.child("user").child(login).child("login").setValue(login);
                     JavaMailAPI javaMailAPI = new JavaMailAPI(CreateLoginUserAdmin.this, mailau, "Utworzono dla ciebo konto w Organizator Budżetu", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Zostało dla ciebie utworzone konto w aplikacji Organizator budżetu</h1><h2 style='text-align:center;padding-bottom:30px'>Login: "+login+"</h2><h2 style='text-align:center;padding-bottom:30px'>Hasło: "+finalPassword+"</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o to konto zignoruj tą wiadomość</h4></div>");
                     javaMailAPI.execute();
                 }
@@ -294,6 +295,7 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
                     databaseReference.child("admin").child(login).child("phone").setValue(phoneau);
                     databaseReference.child("admin").child(login).child("shares").setValue(sharesau);
                     databaseReference.child("admin").child(login).child("team").setValue(team);
+                    databaseReference.child("admin").child(login).child("login").setValue(login);
                     JavaMailAPI javaMailAPI = new JavaMailAPI(CreateLoginUserAdmin.this, mailau, "Utworzono dla ciebo konto administratora w Organizator Budżetu", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Zostało dla ciebie utworzone konto w aplikacji Organizator budżetu</h1><h2 style='text-align:center;padding-bottom:30px'>Login: "+login+"</h2><h2 style='text-align:center;padding-bottom:30px'>Hasło: "+finalPassword+"</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o to konto zignoruj tą wiadomość</h4></div>");
                     javaMailAPI.execute();
                 }

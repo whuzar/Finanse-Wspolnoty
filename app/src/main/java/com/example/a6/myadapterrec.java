@@ -39,7 +39,7 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
     @Override
     protected void onBindViewHolder(@NonNull myviewrec holder, int position, @NonNull modelrec model) {
 
-        holder.namesur.setText(model.getName() + " " + model.getSurname());
+        holder.namesur.setText(model.getlogin());
         holder.email.setText(model.getEmail());
         holder.phone.setText("+48" + model.getPhone());
         if(model.getPimage() == null){
@@ -51,7 +51,7 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
         holder.line.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowPopup(view, parent, holder.phone, holder.email, holder.namesur, holder.getAdapterPosition());
+                ShowPopup(view, parent, holder.phone, holder.email, model.getName() + " " + model.getSurname(), holder.getAdapterPosition());
             }
         });
 
@@ -86,7 +86,7 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
         }
     }
 
-    public void ShowPopup(View v, ViewGroup parent, TextView t1, TextView t2, TextView t3, int i1){
+    public void ShowPopup(View v, ViewGroup parent, TextView t1, TextView t2, String fullname, int i1){
         Dialog mDialog;
         mDialog = new Dialog(parent.getContext());
         mDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -97,7 +97,7 @@ public class myadapterrec extends FirebaseRecyclerAdapter<modelrec, myadapterrec
         CircleImageView profpopup = mDialog.findViewById(R.id.photoprofilepopup);
         String emailmail = String.valueOf(t2.getText());
         String phonephon = String.valueOf(t1.getText());
-        String showname = String.valueOf(t3.getText());
+        String showname = fullname;
         String linkprofil = name.get(i1);
 
         ns.setText(showname);
