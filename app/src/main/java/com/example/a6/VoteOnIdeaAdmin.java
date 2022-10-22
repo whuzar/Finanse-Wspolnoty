@@ -159,7 +159,7 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
                                                                         if(String.valueOf(ds.child("team").getValue()).equals(team)){
                                                                             String ideas = String.valueOf(ds.child("ideas").getValue());
                                                                             if(ideas != null){
-                                                                                ds.child("idea").getRef().removeValue();
+//                                                                                ds.child("idea").getRef().removeValue();
                                                                                 ds.child("send").getRef().removeValue();
                                                                             }
                                                                         }
@@ -181,7 +181,7 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
                                                                         if(String.valueOf(ds.child("team").getValue()).equals(team)){
                                                                             String ideas = String.valueOf(ds.child("ideas").getValue());
                                                                             if(ideas != null){
-                                                                                ds.child("idea").getRef().removeValue();
+//                                                                                ds.child("idea").getRef().removeValue();
                                                                                 ds.child("send").getRef().removeValue();
                                                                             }
                                                                         }
@@ -196,6 +196,7 @@ public class VoteOnIdeaAdmin extends AppCompatActivity implements DatePickerDial
 
                                                                 }
                                                             });
+                                                            databaseReference.child("wspolnota").child(teamwspo).child("userIdeas").getRef().removeValue();
                                                         }
 
                                                     }
