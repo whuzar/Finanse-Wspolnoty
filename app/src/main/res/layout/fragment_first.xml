@@ -75,7 +75,7 @@
                         android:padding="10dp"/>
 
             </LinearLayout>
-<!--            poczatek-->
+
             <LinearLayout
                 android:id="@+id/ideaonoff"
                 android:background="@drawable/back_wh"
@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:text="Czas upłynął"
+                    android:text=""
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
                     android:textSize="15dp"
@@ -143,6 +143,7 @@
                     android:visibility="visible"/>
 
                 <TextView
+                    android:id="@+id/changetext"
                     android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -170,7 +171,7 @@
             <LinearLayout
                 android:id="@+id/buttonlinearidea"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
@@ -203,7 +204,8 @@
                 android:layout_marginEnd="20dp"
                 android:orientation="vertical"
                 android:padding="15dp"
-                android:layout_marginBottom="70dp">
+                android:layout_marginBottom="70dp"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -219,7 +221,6 @@
 
             </LinearLayout>
 
-<!--            koniec-->
 
             <LinearLayout
                 android:id="@+id/chooseidea"
@@ -268,7 +269,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:textAllCaps="true"
-                    android:text="Czas upłynął"
+                    android:text=""
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
                     android:textSize="15dp"

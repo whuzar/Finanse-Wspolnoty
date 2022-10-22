@@ -8,7 +8,6 @@
     android:orientation="vertical"
     tools:context=".ThirdFragment">
 
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshLayoutai"
         android:layout_width="match_parent"
@@ -146,7 +145,7 @@
                         android:layout_height="40dp"
                         android:background="@drawable/notif"
                         android:padding="12dp"
-                        android:src="@drawable/writing" />
+                        android:src="@drawable/lightbulb" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -154,7 +153,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="20dp"
                         android:layout_toEndOf="@id/adminaidealisticon"
-                        android:text="Lista pomysłów"
+                        android:text="Pomysły zarządców"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
 
@@ -186,7 +185,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="20dp"
                         android:layout_toEndOf="@id/Idealist"
-                        android:text="Pomysły urzytkowników"
+                        android:text="Pomysły użytkowników"
                         android:textColor="#FFFFFF"
                         android:textStyle="bold" />
 

@@ -13,6 +13,8 @@
         android:background="#1B023B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:itemIconTint="@color/bottomcolors"
+        app:itemTextColor="@color/bottomcolors"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_menu" />
 

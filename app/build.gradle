@@ -28,6 +28,13 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     namespace 'com.example.a6'
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src\\main\\res', 'src\\main\\res\\color'
+            }
+        }
+    }
 }
 
 dependencies {

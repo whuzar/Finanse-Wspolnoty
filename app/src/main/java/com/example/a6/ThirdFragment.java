@@ -162,6 +162,7 @@ public class ThirdFragment extends Fragment{
         return rootView;
     }
     public void ShowDelete(View v){
+        mDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         mDialog.setContentView(R.layout.popupdeleteacc);
         Button btnexit = mDialog.findViewById(R.id.back);
         btnexit.setOnClickListener(new View.OnClickListener() {

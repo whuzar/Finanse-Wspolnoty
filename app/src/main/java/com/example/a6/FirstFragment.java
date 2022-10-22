@@ -54,6 +54,7 @@ public class FirstFragment extends Fragment {
 
     private SwipeRefreshLayout refreshLayout;
     private TextView timehello, moneytextset, ideamoneyset, themeidea, countertime, countertimefinish, endchoose, nametitle, nametitlow;
+    private TextView chngtxt;
     private EditText typeidea;
     private LinearLayout nothing, showtypeidea, showtypeideabutton, showchooseidea;
     private Button btnsendidea;
@@ -101,6 +102,7 @@ public class FirstFragment extends Fragment {
         endchoose = rootView.findViewById(R.id.youchoosed);
         nametitle = rootView.findViewById(R.id.titlename);
         nametitlow = rootView.findViewById(R.id.titlenamelower);
+        chngtxt = rootView.findViewById(R.id.changetext);
 
         showtypeidea = rootView.findViewById(R.id.ideaonoff);
         nothing = rootView.findViewById(R.id.ideashownothing);
@@ -253,7 +255,6 @@ public class FirstFragment extends Fragment {
 
                             nothing.setVisibility(View.GONE);
                             showtypeidea.setVisibility(View.VISIBLE);
-                            showtypeideabutton.setVisibility(View.VISIBLE);
 
                             themeidea.setText(theme);
 
@@ -392,9 +393,37 @@ public class FirstFragment extends Fragment {
                 }
             }
             public void onFinish() {
-
+                String login = sharedPreferences.getString(KEY_LOGIN, null);
+                String who = sharedPreferences.getString(KEY_LOGED, null);
                 if(showtypeidea.getVisibility() == View.VISIBLE) {
                     countertime.setText("Czas upłynął");
+                    typeidea.setEnabled(false);
+                    showtypeideabutton.setVisibility(View.GONE);
+                    chngtxt.setText("Zakończono zbieranie głosów");
+
+                    DatabaseReference textRef3 = databaseReference;
+                    textRef3.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DataSnapshot snapshot = task.getResult();
+                                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        databaseReference.child(who).child(login).child("send").setValue("true");
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }else {
+                                Log.d("TAG", task.getException().getMessage());
+                            }
+                        }
+                    });
+
                 }else if(showchooseidea.getVisibility() == View.VISIBLE) {
 
                     DatabaseReference textRef3 = databaseReference;
@@ -421,7 +450,7 @@ public class FirstFragment extends Fragment {
                     });
 
                     countertimefinish.setText("Czas upłynął");
-//                    thebest();
+                    thebest();
                 }
             }
         };
@@ -440,8 +469,8 @@ public class FirstFragment extends Fragment {
                         String check = task.getResult().child(who).child(login).child("send").getValue(String.class);
                         if(Objects.equals(check, "true")){
                             typeidea.setEnabled(false);
-                            btnsendidea.setText("Już wpisałeś swój pomysł");
-                            btnsendidea.setEnabled(false);
+                            showtypeideabutton.setVisibility(View.GONE);
+                            chngtxt.setText("Oddano głos");
                         }
                     }
                 }

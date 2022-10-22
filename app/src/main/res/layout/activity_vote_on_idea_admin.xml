@@ -37,6 +37,7 @@
                         android:layout_centerVertical="true"
                         android:textAllCaps="true"
                         android:gravity="center"
+                        android:layout_gravity="center"
                         android:text="Głosowanie na pomysł"
                         android:textSize="23dp"
                         android:textColor="#FFFFFF"
