@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
+
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -54,7 +56,7 @@ public class JavaMailAPI extends AsyncTask<Void,Void,Void>  {
 //        mProgressDialog.dismiss();
 
         //Show success toast
-        Toast.makeText(mContext,"Message Sent",Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext,"Kod Wysłany",Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -84,7 +86,7 @@ public class JavaMailAPI extends AsyncTask<Void,Void,Void>  {
             MimeMessage mm = new MimeMessage(mSession);
 
             //Setting sender address
-            mm.setFrom(new InternetAddress("no.reply.organizator.budzetu@gmail.com"));
+            mm.setFrom(new InternetAddress("no.reply.organizator.budzetu@gmail.com", "NoReply-Finanse-Wspólnoty"));
             //Adding receiver
             mm.addRecipient(Message.RecipientType.TO, new InternetAddress(mEmail));
             //Adding subject
@@ -116,6 +118,8 @@ public class JavaMailAPI extends AsyncTask<Void,Void,Void>  {
 //            mm.setContent(multipart);
 
         } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
         return null;
