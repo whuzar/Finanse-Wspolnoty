@@ -95,7 +95,7 @@ public class AccountVerification extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 code = generateCode();
-                JavaMailAPI javaMailAPI = new JavaMailAPI(AccountVerification.this, email, "Kod potwierdzający rejestracje", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Twój kod Aktywacyjny</h1><h2 style='text-align:center;padding-bottom:30px'>"+code+"</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o weryfikacje zignoruj tą wiadomość</h4></div>");
+                JavaMailAPI javaMailAPI = new JavaMailAPI(AccountVerification.this, email, "Kod potwierdzający rejestracje", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Twój kod Aktywacyjny</h1><h2 style='text-align:center;padding-bottom:30px'>"+code+"</h2><h2 style='text-align:center;padding-bottom:30px'>Po poprawnej Weryfikacji login przyjdzie na maila</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o weryfikacje zignoruj tą wiadomość</h4></div>");
                 javaMailAPI.execute();
                 Toast.makeText(AccountVerification.this, "Wysłano ponownie", Toast.LENGTH_SHORT).show();
             }
