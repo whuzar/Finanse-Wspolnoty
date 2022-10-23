@@ -123,7 +123,7 @@ public class VoteOnIdeaFinish extends AppCompatActivity implements DatePickerDia
                 String dm = dateTextm.getText().toString();
                 String dd = dateTextd.getText().toString();
 
-                if(!dy.equals("") && (!valuer1.isChecked() || !valuer2.isChecked())) {
+                if(!dy.equals("") && (valuer1.isChecked() || valuer2.isChecked())) {
                     endtypeidea(who, login);
                     endchoose(who, login);
                     clearfinish(who, login);

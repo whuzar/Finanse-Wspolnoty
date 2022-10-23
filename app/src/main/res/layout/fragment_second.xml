@@ -54,7 +54,7 @@
                 android:layout_marginBottom="70dp"
                 android:orientation="vertical"
                 android:padding="15dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/from"

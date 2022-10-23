@@ -165,7 +165,7 @@ public class FirstFragment extends Fragment {
                                     }
                                 });
                                 typeidea.setEnabled(false);
-                                btnsendidea.setText("Już wpisałeś swój pomysł");
+                                btnsendidea.setText("Czekaj na kolejne głosowanie");
                                 btnsendidea.setEnabled(false);
                                 Toast.makeText(getActivity(), "Pomysł został wysłany pomyślnie", Toast.LENGTH_SHORT).show();
                                 typeidea.setText("");
@@ -255,12 +255,12 @@ public class FirstFragment extends Fragment {
 
                             nothing.setVisibility(View.GONE);
                             showtypeidea.setVisibility(View.VISIBLE);
-
+                            showtypeideabutton.setVisibility(View.VISIBLE);
                             themeidea.setText(theme);
 
                             int finalmonth = Integer.parseInt(month) - 1;
 
-                            String NewTime = day + "." + finalmonth + "." + year + ", 23:59:59";//Timer date 2
+                            String NewTime = day + "." + finalmonth + "." + year + ", 13:11:00";//Timer date 2
                             try {
                                 oldDate = formatter.parse(oldTime);
                                 newDate = formatter.parse(NewTime);
@@ -396,9 +396,11 @@ public class FirstFragment extends Fragment {
                 String login = sharedPreferences.getString(KEY_LOGIN, null);
                 String who = sharedPreferences.getString(KEY_LOGED, null);
                 if(showtypeidea.getVisibility() == View.VISIBLE) {
-                    countertime.setText("Czas upłynął");
+                    countertime.setText("Czas minął");
                     typeidea.setEnabled(false);
-                    showtypeideabutton.setVisibility(View.GONE);
+                    showtypeideabutton.setVisibility(View.VISIBLE);;
+                    btnsendidea.setText("Czekaj na kolejne głosowanie");
+                    btnsendidea.setEnabled(false);
                     chngtxt.setText("Zakończono zbieranie głosów");
 
                     DatabaseReference textRef3 = databaseReference;
@@ -449,7 +451,7 @@ public class FirstFragment extends Fragment {
                         }
                     });
 
-                    countertimefinish.setText("Czas upłynął");
+                    countertimefinish.setText("Czas minął");
                     thebest();
                 }
             }
@@ -469,8 +471,9 @@ public class FirstFragment extends Fragment {
                         String check = task.getResult().child(who).child(login).child("send").getValue(String.class);
                         if(Objects.equals(check, "true")){
                             typeidea.setEnabled(false);
-                            showtypeideabutton.setVisibility(View.GONE);
-                            chngtxt.setText("Oddano głos");
+                            countertime.setText("Czas minął");
+                            btnsendidea.setText("Czekaj na kolejne głosowanie");
+                            btnsendidea.setEnabled(false);
                         }
                     }
                 }
