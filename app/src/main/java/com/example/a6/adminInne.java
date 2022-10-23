@@ -189,6 +189,7 @@ public class adminInne extends AppCompatActivity {
     }
 
     public void ShowDeleteUser(View v){
+        mDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         mDialog.setContentView(R.layout.popupdeleteaccuser);
         Button btnexit = mDialog.findViewById(R.id.backuser);
         btnexit.setOnClickListener(new View.OnClickListener() {
