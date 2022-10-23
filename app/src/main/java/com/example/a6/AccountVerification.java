@@ -74,6 +74,8 @@ public class AccountVerification extends AppCompatActivity {
                                 // przy generowaniu loginu ma nie byc admina chyba ze generuje dla kolejnych zarzadcow
 
                                 Toast.makeText(AccountVerification.this, "Utworzono użytkonika", Toast.LENGTH_SHORT).show();
+                                JavaMailAPI javaMailAPI = new JavaMailAPI(AccountVerification.this, email, "Login do użytkownika", "<div style='background-image:linear-gradient(to right,#7400b8,#80ffdb); margin: 10px;'><h1 style='text-align:center;padding-top: 30px;'>Twój login</h1><h2 style='text-align:center;padding-bottom:30px'>"+login+"</h2><h4 style='padding: 20px; text-align:center;'>Jeśli to nie ty prosiłeś o weryfikacje zignoruj tą wiadomość</h4></div>");
+                                javaMailAPI.execute();
                                 finish();
                         }
 
