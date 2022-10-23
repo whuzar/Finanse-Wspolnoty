@@ -176,7 +176,7 @@ public class CreateLoginUserAdmin extends AppCompatActivity {
 
 
         finalPassword = password;
-        if(!validateEmail() || !validatePhone() || !validateShares() || !validateName(nameau, name) || !validateName(surnameau, username)){
+        if(!validateName(nameau, name) || !validateName(surnameau, username) || !validateEmail() || !validatePhone() || !validateShares()){
             mDialog.dismiss();
             return;
         }

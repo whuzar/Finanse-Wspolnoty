@@ -63,6 +63,7 @@ public class EditAnotherUser extends AppCompatActivity {
                                     editor.apply();
                                     startActivity(new Intent(EditAnotherUser.this, EditAnotherUserNext.class));
                                     getuser.setText("");
+                                    break;
                                 }else{
                                     Toast.makeText(EditAnotherUser.this, "Taki użytkownik w twojej wspólocie nie istnieje", Toast.LENGTH_SHORT).show();
                                 }

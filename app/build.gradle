@@ -31,7 +31,7 @@ android {
     sourceSets {
         main {
             res {
-                srcDirs 'src\\main\\res', 'src\\main\\res\\color'
+                srcDirs 'src\\main\\res', 'src\\main\\res\\color', 'src\\main\\res\\adapters'
             }
         }
     }

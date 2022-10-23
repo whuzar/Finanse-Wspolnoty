@@ -224,7 +224,7 @@ public class EditAnotherUserNext extends AppCompatActivity {
             return false;
         } else if (!PHONE_PATTERN.matcher(phoneInput).matches()) {
             eaphone.setError("Proszę wpisać poprawnie numer telefonu");
-            Toast.makeText(EditAnotherUserNext.this, "Proszę wpisać poprawnie numer telefonu", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(EditAnotherUserNext.this, "Proszę wpisać poprawnie numer telefonu", Toast.LENGTH_SHORT).show();
             return false;
         } else {
 //            log.setError(null);
